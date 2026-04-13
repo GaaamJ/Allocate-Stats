@@ -72,22 +72,31 @@ public class RoomSceneController : MonoBehaviour
 
         RoomData.CheckStep step = currentRoom.steps[index];
 
-        // 단계 나레이션
         if (!string.IsNullOrEmpty(step.narration))
         {
             yield return ShowNarration(step.narration);
             yield return WaitForContinue();
         }
 
-        // 판정 전 연출 훅
         if (roomAnimator) yield return roomAnimator.OnBeforeCheck(currentRoom.roomID, index);
 
-        // 판정
-        bool success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out string log);
+        // ── 판정 ─────────────────────────────────────────
+        bool success;
+        if (step.checkType == CheckSystem.CheckType.Compound)
+        {
+            success = CheckSystem.RollCompoundDebug(
+                step.stat, step.threshold,
+                step.stat2, step.threshold2,
+                out _);
+        }
+        else
+        {
+            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out _);
+        }
+
         string summary = success ? step.endingSummary_success : step.endingSummary_failure;
         GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}", summary);
 
-        // 결과 나레이션
         RoomData.StepOutcome outcome = success ? step.onSuccess : step.onFailure;
         if (!string.IsNullOrEmpty(outcome.narration))
         {
@@ -95,10 +104,8 @@ public class RoomSceneController : MonoBehaviour
             yield return WaitForContinue();
         }
 
-        // 판정 후 연출 훅
         if (roomAnimator) yield return roomAnimator.OnAfterCheck(currentRoom.roomID, index, success);
 
-        // 결과 분기
         yield return HandleOutcome(outcome);
     }
 
