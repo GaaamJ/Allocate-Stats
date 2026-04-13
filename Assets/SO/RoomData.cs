@@ -38,6 +38,10 @@ public class RoomData : ScriptableObject
         [Header("결과 분기")]
         public StepOutcome onSuccess;
         public StepOutcome onFailure;
+
+        [Header("엔딩 요약 텍스트 (판정 기록 패널용)")]
+        public string endingSummary_success;
+        public string endingSummary_failure;
     }
 
     [System.Serializable]

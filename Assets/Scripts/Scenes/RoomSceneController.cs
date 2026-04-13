@@ -84,7 +84,8 @@ public class RoomSceneController : MonoBehaviour
 
         // 판정
         bool success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out string log);
-        GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}");
+        string summary = success ? step.endingSummary_success : step.endingSummary_failure;
+        GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}", summary);
 
         // 결과 나레이션
         RoomData.StepOutcome outcome = success ? step.onSuccess : step.onFailure;
@@ -114,12 +115,12 @@ public class RoomSceneController : MonoBehaviour
                 GameFlowManager.Instance?.OnGameOver(currentRoom.roomID);
                 break;
 
-            case RoomData.OutcomeType.Escape:
-                GameFlowManager.Instance?.OnEscape();
-                break;
-
             case RoomData.OutcomeType.GoToStep:
                 yield return ExecuteStep(outcome.nextStepIndex);
+                break;
+
+            case RoomData.OutcomeType.Escape:
+                GameFlowManager.Instance?.OnEscape(currentRoom.roomID);  // roomID 전달
                 break;
         }
     }
