@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: 03.Monster
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Monster
+  displayName: "\uAD34\uBB3C"
+  entryNarration:
+  - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uBD89\uC740
+    \uC6B0\uC8FC.\n\uC54C \uC218 \uC5C6\uB294 \uAD34\uBB3C. \uBB38 \uD558\uB098."
+  - "\uC778\uC2DD\uC774 5\uAC00 \uC544\uB2CC \uAC83\uC5D0 \uAC10\uC0AC\uD574 \uD558\uC2ED\uC2DC\uC624."
+  - "\uCC3D\uACFC \uBC29\uD328\uAC00 \uB9D0\uD569\uB2C8\uB2E4."
+  - "O \uBAA9\uC228\uC744 \uAC74 \uC804\uD22C\uB97C \uCE58\uB974\uACE0 | \uADF8\uC5D0
+    \uC751\uD558\uB294 \uBCF4\uC0C1\uC744 \uBC1B\uC544\uB77C."
+  steps:
+  - narration:
+    - "\uD589\uB3D9: \uCE7C\uC744 \uC8FC\uC6B0\uC138\uC694."
+    - "\uD589\uB3D9: \uB0B4\uB2EC\uB9AC\uACE0 \uB364\uBE44\uACE0"
+    - "\uD589\uB3D9: \uCC0C\uB974\uACE0 \uB3CC\uB9AC\uACE0 \uBE7C\uACE0"
+    stat: 0
+    checkType: 0
+    threshold: 3
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 3
+      nextStepIndex: 1
+      endingID: 
+      narration:
+      - "\uB2F9\uC2E0\uC740 \uAD34\uBB3C\uC744 \uC8FD\uC785\uB2C8\uB2E4."
+    onFailure:
+      type: 3
+      nextStepIndex: 2
+      endingID: 
+      narration:
+      - "\uAD34\uBB3C\uC758 \uC0C1\uC0C1\uD558\uAE30\uB3C4 \uC2EB\uC740 \uBB34\uC5B8\uAC00\uC5D0\n\uCE7C\uC744
+        \uBC15\uC544\uB123\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.\n(STR \uBD80\uC871)"
+    endingSummary_success: 
+    endingSummary_failure: 
+  - narration:
+    - "\uC778\uC2DD: \uD750\uB974\uB294 \uC0C1\uC0C1\uD558\uAE30\uB3C4 \uC2EB\uC740
+      \uBB34\uC5B8\uAC00\uB97C \uBCF4\uC138\uC694."
+    - "\uC778\uC2DD: \uC0C1\uC0C1\uD558\uAE30\uB3C4 \uC2EB\uC740 \uBB34\uC5B8\uAC00\uAC00
+      \uD53C\uC5B4\uB0A9\uB2C8\uB2E4."
+    stat: 2
+    checkType: 1
+    threshold: -1
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 2
+      nextStepIndex: -1
+      endingID: "\uD53C\uC5B4\uB098\uB294 \uAC83"
+      narration:
+      - "\uB2F9\uC2E0\uC740 \uC0C1\uC0C1\uD558\uAE30\uB3C4 \uC2EB\uC740 \uBB34\uC5B8\uAC00\uB97C
+        \uC778\uC2DD\uD588\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740 \uADF8\uAC83\uC744
+        \uC190\uC5D0 \uB4ED\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740 \uADF8\uAC83\uC744 \uBA39\uC2B5\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uADC0\uD658\uD569\uB2C8\uB2E4."
+    onFailure:
+      type: 0
+      nextStepIndex: -1
+      endingID: 
+      narration:
+      - "\uC774\uC720\uB294 \uBAA8\uB974\uC9C0\uB9CC, \uD610\uC624\uAC10\uC774 \uB4ED\uB2C8\uB2E4."
+      - "\uD589\uB3D9: \uBB38\uC744 \uC5EC\uC138\uC694."
+      - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694.\n(PER \uD655\uB960
+        \uD310\uC815 \uC2E4\uD328)"
+    endingSummary_success: 
+    endingSummary_failure: 
+  - narration:
+    - "\uD589\uB3D9: \uB3C4\uB9DD\n\uD589\uB3D9: \uB3C4\uB9DD\n\uD589\uB3D9: \uB3C4\uB9DD"
+    stat: 1
+    checkType: 0
+    threshold: 1
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 0
+      nextStepIndex: -1
+      endingID: 
+      narration:
+      - "\uC778\uC2DD: \uBB38\uC774 \uBCF4\uC785\uB2C8\uB2E4."
+      - "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC544"
+      - "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB824"
+      - "\uD589\uB3D9: \uBB38\uC744 \uC5F4\uC5B4"
+      - "\uD589\uB3D9: \uB4E4\uC5B4\uAC00"
+      - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+    onFailure:
+      type: 4
+      nextStepIndex: -1
+      endingID: "\uC0AC\uB9DD"
+      narration:
+      - "\uB2F9\uC2E0\uC740 \uAD34\uBB3C\uC5D0\uAC8C \uAC08\uAC00\uB9AC \uCC22\uACBC\uC2B5\uB2C8\uB2E4.\n(DEX
+        \uBD80\uC871)"
+    endingSummary_success: 
+    endingSummary_failure: 
+  canEscape: 1

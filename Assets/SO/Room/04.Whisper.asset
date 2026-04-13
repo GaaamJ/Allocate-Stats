@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: 04.Whisper
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Whisper
+  displayName: "\uC18D\uC0AD\uC784"
+  entryNarration:
+  - "\uD770\uC0C9\uC758 \uAE34 \uBCF5\uB3C4. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758
+    \uC544\uB984\uB2E4\uC6B4 \uC6B0\uC8FC.\n\uBB34\uC5B8\uAC00 \uC788\uC74C."
+  - "\uBCF4\uC11D\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+  - "O \uB108\uB97C + \uC6D0\uD574"
+  steps:
+  - narration:
+    - "\uC778\uC2DD: \uBB34\uC5B8\uAC00\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
+    - "\uC778\uC2DD: \uB208\uCE58\uCC44\uC138\uC694.\n\uC778\uC2DD: \uB208\uCE58\uCC44\uC138\uC694.\n\uC778\uC2DD:
+      \uB208\uCE58\uCC44\uC138\uC694."
+    stat: 2
+    checkType: 0
+    threshold: 2
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 3
+      nextStepIndex: 1
+      endingID: 
+      narration:
+      - "\uB2F9\uC2E0\uC740 \uBB34\uC5B8\uAC00\uB97C \uC778\uC9C0\uD569\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC774
+        \uC778\uC9C0\uD588\uB2E4\uB294 \uAC83\uC744 \uADF8\uAC83\uB3C4 \uC54C\uC544\uCC28\uB9BD\uB2C8\uB2E4."
+    onFailure:
+      type: 1
+      nextStepIndex: -1
+      endingID: "\uD558\uB098\uAC00 \uB418\uB2E4"
+      narration:
+      - "\uBC1B\uC544\uB4E4\uC774\uC138\uC694.\n\uBC1B\uC544\uB4E4\uC774\uC138\uC694.\n\uBC1B\uC544\uB4E4\uC774\uC138\uC694."
+      - "\uB2F9\uC2E0\uC740 \uD558\uB098\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\n(PER
+        \uBD80\uC871)"
+    endingSummary_success: 
+    endingSummary_failure: 
+  - narration:
+    - "\uD589\uB3D9: \uB2EC\uB824\n\uD589\uB3D9: \uB2EC\uB824\n\uD589\uB3D9: \uB2EC\uB824"
+    stat: 1
+    checkType: 0
+    threshold: 2
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 0
+      nextStepIndex: -1
+      endingID: 
+      narration:
+      - "\uBB38\uC774 \uBCF4\uC785\uB2C8\uB2E4."
+      - "\uBB38\uACE0\uB9AC\uB97C \uBD99\uC7A1\uACE0 \uB3CC\uB9AC\uACE0\n\uBB38\uC744
+        \uC5F4\uACE0 \uBAB8\uC744 \uB358\uC838"
+      - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694."
+    onFailure:
+      type: 1
+      nextStepIndex: -1
+      endingID: "\uD558\uB098\uAC00 \uB418\uB2E4"
+      narration:
+      - "\uBB38\uC774 \uBCF4\uC774\uC9C0\uB9CC \uB2FF\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740
+        \uD558\uB098\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\n(DEX \uBD80\uC871)"
+    endingSummary_success: 
+    endingSummary_failure: 
+  canEscape: 0

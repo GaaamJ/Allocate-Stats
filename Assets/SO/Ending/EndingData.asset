@@ -12,14 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1af03beadbb08e41b691d24d2a99c6e, type: 3}
   m_Name: EndingData
   m_EditorClassIdentifier: Assembly-CSharp::EndingData
-  clearEntries:
-  - roomID: 
-    endingName: 
-    humThreshold: 0
-    humEndingEligible: 0
-    narration_low: 
-    narration_high: 
-  gameOverEntries:
-  - roomID: 
-    endingName: 
-    narration: 
+  escapeEntries: []

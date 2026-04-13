@@ -621,13 +621,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65620b0a6a8f9d043b5d1a43e51a6200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleSceneController
+  titleData: {fileID: 11400000, guid: f866e68da12d1d742b1c951edc38bd14, type: 2}
   narratorUI: {fileID: 1007679711}
   statAllocator: {fileID: 1924040722}
   timerUI: {fileID: 1564953142}
   titleAnimator: {fileID: 0}
   titleScreenGroup: {fileID: 0}
   p01NarratorDuration: 5
-  allocateTimerSeconds: 30
+  allocateTimerSeconds: 20
 --- !u!1 &1004763070
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,8 +835,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -901,8 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorUI
   narratorTMP: {fileID: 1007679709}
   charInterval: 0.035
-  introText: Hello, World!
-  confirmText: You made a decision...
+  pauseBetweenSegments: 1
 --- !u!1 &1010263861
 GameObject:
   m_ObjectHideFlags: 0

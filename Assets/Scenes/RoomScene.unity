@@ -457,7 +457,8 @@ Transform:
   m_LocalPosition: {x: 676.3558, y: 137.49625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1847586245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &463445417
@@ -476,6 +477,7 @@ MonoBehaviour:
   continueButton: {fileID: 1926665061}
   inputBlocker: {fileID: 0}
   roomAnimator: {fileID: 0}
+  encoreController: {fileID: 1847586246}
 --- !u!1 &1007679707
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,8 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorUI
   narratorTMP: {fileID: 1007679709}
   charInterval: 0.035
-  introText: Hello, World!
-  confirmText: You made a decision...
+  pauseBetweenSegments: 0.8
 --- !u!1 &1378040313
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,37 +734,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1572851381
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1572851382}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1572851382
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572851381}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 660.69086, y: 180.49893, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1633190026
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +871,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633190026}
   m_CullTransparentMesh: 1
+--- !u!1 &1847586244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847586245}
+  - component: {fileID: 1847586246}
+  m_Layer: 0
+  m_Name: EncoreRoom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1847586245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847586244}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 463445416}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1847586246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847586244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7293b8825a31cbc4496c51aa4d00b8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EncoreSceneController
 --- !u!1 &1856054649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1302,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1971634281871353146, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: encoreRoomData
+      value: 
+      objectReference: {fileID: 11400000, guid: ed50645900356e44483055c97dae1ab7, type: 2}
+    - target: {fileID: 1971634281871353146, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: roomSequence.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971634281871353146, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: 'roomSequence.Array.data[9]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b095972eded430f43ad117151b98ce1d, type: 2}
     - target: {fileID: 3762604893588276977, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1349,5 +1375,4 @@ SceneRoots:
   - {fileID: 183226828}
   - {fileID: 1378040317}
   - {fileID: 2072322808}
-  - {fileID: 1572851382}
   - {fileID: 2003692366}

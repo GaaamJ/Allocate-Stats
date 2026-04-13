@@ -3,15 +3,16 @@ using System.Collections;
 
 /// <summary>
 /// RoomScene 총괄 컨트롤러.
+/// - GameFlowManager.IsEncoreLoop 가 true면 EncoreSceneController에 위임.
 /// - GameFlowManager.CurrentRoomData 로 현재 방 데이터를 받음 (Inspector 연결 불필요)
 /// - RoomData의 CheckStep 배열을 순서대로 실행
-/// - 에셋 없이 텍스트만으로 전체 흐름 테스트 가능
 ///
 /// [Inspector 연결 목록]
-///   - narratorUI    : NarratorUI
-///   - continueButton: 다음 단계 진행 버튼
-///   - inputBlocker  : 판정 중 클릭 방지 CanvasGroup (선택)
-///   - roomAnimator  : 연출 담당 (없으면 자동 스킵)
+///   - narratorUI       : NarratorUI
+///   - continueButton   : 다음 단계 진행 버튼
+///   - inputBlocker     : 판정 중 클릭 방지 CanvasGroup (선택)
+///   - roomAnimator     : 연출 담당 (없으면 자동 스킵)
+///   - encoreController : EncoreSceneController (앙코르 루프 위임용)
 /// </summary>
 public class RoomSceneController : MonoBehaviour
 {
@@ -23,13 +24,35 @@ public class RoomSceneController : MonoBehaviour
     [Header("Animator (연출용 — 없으면 스킵)")]
     [SerializeField] private RoomAnimator roomAnimator;
 
+    [Header("앙코르 루프 위임")]
+    [SerializeField] private EncoreRoomController encoreController;
+
     // ── 런타임 상태 ───────────────────────────────────────
     private RoomData currentRoom;
     private bool waitingForContinue = false;
 
+    // ── 테스트용 판정 오버라이드 ──────────────────────────
+    public enum ForceResult { None, Success, Failure, Skip }
+    public ForceResult TestForceResult { get; set; } = ForceResult.None;
+
     private void Start()
     {
-        currentRoom = GameFlowManager.Instance?.CurrentRoomData;
+        var flow = GameFlowManager.Instance;
+
+        // 앙코르 루프 중이면 EncoreSceneController에 위임
+        if (flow != null && flow.IsEncoreLoop)
+        {
+            if (encoreController != null)
+            {
+                encoreController.Run(narratorUI, continueButton);
+                Debug.Log("[RoomScene] IsEncoreLoop 감지");
+            }
+            else
+                Debug.LogError("[RoomScene] IsEncoreLoop=true인데 EncoreSceneController 연결 안 됨");
+            return;
+        }
+
+        currentRoom = flow?.CurrentRoomData;
 
         if (currentRoom == null)
         {
@@ -49,14 +72,12 @@ public class RoomSceneController : MonoBehaviour
 
     private IEnumerator RunRoom()
     {
-        // 진입 나레이션
-        if (!string.IsNullOrEmpty(currentRoom.entryNarration))
+        if (currentRoom.entryNarration != null && currentRoom.entryNarration.Length > 0)
         {
             yield return ShowNarration(currentRoom.entryNarration);
             yield return WaitForContinue();
         }
 
-        // 진입 연출 훅
         if (roomAnimator) yield return roomAnimator.OnRoomEnter(currentRoom.roomID);
 
         yield return ExecuteStep(0);
@@ -72,7 +93,7 @@ public class RoomSceneController : MonoBehaviour
 
         RoomData.CheckStep step = currentRoom.steps[index];
 
-        if (!string.IsNullOrEmpty(step.narration))
+        if (step.narration != null && step.narration.Length > 0)
         {
             yield return ShowNarration(step.narration);
             yield return WaitForContinue();
@@ -80,25 +101,37 @@ public class RoomSceneController : MonoBehaviour
 
         if (roomAnimator) yield return roomAnimator.OnBeforeCheck(currentRoom.roomID, index);
 
-        // ── 판정 ─────────────────────────────────────────
+        // 판정
         bool success;
-        if (step.checkType == CheckSystem.CheckType.Compound)
+        string log;
+
+        if (TestForceResult == ForceResult.Skip)
         {
-            success = CheckSystem.RollCompoundDebug(
-                step.stat, step.threshold,
-                step.stat2, step.threshold2,
-                out _);
+            GameFlowManager.Instance?.OnRoomClear_NextRoom();
+            yield break;
         }
+        else if (TestForceResult == ForceResult.Success)
+        {
+            success = true;
+            log = "[CheckOverride] FORCE SUCCESS";
+            Debug.Log(log);
+        }
+        else if (TestForceResult == ForceResult.Failure)
+        {
+            success = false;
+            log = "[CheckOverride] FORCE FAILURE";
+            Debug.Log(log);
+        }
+        else if (step.checkType == CheckSystem.CheckType.Compound)
+            success = CheckSystem.RollCompoundDebug(step.stat, step.threshold, step.stat2, step.threshold2, out log);
         else
-        {
-            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out _);
-        }
+            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out log);
 
         string summary = success ? step.endingSummary_success : step.endingSummary_failure;
         GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}", summary);
 
         RoomData.StepOutcome outcome = success ? step.onSuccess : step.onFailure;
-        if (!string.IsNullOrEmpty(outcome.narration))
+        if (outcome.narration != null && outcome.narration.Length > 0)
         {
             yield return ShowNarration(outcome.narration);
             yield return WaitForContinue();
@@ -117,9 +150,8 @@ public class RoomSceneController : MonoBehaviour
                 GameFlowManager.Instance?.OnRoomClear_NextRoom();
                 break;
 
-            case RoomData.OutcomeType.GameOver:
             case RoomData.OutcomeType.Death:
-                GameFlowManager.Instance?.OnGameOver(currentRoom.roomID);
+                GameFlowManager.Instance?.OnDeath(outcome.endingID);
                 break;
 
             case RoomData.OutcomeType.GoToStep:
@@ -127,7 +159,7 @@ public class RoomSceneController : MonoBehaviour
                 break;
 
             case RoomData.OutcomeType.Escape:
-                GameFlowManager.Instance?.OnEscape(currentRoom.roomID);  // roomID 전달
+                GameFlowManager.Instance?.OnEscape(outcome.endingID);
                 break;
         }
     }
@@ -136,10 +168,10 @@ public class RoomSceneController : MonoBehaviour
     // UI 헬퍼
     // ══════════════════════════════════════════════════════
 
-    private IEnumerator ShowNarration(string text)
+    private IEnumerator ShowNarration(string[] blocks)
     {
         SetInputBlock(true);
-        yield return narratorUI.ShowText(text);
+        yield return narratorUI.ShowBlocks(blocks);
         SetInputBlock(false);
     }
 
