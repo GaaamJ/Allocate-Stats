@@ -33,6 +33,7 @@ MonoBehaviour:
     onSuccess:
       type: 2
       nextStepIndex: -1
+      endingID: "\uBC14\uB2E4\uAC70\uD488"
       narration:
       - "\uBC29\uC5D0 \uBB3C\uC774 \uAC00\uB4DD \uCC28\uC624\uB985\uB2C8\uB2E4."
       - "\uB2F9\uC2E0\uC740 \uC78A\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC744 \uC78A\uC2B5\uB2C8\uB2E4."
@@ -40,6 +41,7 @@ MonoBehaviour:
     onFailure:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uB2F9\uC2E0\uC740 \uB2F9\uC2E0\uC774 \uB204\uAD70\uC9C0 \uBAA8\uB985\uB2C8\uB2E4."
       - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694.\n(PER \uBD80\uC871)"

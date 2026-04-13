@@ -31,12 +31,14 @@ MonoBehaviour:
     onSuccess:
       type: 3
       nextStepIndex: 1
+      endingID: 
       narration:
       - "\uBB38\uB4DD \uB2F9\uC2E0\uC758 \uBA38\uB9BF\uC18D\uC5D0\uC11C \uBD88\uACBD\uD55C
         \uBC29\uBC95\uC774 \uB5A0\uC624\uB985\uB2C8\uB2E4."
     onFailure:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uB2F9\uC2E0\uC740 \uBC88\uC81C\uD558\uB294 \uBC29\uBC95\uC744 \uB5A0\uC62C\uB9AC\uC9C0
         \uBABB\uD588\uC2B5\uB2C8\uB2E4.\n"
@@ -55,12 +57,14 @@ MonoBehaviour:
     onSuccess:
       type: 3
       nextStepIndex: 2
+      endingID: 
       narration:
       - "\uB2F9\uC2E0\uC740 \uD669\uAE08 \uC554\uC18C\uB97C \uB3CC \uC81C\uB2E8 \uC704\uB85C
         \uC62C\uB824\uB193\uC2B5\uB2C8\uB2E4."
     onFailure:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uB2F9\uC2E0\uC740 \uD669\uAE08 \uC554\uC18C\uB97C \uB4E4\uC5B4\uC62C\uB9AC\uC9C0
         \uBABB\uD588\uC2B5\uB2C8\uB2E4.\n"
@@ -77,6 +81,7 @@ MonoBehaviour:
     onSuccess:
       type: 2
       nextStepIndex: -1
+      endingID: "\uC2E0\uC131\uBAA8\uB3C5"
       narration:
       - "\uB137\uC774 \uC544\uB2CC \uB2E4\uB978 \uC18D\uC0AD\uC784\uC774 \uB4E4\uB9BD\uB2C8\uB2E4."
       - "\"\uC2E0\uC131 \uBAA8\uB3C5\uC758 \uB300\uAC00\uB97C \uCE58\uB8F0 \uAC83\uC774\uB2E4.\""
@@ -84,6 +89,7 @@ MonoBehaviour:
     onFailure:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uB137\uC740 \uB9CC\uC871\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.\n\uC6B0\uC0C1
         \uC22D\uBC30\uB294 \uC6A9\uC11C\uBC1B\uC558\uC2B5\uB2C8\uB2E4."

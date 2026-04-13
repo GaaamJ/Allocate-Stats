@@ -32,12 +32,14 @@ MonoBehaviour:
     onSuccess:
       type: 3
       nextStepIndex: 1
+      endingID: 
       narration:
       - "\uB2F9\uC2E0\uC740 \uBB34\uC5B8\uAC00\uB97C \uC778\uC9C0\uD569\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC774
         \uC778\uC9C0\uD588\uB2E4\uB294 \uAC83\uC744 \uADF8\uAC83\uB3C4 \uC54C\uC544\uCC28\uB9BD\uB2C8\uB2E4."
     onFailure:
-      type: 4
+      type: 1
       nextStepIndex: -1
+      endingID: "\uD558\uB098\uAC00 \uB418\uB2E4"
       narration:
       - "\uBC1B\uC544\uB4E4\uC774\uC138\uC694.\n\uBC1B\uC544\uB4E4\uC774\uC138\uC694.\n\uBC1B\uC544\uB4E4\uC774\uC138\uC694."
       - "\uB2F9\uC2E0\uC740 \uD558\uB098\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\n(PER
@@ -54,6 +56,7 @@ MonoBehaviour:
     onSuccess:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uBB38\uC774 \uBCF4\uC785\uB2C8\uB2E4."
       - "\uBB38\uACE0\uB9AC\uB97C \uBD99\uC7A1\uACE0 \uB3CC\uB9AC\uACE0\n\uBB38\uC744
@@ -62,6 +65,7 @@ MonoBehaviour:
     onFailure:
       type: 1
       nextStepIndex: -1
+      endingID: "\uD558\uB098\uAC00 \uB418\uB2E4"
       narration:
       - "\uBB38\uC774 \uBCF4\uC774\uC9C0\uB9CC \uB2FF\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740
         \uD558\uB098\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\n(DEX \uBD80\uC871)"

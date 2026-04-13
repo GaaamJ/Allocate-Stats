@@ -34,12 +34,14 @@ MonoBehaviour:
     onSuccess:
       type: 0
       nextStepIndex: -1
+      endingID: 
       narration:
       - "\uC801\uC808\uD55C \uBB38\uC744 \uCC3E\uC558\uC2B5\uB2C8\uB2E4."
       - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694."
     onFailure:
-      type: 4
+      type: 1
       nextStepIndex: -1
+      endingID: "\uCD94\uB77D"
       narration:
       - "\uB2F9\uC2E0\uC740 \uCD94\uB77D\uD569\uB2C8\uB2E4.\n(INT \uBD80\uC871)"
       - "\uB2F9\uC2E0\uC740\n           \uCD94\uB77D\uD569\uB2C8\uB2E4."
