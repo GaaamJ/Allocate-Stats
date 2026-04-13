@@ -1,68 +1,48 @@
 using UnityEngine;
 
 /// <summary>
-/// 모든 엔딩 텍스트를 담는 SO 테이블.
+/// HUM 분기가 있는 탈출 엔딩 텍스트만 담는 SO 테이블.
+/// 일반 사망/탈출 나레이션은 RoomData.StepOutcome.narration[] 에서 처리.
 /// 에셋 1개만 만들어서 EndingSceneController에 연결.
 /// </summary>
 [CreateAssetMenu(fileName = "EndingData", menuName = "AllocateStats/EndingData")]
 public class EndingData : ScriptableObject
 {
-    [Header("클리어 엔딩 목록")]
-    public ClearEntry[] clearEntries;
-
-    [Header("게임오버 엔딩 목록")]
-    public GameOverEntry[] gameOverEntries;
+    [Header("탈출 엔딩 목록 (HUM 분기 있는 것만)")]
+    public EscapeEntry[] escapeEntries;
 
     // ── 조회 API ──────────────────────────────────────────
 
     /// <summary>
-    /// 클리어 엔딩 텍스트 반환.
-    /// HUM 수치로 low/high 분기, HUM 특수엔딩 가능 여부도 out으로 전달.
+    /// HUM 분기 탈출 엔딩 나레이션 블록 배열 반환.
+    /// isHumEnding: HUM 특수엔딩 발동 여부.
+    /// endingID 매칭 없으면 null 반환 — 호출부에서 null 체크 필요.
     /// </summary>
-    public string GetClearNarration(string roomID, int hum, out bool isHumEnding)
+    public string[] GetEscapeNarration(string endingID, int hum, out bool isHumEnding)
     {
-        foreach (var e in clearEntries)
+        foreach (var e in escapeEntries)
         {
-            if (e.roomID != roomID) continue;
-
+            if (e.endingID != endingID) continue;
             isHumEnding = e.humEndingEligible && hum >= e.humThreshold;
             return hum >= e.humThreshold ? e.narration_high : e.narration_low;
         }
-
-        // roomID 매칭 없음 — 폴백
         isHumEnding = false;
-        return "탈출했다.";
-    }
-
-    /// <summary>게임오버 엔딩 텍스트 반환.</summary>
-    public string GetGameOverNarration(string roomID)
-    {
-        foreach (var e in gameOverEntries)
-            if (e.roomID == roomID) return e.narration;
-        return "끝났다.";
+        return null;
     }
 
     // ── 데이터 구조 ───────────────────────────────────────
 
     [System.Serializable]
-    public class ClearEntry
+    public class EscapeEntry
     {
-        public string roomID;
+        public string endingID;
         public string endingName;           // 에디터 식별용 ("성공적인 거래" 등)
 
         [Header("HUM 분기")]
         public int humThreshold = 3;       // 기획서: 0~2 // 3~4
-        public bool humEndingEligible;      // 이 방에서 HUM 특수엔딩 발동 가능?
+        public bool humEndingEligible;      // 이 엔딩에서 HUM 특수엔딩 발동 가능?
 
-        [TextArea] public string narration_low;   // HUM < threshold
-        [TextArea] public string narration_high;  // HUM >= threshold (특수엔딩 포함)
-    }
-
-    [System.Serializable]
-    public class GameOverEntry
-    {
-        public string roomID;
-        public string endingName;           // "뒤집힌 것" 등
-        [TextArea] public string narration;
+        [TextArea(2, 6)] public string[] narration_low;   // HUM < threshold
+        [TextArea(2, 6)] public string[] narration_high;  // HUM >= threshold
     }
 }

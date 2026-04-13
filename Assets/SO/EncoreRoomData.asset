@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 294cb69eaf8458447a3883aa202bc8cc, type: 3}
+  m_Name: EncoreRoomData
+  m_EditorClassIdentifier: Assembly-CSharp::EncoreRoomData
+  planets:
+  - planetName: 
+    isMercy: 0
+    narration:
+    - "\uD0DC\uC591"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uC218\uC131"
+    isMercy: 0
+    narration:
+    - "\uC218\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uAE08\uC131"
+    isMercy: 0
+    narration:
+    - "\uAE08\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uC9C0\uAD6C"
+    isMercy: 1
+    narration:
+    - "\uC9C0\uAD6C"
+    mercyDeathNarration:
+    - "\uC0AC\uB9DD"
+    mercySurviveNarration:
+    - "\uB2E4\uC74C \uBC29"
+  - planetName: "\uD654\uC131"
+    isMercy: 0
+    narration:
+    - "\uD654\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uBAA9\uC131"
+    isMercy: 0
+    narration:
+    - "\uBAA9\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uD1A0\uC131"
+    isMercy: 0
+    narration:
+    - "\uD1A0\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uCC9C\uC655\uC131"
+    isMercy: 0
+    narration:
+    - "\uCC9C\uC655\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  - planetName: "\uD574\uC655\uC131"
+    isMercy: 0
+    narration:
+    - "\uD574\uC655\uC131"
+    mercyDeathNarration: []
+    mercySurviveNarration: []
+  mercyDeathEndingID: "\uC548\uC2DD"

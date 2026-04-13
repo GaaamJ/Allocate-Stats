@@ -7,28 +7,42 @@ using System.Collections.Generic;
 ///
 /// [Inspector 연결 목록]
 ///   - roomSequence    : 방 진행 순서 (RoomData 배열)
+///   - encoreRoomData  : 영원 방 앙코르 루프용 SO
 ///   - roomSceneName   : "RoomScene"
-///   - clearSceneName  : "ClearScene"
-///   - gameOverSceneName : "GameOverScene"
+///   - endingSceneName : "EndingScene" (클리어/게임오버 통합)
 /// </summary>
 public class GameFlowManager : MonoBehaviour
 {
     public static GameFlowManager Instance { get; private set; }
 
-    // ── 방 순서 ───────────────────────────────────────────
     [Header("방 순서 (인덱스 순서대로 진행)")]
     [SerializeField] private RoomData[] roomSequence;
+
+    [Header("영원 방 앙코르 루프")]
+    [SerializeField] private EncoreRoomData encoreRoomData;
 
     // ── 공개 상태 ─────────────────────────────────────────
     public int CurrentRoomIndex { get; private set; } = 0;
     public bool IsGameOver { get; private set; } = false;
     public bool IsEscaped { get; private set; } = false;
 
-    /// <summary>현재 방 데이터. RoomSceneController에서 참조.</summary>
+    public string LastEndingID { get; private set; } = "";
+
+    // ── 앙코르 상태 ───────────────────────────────────────
+    public bool IsEncoreLoop { get; private set; } = false;
+    public int EncoreCounter { get; private set; } = 0;
+
+    /// <summary>
+    /// 현재 방 데이터. RoomSceneController에서 참조.
+    /// 앙코르 루프 중이면 null 반환 — RoomSceneController에서 IsEncoreLoop로 분기.
+    /// </summary>
     public RoomData CurrentRoomData =>
-        (CurrentRoomIndex >= 0 && CurrentRoomIndex < roomSequence.Length)
+        (!IsEncoreLoop && CurrentRoomIndex >= 0 && CurrentRoomIndex < roomSequence.Length)
         ? roomSequence[CurrentRoomIndex]
         : null;
+
+    /// <summary>EncoreSceneController에서 참조.</summary>
+    public EncoreRoomData EncoreRoomData => encoreRoomData;
 
     // ── 판정 기록 ─────────────────────────────────────────
     public readonly List<CheckRecord> CheckHistory = new();
@@ -36,8 +50,7 @@ public class GameFlowManager : MonoBehaviour
     // ── 씬 이름 ───────────────────────────────────────────
     [Header("Scene Names")]
     [SerializeField] private string roomSceneName = "RoomScene";
-    [SerializeField] private string clearSceneName = "ClearScene";
-    [SerializeField] private string gameOverSceneName = "GameOverScene";
+    [SerializeField] private string endingSceneName = "EndingScene";
 
     private void Awake()
     {
@@ -55,44 +68,54 @@ public class GameFlowManager : MonoBehaviour
         LoadRoomScene();
     }
 
-    /// <summary>
-    /// 방 클리어 → 다음 방으로.
-    /// 마지막 방 이후면 OnEscape() 호출.
-    /// </summary>
+    /// <summary>방 클리어 → 다음 방으로. 마지막 방이면 앙코르 루프 진입.</summary>
     public void OnRoomClear_NextRoom()
     {
         CurrentRoomIndex++;
 
         if (CurrentRoomIndex >= roomSequence.Length)
-            OnEscape();
+            EnterEncoreLoop();
         else
             LoadRoomScene();
     }
 
-    public void OnGameOver(string causeRoomID)
+    /// <summary>앙코르 루프 진입.</summary>
+    public void EnterEncoreLoop()
     {
-        IsGameOver = true;
-        LastGameOverCause = causeRoomID;
-
-        SnapshotFinalStats();
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverSceneName);
+        IsEncoreLoop = true;
+        EncoreCounter = 0;
+        LoadRoomScene(); // RoomScene 재사용 — EncoreSceneController가 IsEncoreLoop 감지
     }
 
-    public string LastGameOverCause { get; private set; } = "";
+    /// <summary>앙코르 방 하나 클리어 → 카운터 올리고 다시 로드.</summary>
+    public void OnEncoreClear()
+    {
+        EncoreCounter++;
+        Debug.Log($"[GameFlow] OnEncoreClear → EncoreCounter: {EncoreCounter}");
 
-    // 기존 LastGameOverCause 바로 아래에 추가
-    public string LastClearRoomID { get; private set; } = "";
+        LoadRoomScene();
+    }
 
-    public void OnEscape(string clearRoomID = "")
+    /// <summary>게임 오버 (사망 포함). endingID → EndingData 매칭.</summary>
+    public void OnDeath(string endingID)
+    {
+        IsGameOver = true;
+        IsEscaped = false;
+        LastEndingID = endingID;
+
+        SnapshotFinalStats();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
+    }
+
+    /// <summary>탈출 (클리어). endingID → EndingData 매칭.</summary>
+    public void OnEscape(string endingID)
     {
         IsEscaped = true;
-        LastClearRoomID = clearRoomID;
+        IsGameOver = false;
+        LastEndingID = endingID;
 
-        // 엔딩 씬 진입 직전 스탯 스냅샷 저장
         SnapshotFinalStats();
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(clearSceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
     }
 
     private void LoadRoomScene()
@@ -119,15 +142,14 @@ public class GameFlowManager : MonoBehaviour
         CurrentRoomIndex = 0;
         IsGameOver = false;
         IsEscaped = false;
-        LastGameOverCause = "";
-        LastClearRoomID = "";
+        IsEncoreLoop = false;
+        EncoreCounter = 0;
+        LastEndingID = "";
         FinalStats = null;
         CheckHistory.Clear();
     }
 
     // ── 스탯 스냅샷 ───────────────────────────────────────
-    // PlayerStats는 DontDestroyOnLoad라 엔딩 씬에서도 살아있지만,
-    // "게임 종료 시점의 스탯"을 명시적으로 굳혀두면 나중에 재시작해도 오염 없음.
 
     public FinalStatsSnapshot FinalStats { get; private set; }
 
@@ -158,8 +180,6 @@ public class GameFlowManager : MonoBehaviour
         public string summaryText;
     }
 
-    // ── 내부 데이터 구조 (기존 CheckRecord 아래에 추가) ───
-
     [System.Serializable]
     public class FinalStatsSnapshot
     {
@@ -169,24 +189,36 @@ public class GameFlowManager : MonoBehaviour
             $"STR  {STR}\nDEX  {DEX}\nPER  {PER}\nINT  {INT}\nLUK  {LUK}\nHUM  {HUM}";
     }
 
-    // ── 테스트용 데이터 주입 API (EndingTest에서 사용) ───────────────
+    // ── 테스트용 데이터 주입 API ──────────────────────────
 #if UNITY_EDITOR
-    /// <summary>EndingTest 전용 — 에디터에서만 컴파일됨.</summary>
-    public void InjectTestGameOver(string roomID)
+    public void InjectTestDeath(string endingID)
     {
         IsGameOver = true;
         IsEscaped = false;
-        LastGameOverCause = roomID;
+        LastEndingID = endingID;
         SnapshotFinalStats();
     }
 
-    /// <summary>EndingTest 전용 — 에디터에서만 컴파일됨.</summary>
-    public void InjectTestClear(string roomID)
+    public void InjectTestEscape(string endingID)
     {
         IsGameOver = false;
         IsEscaped = true;
-        LastClearRoomID = roomID;
+        LastEndingID = endingID;
         SnapshotFinalStats();
+    }
+
+    public void JumpToRoom(int index)
+    {
+        IsEncoreLoop = false;
+        CurrentRoomIndex = Mathf.Clamp(index, 0, roomSequence.Length - 1);
+        LoadRoomScene();
+    }
+
+    public void JumpToEncore(int counter)
+    {
+        IsEncoreLoop = true;
+        EncoreCounter = counter;
+        LoadRoomScene();
     }
 #endif
 }

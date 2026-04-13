@@ -52,7 +52,8 @@ public class RoomData : ScriptableObject
     public class StepOutcome
     {
         public OutcomeType type;
-        public int nextStepIndex;   // GoToStep 일 때 사용 (-1 = 없음)
+        public int nextStepIndex;       // GoToStep 일 때 사용 (-1 = 없음)
+        public string endingID;         // Death / Escape 시 EndingData roomID와 매칭
 
         [TextArea(2, 6)] public string[] narration; // 결과 나레이터 텍스트 (블록 단위)
     }
@@ -60,9 +61,8 @@ public class RoomData : ScriptableObject
     public enum OutcomeType
     {
         NextRoom,   // 다음 방으로
-        GameOver,   // 게임 오버
+        Death,      // 게임 오버 (사망 포함 통합)
         Escape,     // 탈출 (클리어)
         GoToStep,   // 같은 방 내 다른 단계로
-        Death,      // 사망 (GameOver와 구분이 필요하면 별도 엔딩용)
     }
 }
