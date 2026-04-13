@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: MonsterRoom
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Monster
+  displayName: "\uAD34\uBB3C"
+  entryNarration: "\uC2DC\uC57C: \uD770 \uBC29. \uC5B4\uB5A0\uD55C \uC561\uCCB4.
+    \uC54C \uC218 \uC5C6\uB294 \uAC70\uB300\uD55C \uBB34\uC5B8\uAC00.\n\uADF8\uAC83\uC774
+    \uB2F9\uC2E0\uC5D0\uAC8C \uB6F0\uC5B4\uB4ED\uB2C8\uB2E4."
+  steps:
+  - narration: "\uD589\uB3D9: \uD53C\uD574\n\uD53C\uD574\n\uD53C\uD574"
+    stat: 1
+    checkType: 0
+    threshold: 2
+    onSuccess:
+      type: 3
+      nextStepIndex: 1
+      narration: "\uC0AC\uACE0\uD574\n\uD589\uB3D9\uD574\n\uB0B4\uC9C8\uB7EC"
+    onFailure:
+      type: 4
+      nextStepIndex: -1
+      narration: "\uAC08\uAC00\uB9AC \uCC22\uAE34 \uACE0\uAE30 \uC808\uD3B8\uC774
+        \uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+  - narration: "\uD589\uB3D9: \uB51B\uC5B4\n\uBAA8\uC544\n\uB0B4\uC9C8\uB7EC"
+    stat: 0
+    checkType: 0
+    threshold: 3
+    onSuccess:
+      type: 2
+      nextStepIndex: 1
+      narration: "\uAD34\uBB3C\uC774 \uB354 \uC774\uC0C1 \uAD34\uBB3C\uC774 \uC544\uB2C8\uAC8C
+        \uB41C \uC21C\uAC04."
+    onFailure:
+      type: 4
+      nextStepIndex: -1
+      narration: "\uAC08\uAC00\uB9AC \uCC22\uAE34 \uACE0\uAE30 \uC808\uD3B8\uC774
+        \uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+  - narration: "\uC778\uC2DD: \uAD34\uBB3C\uC758 \uBAB8\uB6B1\uC5B4\uB9AC\uC5D0\uC11C
+      \uBC1C\uACAC\uD558\uC138\uC694.\n"
+    stat: 2
+    checkType: 1
+    threshold: 0
+    onSuccess:
+      type: 2
+      nextStepIndex: 1
+      narration: "\uB72F\uC5B4\uB0B4\n\uBA39\uC5B4\n\uBB38\uC744 \uC7A1\uACE0 \uB3CC\uB9AC\uBA74
+        \uC9D1"
+    onFailure:
+      type: 0
+      nextStepIndex: -1
+      narration: "\uC778\uC2DD\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.\n\uD589\uB3D9:
+        \uBB38\uC744 \uC7A1\uACE0 \uB3CC\uB824 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694."
+  canEscape: 1

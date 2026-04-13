@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: TheaterRoom
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Theater
+  displayName: "\uC5F0\uADF9"
+  entryNarration: "\uBC29 \uC548\uC5D0 \uBB34\uC218\uD55C \uC0AC\uB78C\uB4E4\uC774
+    \uC788\uC2B5\uB2C8\uB2E4.\n\uBAA8\uB450\uB4E4 \uC6C3\uACE0 \uC6B8\uACE0 \uD654\uB0B4\uACE0
+    \uCDA4\uCD94\uACE0 \uC560\uB3C4\uD558\uACE0 \uCC0C\uB974\uACE0\n\uB2F9\uC2E0\uC740
+    \uC5B4\uC9F8\uC11C \uC544\uBB34\uAC83\uB3C4 \uD558\uC9C0 \uC54A\uC2B5\uB2C8\uAE4C?"
+  steps:
+  - narration: "\uC2DC\uC57C: \uC6C3\uB294 \uC774\uB4E4\uC774 \uB2E4\uAC00\uC635\uB2C8\uB2E4.\n\uC0AC\uACE0:
+      \uC5F0\uAE30\uD558\uC138\uC694. \uADF8\uB4E4\uCC98\uB7FC \uB418\uC138\uC694.
+      \uADF8\uB4E4\uCC98\uB7FC \uD589\uB3D9\uD558\uC138\uC694.\n\uC7A1\uC544\uBA39\uD788\uC9C0
+      \uB9C8\uC138\uC694."
+    stat: 3
+    checkType: 0
+    threshold: 2
+    onSuccess:
+      type: 3
+      nextStepIndex: 1
+      narration: "\uB2F9\uC2E0\uC740 \uC5F0\uAE30\uD558\uAE30 \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4."
+    onFailure:
+      type: 1
+      nextStepIndex: 0
+      narration: "\uB2F9\uC2E0\uC758 \uC5F0\uAE30\uB294 \uD615\uD3B8\uC5C6\uC5C8\uC2B5\uB2C8\uB2E4.\n\uC6C3\uB294
+        \uC774\uB294 \uD654\uB0B4\uACE0 \uC6B0\uB294 \uC774\uB3C4 \uD654\uB0B4\uACE0
+        \uD654\uB0B4\uB294 \uC774\uB294 \uD654\uB0B4\uBA70\n\uB2F9\uC2E0\uC5D0\uAC8C
+        \uB2E4\uAC00\uC635\uB2C8\uB2E4."
+  - narration: "\uD589\uB3D9: \uACC4\uC18D \uC5F0\uAE30\uD558\uC138\uC694.\n\uC6B4\uBA85:
+      \uAE30\uB3C4\uD558\uC138\uC694."
+    stat: 4
+    checkType: 2
+    threshold: 2
+    onSuccess:
+      type: 2
+      nextStepIndex: -1
+      narration: "\uB2F9\uC2E0\uC740 \uB2F9\uC2E0\uC744 \uC7A1\uC544\uB0C5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740
+        \uD589\uB3D9\uD588\uC9C0\uB9CC \uBAB0\uC785\uD558\uC9C4 \uC54A\uC558\uC2B5\uB2C8\uB2E4."
+    onFailure:
+      type: 3
+      nextStepIndex: 2
+      narration: "\uB2EC\uB824\n\uB2EC\uB824\n\uB2EC\uB824"
+  - narration: "\uC2DC\uC57C: \uC778\uD615, \uBB34\uC218\uD788 \uB9CE\uC740 \uC778\uD615.\n\uB2EC\uB824\n\uB2EC\uB824"
+    stat: 1
+    checkType: 1
+    threshold: 0
+    onSuccess:
+      type: 0
+      nextStepIndex: 2
+      narration: "\uC2DC\uC57C: \uD750\uB9BF\uD55C \uBB38\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+        \uC7A1\uC544\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB824 \uB4E4\uC5B4\uAC00
+        \uB4E4\uC5B4\uAC00 \uB4E4\uC5B4\uAC00"
+    onFailure:
+      type: 1
+      nextStepIndex: -1
+      narration: "\uBB34\uB300 \uC704\uC758 \uBC30\uC6B0.\n\uC778\uD615\uC774 \uB418\uC5B4
+        \uCDA4\uC744 \uCD94\uC790."
+  canEscape: 1

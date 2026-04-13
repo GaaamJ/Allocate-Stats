@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: StartRoom
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: StartRoom
+  displayName: "\uC11C\uACE1"
+  entryNarration: "\uD558\uC580\uC0C9 \uBC29, \uB6AB\uB9B0 \uCC9C\uC7A5. \uCC9C\uC7A5
+    \uB108\uBA38\uC758 \uC6B0\uC8FC.\n\uBB38 \uB450 \uAC1C."
+  steps:
+  - narration: "\uC120\uD0DD: \uD558\uB098\uC758 \uBB38\uC744 \uACE0\uB974\uC138\uC694.\n\uD589\uB3D9:
+      \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uC138\uC694."
+    stat: 4
+    checkType: 2
+    threshold: 4
+    onSuccess:
+      type: 2
+      nextStepIndex: -1
+      narration: "\uD0C8\uCD9C."
+    onFailure:
+      type: 0
+      nextStepIndex: 1
+      narration: "\uB610 \uB2E4\uB978 \uBC29."
+  canEscape: 1
