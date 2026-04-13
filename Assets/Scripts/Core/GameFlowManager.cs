@@ -69,20 +69,31 @@ public class GameFlowManager : MonoBehaviour
             LoadRoomScene();
     }
 
-    public void OnEscape()
-    {
-        IsEscaped = true;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(clearSceneName);
-    }
-
     public void OnGameOver(string causeRoomID)
     {
         IsGameOver = true;
         LastGameOverCause = causeRoomID;
+
+        SnapshotFinalStats();
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverSceneName);
     }
 
     public string LastGameOverCause { get; private set; } = "";
+
+    // 기존 LastGameOverCause 바로 아래에 추가
+    public string LastClearRoomID { get; private set; } = "";
+
+    public void OnEscape(string clearRoomID = "")
+    {
+        IsEscaped = true;
+        LastClearRoomID = clearRoomID;
+
+        // 엔딩 씬 진입 직전 스탯 스냅샷 저장
+        SnapshotFinalStats();
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(clearSceneName);
+    }
 
     private void LoadRoomScene()
     {
@@ -91,7 +102,7 @@ public class GameFlowManager : MonoBehaviour
 
     // ── 판정 기록 ─────────────────────────────────────────
 
-    public void RecordCheck(StatType stat, bool success, string context)
+    public void RecordCheck(StatType stat, bool success, string context, string summaryText = "")
     {
         CheckHistory.Add(new CheckRecord
         {
@@ -99,6 +110,7 @@ public class GameFlowManager : MonoBehaviour
             success = success,
             context = context,
             statValue = PlayerStats.Instance != null ? PlayerStats.Instance.Get(stat) : 0,
+            summaryText = summaryText,
         });
     }
 
@@ -108,7 +120,30 @@ public class GameFlowManager : MonoBehaviour
         IsGameOver = false;
         IsEscaped = false;
         LastGameOverCause = "";
+        LastClearRoomID = "";
+        FinalStats = null;
         CheckHistory.Clear();
+    }
+
+    // ── 스탯 스냅샷 ───────────────────────────────────────
+    // PlayerStats는 DontDestroyOnLoad라 엔딩 씬에서도 살아있지만,
+    // "게임 종료 시점의 스탯"을 명시적으로 굳혀두면 나중에 재시작해도 오염 없음.
+
+    public FinalStatsSnapshot FinalStats { get; private set; }
+
+    private void SnapshotFinalStats()
+    {
+        if (PlayerStats.Instance == null) return;
+        var s = PlayerStats.Instance;
+        FinalStats = new FinalStatsSnapshot
+        {
+            STR = s.STR,
+            DEX = s.DEX,
+            PER = s.PER,
+            INT = s.INT,
+            LUK = s.LUK,
+            HUM = s.HUM,
+        };
     }
 
     // ── 내부 데이터 구조 ──────────────────────────────────
@@ -120,5 +155,38 @@ public class GameFlowManager : MonoBehaviour
         public int statValue;
         public bool success;
         public string context;
+        public string summaryText;
     }
+
+    // ── 내부 데이터 구조 (기존 CheckRecord 아래에 추가) ───
+
+    [System.Serializable]
+    public class FinalStatsSnapshot
+    {
+        public int STR, DEX, PER, INT, LUK, HUM;
+
+        public override string ToString() =>
+            $"STR  {STR}\nDEX  {DEX}\nPER  {PER}\nINT  {INT}\nLUK  {LUK}\nHUM  {HUM}";
+    }
+
+    // ── 테스트용 데이터 주입 API (EndingTest에서 사용) ───────────────
+#if UNITY_EDITOR
+    /// <summary>EndingTest 전용 — 에디터에서만 컴파일됨.</summary>
+    public void InjectTestGameOver(string roomID)
+    {
+        IsGameOver = true;
+        IsEscaped = false;
+        LastGameOverCause = roomID;
+        SnapshotFinalStats();
+    }
+
+    /// <summary>EndingTest 전용 — 에디터에서만 컴파일됨.</summary>
+    public void InjectTestClear(string roomID)
+    {
+        IsGameOver = false;
+        IsEscaped = true;
+        LastClearRoomID = roomID;
+        SnapshotFinalStats();
+    }
+#endif
 }
