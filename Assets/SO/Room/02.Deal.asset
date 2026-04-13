@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: 02.Deal
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Deal
+  displayName: "\uAC70\uB798"
+  entryNarration:
+  - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uC870\uADF8\uB9C8\uD55C
+    \uC6B0\uC8FC.\n\uBB38 \uB450 \uAC1C. \uC2DC\uB044\uB7FD\uAC8C \uC6B8\uB9AC\uB294
+    \uAD6C\uC2DD \uC804\uD654\uAE30 \uD558\uB098."
+  - "\uB9D0 \uB9CE\uC740 \uC774\uAC00 \uB9D0\uD569\uB2C8\uB2E4."
+  - "H \uC9C8\uBB38\uD574\uBD10. G \uC9C8\uC758\uC751\uB2F5!"
+  steps:
+  - narration:
+    - "\uD589\uB3D9: \uAD6C\uC2DD \uC804\uD654\uAE30\uB97C \uC190\uC5D0 \uB4DC\uC138\uC694."
+    - "\uD589\uB3D9: \uC804\uD654\uB97C \uBC1B\uC73C\uC138\uC694."
+    - "\uD589\uB3D9: \uC9C8\uBB38\uD558\uC138\uC694."
+    - "\uC0AC\uACE0: \uC5B4\uB290 \uBB38\uC744 \uC5F4\uC5B4\uC57C \uD560\uC9C0 \uACB0\uC815\uD558\uC138\uC694."
+    stat: 3
+    checkType: 0
+    threshold: 2
+    stat2: 0
+    threshold2: 0
+    onSuccess:
+      type: 0
+      nextStepIndex: -1
+      narration:
+      - "\uC801\uC808\uD55C \uBB38\uC744 \uCC3E\uC558\uC2B5\uB2C8\uB2E4."
+      - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC138\uC694."
+    onFailure:
+      type: 4
+      nextStepIndex: -1
+      narration:
+      - "\uB2F9\uC2E0\uC740 \uCD94\uB77D\uD569\uB2C8\uB2E4.\n(INT \uBD80\uC871)"
+      - "\uB2F9\uC2E0\uC740\n           \uCD94\uB77D\uD569\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740\n           \uCD94\uB77D\n                   \uD569\uB2C8\uB2E4."
+      - "\uCD94\uB77D\n       \uD569\uB2C8\uB2E4.\n                   \uB2F9\uC2E0\uC740"
+      - "\uD569\uB2C8\uB2E4.\n            \uB2F9\uC2E0\uC740\n                      
+        \uCD94\uB77D"
+    endingSummary_success: 
+    endingSummary_failure: 
+  canEscape: 0

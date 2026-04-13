@@ -50,7 +50,7 @@ public class RoomSceneController : MonoBehaviour
     private IEnumerator RunRoom()
     {
         // 진입 나레이션
-        if (!string.IsNullOrEmpty(currentRoom.entryNarration))
+        if (currentRoom.entryNarration != null && currentRoom.entryNarration.Length > 0)
         {
             yield return ShowNarration(currentRoom.entryNarration);
             yield return WaitForContinue();
@@ -72,40 +72,38 @@ public class RoomSceneController : MonoBehaviour
 
         RoomData.CheckStep step = currentRoom.steps[index];
 
-        if (!string.IsNullOrEmpty(step.narration))
+        // 단계 나레이션
+        if (step.narration != null && step.narration.Length > 0)
         {
             yield return ShowNarration(step.narration);
             yield return WaitForContinue();
         }
 
+        // 판정 전 연출 훅
         if (roomAnimator) yield return roomAnimator.OnBeforeCheck(currentRoom.roomID, index);
 
-        // ── 판정 ─────────────────────────────────────────
+        // 판정
         bool success;
+        string log;
         if (step.checkType == CheckSystem.CheckType.Compound)
-        {
-            success = CheckSystem.RollCompoundDebug(
-                step.stat, step.threshold,
-                step.stat2, step.threshold2,
-                out _);
-        }
+            success = CheckSystem.RollCompoundDebug(step.stat, step.threshold, step.stat2, step.threshold2, out log);
         else
-        {
-            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out _);
-        }
-
+            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out log);
         string summary = success ? step.endingSummary_success : step.endingSummary_failure;
         GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}", summary);
 
+        // 결과 나레이션
         RoomData.StepOutcome outcome = success ? step.onSuccess : step.onFailure;
-        if (!string.IsNullOrEmpty(outcome.narration))
+        if (outcome.narration != null && outcome.narration.Length > 0)
         {
             yield return ShowNarration(outcome.narration);
             yield return WaitForContinue();
         }
 
+        // 판정 후 연출 훅
         if (roomAnimator) yield return roomAnimator.OnAfterCheck(currentRoom.roomID, index, success);
 
+        // 결과 분기
         yield return HandleOutcome(outcome);
     }
 
@@ -136,10 +134,10 @@ public class RoomSceneController : MonoBehaviour
     // UI 헬퍼
     // ══════════════════════════════════════════════════════
 
-    private IEnumerator ShowNarration(string text)
+    private IEnumerator ShowNarration(string[] blocks)
     {
         SetInputBlock(true);
-        yield return narratorUI.ShowText(text);
+        yield return narratorUI.ShowBlocks(blocks);
         SetInputBlock(false);
     }
 
