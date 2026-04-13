@@ -9,40 +9,79 @@ using System.Collections;
 /// - ShowText()로 RoomScene 등 모든 씬에서 재사용 가능
 ///
 /// [Inspector 연결 목록]
-///   - narratorTMP  : TextMeshPro
-///   - charInterval : 타이핑 간격 (초)
-///   - introText    : Phase 01 텍스트
-///   - confirmText  : Phase 04 텍스트
+///   - narratorTMP          : TextMeshPro
+///   - charInterval         : 타이핑 간격 (초)
+///   - pauseBetweenSegments : 빈 줄 구분 덩어리 사이 텀 (초)
 /// </summary>
 public class NarratorUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI narratorTMP;
     [SerializeField] private float charInterval = 0.035f;
 
-    [Header("Texts")]
-    [TextArea, SerializeField] private string introText = "당신은 이 공간에 있습니다.\n스탯을 분배하세요.";
-    [TextArea, SerializeField] private string confirmText = "이걸로 정해졌습니다.";
+    [Header("분할 출력")]
+    [SerializeField] private float pauseBetweenSegments = 0.8f;
 
     private Coroutine typingCoroutine;
+    private Coroutine restoreCoroutine;
+    private string currentText = ""; // 호버 복원용
 
     // ── Phase 01 / 04 ────────────────────────────────────
 
-    public IEnumerator PlayIntro(float maxDuration)
+    /// <summary>TitleData.introBlocks 를 받아 블록 순서대로 출력. maxDuration은 블록 전체 제한.</summary>
+    public IEnumerator PlayIntro(string[] blocks, float maxDuration)
     {
-        yield return TypeText(introText, maxDuration);
+        if (blocks == null) yield break;
+        float elapsed = 0f;
+        foreach (string block in blocks)
+        {
+            if (string.IsNullOrEmpty(block)) continue;
+            yield return TypeText(block, 0f);
+            elapsed += pauseBetweenSegments;
+            if (maxDuration > 0 && elapsed >= maxDuration) yield break;
+            yield return new WaitForSeconds(pauseBetweenSegments);
+        }
     }
 
-    public IEnumerator PlayConfirm()
+    /// <summary>TitleData.confirmBlocks 를 받아 블록 순서대로 출력.</summary>
+    public IEnumerator PlayConfirm(string[] blocks)
     {
-        yield return TypeText(confirmText, 0f);
+        yield return ShowBlocks(blocks);
     }
 
     // ── 범용 텍스트 출력 (RoomScene 등에서 사용) ──────────
 
-    /// <summary>임의 텍스트를 타이핑 애니메이션으로 출력. 완료까지 대기.</summary>
+    /// <summary>
+    /// 임의 텍스트를 타이핑 애니메이션으로 출력.
+    /// 빈 줄(\n\n) 기준으로 덩어리 분할 후 pauseBetweenSegments 텀을 둠.
+    /// 완료까지 대기.
+    /// </summary>
     public IEnumerator ShowText(string text)
     {
-        yield return TypeText(text, 0f);
+        // 빈 줄 1줄 이상(\n 2개 이상)을 구분자로 덩어리 분할
+        string[] segments = System.Text.RegularExpressions.Regex.Split(
+            text.Trim(), @"\n\s*\n"
+        );
+
+        foreach (string seg in segments)
+        {
+            string trimmed = seg.Trim();
+            if (string.IsNullOrEmpty(trimmed)) continue;
+
+            yield return TypeText(trimmed, 0f);
+            yield return new WaitForSeconds(pauseBetweenSegments);
+        }
+    }
+
+    /// <summary>배열 단위로 블록 순서대로 출력. 블록마다 화면 지우고 새로 타이핑.</summary>
+    public IEnumerator ShowBlocks(string[] blocks)
+    {
+        if (blocks == null) yield break;
+        foreach (string block in blocks)
+        {
+            if (string.IsNullOrEmpty(block)) continue;
+            yield return TypeText(block, 0f);
+            yield return new WaitForSeconds(pauseBetweenSegments);
+        }
     }
 
     /// <summary>타이핑 없이 즉시 교체.</summary>
@@ -54,9 +93,25 @@ public class NarratorUI : MonoBehaviour
 
     // ── 스탯 설명 (호버) ────────────────────────────────
 
+    /// <summary>스탯 호버 시 설명 출력. 복원 대기 중이면 취소.</summary>
     public void ShowStatDescription(string desc)
     {
+        if (restoreCoroutine != null) StopCoroutine(restoreCoroutine);
         if (narratorTMP) narratorTMP.text = desc;
+    }
+
+    /// <summary>호버 해제 시 호출 — 딜레이 후 currentText로 복원.</summary>
+    public void RestoreText()
+    {
+        if (restoreCoroutine != null) StopCoroutine(restoreCoroutine);
+        restoreCoroutine = StartCoroutine(RestoreDelay());
+    }
+
+    private IEnumerator RestoreDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (narratorTMP) narratorTMP.text = currentText;
+        restoreCoroutine = null;
     }
 
     // ── 타이핑 코루틴 ────────────────────────────────────
@@ -68,6 +123,7 @@ public class NarratorUI : MonoBehaviour
         if (narratorTMP == null) yield break;
 
         narratorTMP.text = "";
+        currentText = text;
         float elapsed = 0f;
 
         foreach (char c in text)

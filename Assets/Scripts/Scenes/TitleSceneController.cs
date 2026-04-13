@@ -12,6 +12,7 @@ using System.Collections;
 ///   P04_Confirm → 최종 스탯 확인 (종이 클릭 → 게임 시작)
 ///
 /// [Inspector 연결 목록]
+///   - titleData          : TitleData ScriptableObject
 ///   - narratorUI         : NarratorUI
 ///   - statAllocator      : StatAllocatorUI
 ///   - timerUI            : TimerUI
@@ -23,6 +24,9 @@ using System.Collections;
 public class TitleSceneController : MonoBehaviour
 {
     public enum Phase { P00_Title, P01_Intro, P02_Allocate, P03_Random, P04_Confirm }
+
+    [Header("Data")]
+    [SerializeField] private TitleData titleData;
 
     [Header("Sub-Controllers")]
     [SerializeField] private NarratorUI narratorUI;
@@ -73,7 +77,9 @@ public class TitleSceneController : MonoBehaviour
         }
 
         if (titleAnimator) titleAnimator.ShowNotebook();
-        if (narratorUI) yield return narratorUI.PlayIntro(p01NarratorDuration);
+
+        if (narratorUI && titleData != null)
+            yield return narratorUI.PlayIntro(titleData.introBlocks, p01NarratorDuration);
 
         StartCoroutine(RunP02());
     }
@@ -83,6 +89,9 @@ public class TitleSceneController : MonoBehaviour
         CurrentPhase = Phase.P02_Allocate;
 
         if (titleAnimator) yield return titleAnimator.SummonObjects();
+
+        if (narratorUI && titleData != null)
+            yield return narratorUI.ShowBlocks(titleData.allocateBlocks);
 
         if (timerUI) timerUI.StartTimer(allocateTimerSeconds, OnTimerExpired);
         if (statAllocator) statAllocator.Activate();
@@ -120,7 +129,8 @@ public class TitleSceneController : MonoBehaviour
             titleAnimator.EnablePaperClick(OnPaperClicked);
         }
 
-        if (narratorUI) yield return narratorUI.PlayConfirm();
+        if (narratorUI && titleData != null)
+            yield return narratorUI.PlayConfirm(titleData.confirmBlocks);
     }
 
     // ── 헬퍼 ─────────────────────────────────────────────

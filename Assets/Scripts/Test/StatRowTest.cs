@@ -39,7 +39,8 @@ public class StatRowTest : MonoBehaviour
         statRow.Init(
             entry,
             onValueChanged: OnValueChanged,
-            onHover: () => Log("호버: 근력 설명 표시")
+            onHover: () => Log("호버: 근력 설명 표시"),
+            onExit: () => { }
         );
 
         if (btnUp) btnUp.onClick.AddListener(() => OnValueChanged(fakeAllocation + 1));

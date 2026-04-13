@@ -33,7 +33,6 @@ public class StatAllocatorUI : MonoBehaviour
 
     private void Awake()
     {
-        // 초기화
         foreach (StatType t in System.Enum.GetValues(typeof(StatType)))
             allocation[t] = 0;
 
@@ -65,7 +64,8 @@ public class StatAllocatorUI : MonoBehaviour
             row.Init(
                 entry,
                 onValueChanged: (newVal) => TrySet(entry.type, newVal),
-                onHover: () => narratorUI.ShowStatDescription(entry.description)
+                onHover: () => narratorUI.ShowStatDescription(entry.description),
+                onExit: () => narratorUI.RestoreText()
             );
             rows[entry.type] = row;
         }
@@ -73,14 +73,13 @@ public class StatAllocatorUI : MonoBehaviour
 
     // ── 포인트 조작 ──────────────────────────────────────
 
-    /// <summary>세그먼트 클릭 시 "이 스탯을 newVal로 바꾸고 싶다"는 요청.</summary>
     private void TrySet(StatType type, int newVal)
     {
         int prev = allocation[type];
-        int delta = newVal - prev;       // 양수면 포인트 소모, 음수면 환급
+        int delta = newVal - prev;
         int newRemain = remainingPoints - delta;
 
-        if (newRemain < 0) return;           // 포인트 부족 → 무시
+        if (newRemain < 0) return;
         if (newVal < PlayerStats.MIN_STAT || newVal > PlayerStats.MAX_STAT) return;
 
         allocation[type] = newVal;
@@ -95,7 +94,7 @@ public class StatAllocatorUI : MonoBehaviour
         if (remainingPointsTMP)
             remainingPointsTMP.text = $"남은 포인트: {remainingPoints}";
 
-        confirmButton.interactable = true; // 언제든 확정 가능
+        confirmButton.interactable = true;
     }
 
     // ── 랜덤 배분 (Phase 03) ─────────────────────────────
@@ -103,7 +102,6 @@ public class StatAllocatorUI : MonoBehaviour
     public void RandomizeRemaining()
     {
         PlayerStats.Instance.RandomizeRemaining(new Dictionary<StatType, int>(allocation), remainingPoints);
-        // UI도 동기화
         foreach (var kv in allocation)
             if (rows.TryGetValue(kv.Key, out var row))
                 row.SetValue(PlayerStats.Instance.Get(kv.Key));
@@ -118,7 +116,6 @@ public class StatAllocatorUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        // TitleSceneController로 위임
         FindFirstObjectByType<TitleSceneController>().OnAllocateConfirmed();
     }
 }
