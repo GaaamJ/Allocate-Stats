@@ -84,6 +84,14 @@ public class NarratorUI : MonoBehaviour
         }
     }
 
+    /// <summary>나레이터 텍스트 즉시 클리어.</summary>
+    public void Clear()
+    {
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        if (narratorTMP) narratorTMP.text = "";
+        currentText = "";
+    }
+
     /// <summary>타이핑 없이 즉시 교체.</summary>
     public void SetTextImmediate(string text)
     {

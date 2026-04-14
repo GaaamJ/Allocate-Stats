@@ -2,67 +2,136 @@ using UnityEngine;
 
 /// <summary>
 /// 방 하나를 정의하는 ScriptableObject.
-/// [CreateAssetMenu] 로 에디터에서 방마다 에셋 생성.
+/// 방은 여러 Phase로 구성되며, 각 Phase는 독립적인 트리거 / 나레이션 / 판정 / 연출을 가진다.
 ///
-/// 판정 흐름은 RoomSceneController가 읽어서 실행.
+/// [Inspector 연결]
+///   GameFlowManager.roomSequence 배열에 순서대로 등록.
 /// </summary>
 [CreateAssetMenu(fileName = "RoomData", menuName = "AllocateStats/RoomData")]
 public class RoomData : ScriptableObject
 {
     [Header("기본 정보")]
-    public string roomID;           // "mirror", "monster" 등 고유 ID
-    public string displayName;      // "거울 방"
+    public string roomID;       // 고유 ID — RoomBridge, PhaseAnimator 식별에 사용
+    public string displayName;  // 에디터 및 UI 표시용
 
-    [Header("방 진입 나레이션 (블록 단위)")]
-    [TextArea(2, 6)] public string[] entryNarration;
+    [Header("Phase 목록")]
+    public PhaseData[] phases;
 
-    [Header("판정 단계 목록")]
-    public CheckStep[] steps;
-
-    [Header("탈출 가능 여부")]
-    public bool canEscape;
-
-    // ── 내부 데이터 구조 ──────────────────────────────────
+    // ─────────────────────────────────────────────────────────
+    // PhaseData
+    // ─────────────────────────────────────────────────────────
 
     [System.Serializable]
-    public class CheckStep
+    public class PhaseData
     {
-        [Header("이 단계의 설명 (나레이터 출력, 블록 단위)")]
-        [TextArea(2, 6)] public string[] narration;
+        [Header("디버깅 및 RoomEventBus 매칭 키")]
+        public string phaseID;
+
+        [Header("페이즈 트리거 조건")]
+        public TriggerCondition triggerCondition;
+
+        [Header("진입 나레이션 (블록 단위)")]
+        [TextArea(2, 6)] public string[] onEnter;
+
+        [Header("페이즈 종료 조건")]
+        public ExitCondition exitCondition;
+
+        [Header("exitCondition == Check 일 때만 사용")]
+        public CheckData checkData;
+
+        [Header("exitCondition == Auto일 때 사용")]
+        public OutcomeData outcome;
+
+        [Header("연출 — 없으면 스킵")]
+        public PhaseAnimator animator;
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // TriggerCondition
+    // 새 트리거가 필요하면 enum에 추가 후 BaseRoomRunner에 처리 추가.
+    // ─────────────────────────────────────────────────────────
+
+    public enum TriggerCondition
+    {
+        RoomStart,      // 방 입장 시 자동 실행 — 방의 첫 Phase
+        Interact,       // 대기 상태에서 플레이어 상호작용 시 (phaseID 매칭)
+        PhaseComplete,  // 이전 Phase 완료 후 자동 연결 (선형 흐름용)
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // ExitCondition
+    // 새 조건이 필요하면 enum에 추가 후 BaseRoomRunner.RunPhase()에 케이스 추가.
+    // ─────────────────────────────────────────────────────────
+
+    public enum ExitCondition
+    {
+        Auto,   // 나레이션 종료 후 자동 종료 → outcome으로 분기
+        Check,  // 판정 실행 후 결과에 따라 분기 → checkData.onSuccess / onFailure
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // CheckData
+    // ─────────────────────────────────────────────────────────
+
+    [System.Serializable]
+    public class CheckData
+    {
+        [Header("판정 전 나레이션")]
+        [TextArea(2, 6)] public string[] onBeforeCheck;
+
+        [Header("판정 후 나레이션 — 결과 나레이션 이전 출력")]
+        [TextArea(2, 6)] public string[] onAfterCheck;
 
         [Header("판정 설정")]
         public StatType stat;
         public CheckSystem.CheckType checkType;
         public int threshold;
 
-        [Header("복합 판정 (Compound 전용)")]
+        [Header("복합 판정 — checkType == Compound 일 때만 사용")]
         public StatType stat2;
         public int threshold2;
 
         [Header("결과 분기")]
-        public StepOutcome onSuccess;
-        public StepOutcome onFailure;
+        public OutcomeData onSuccess;
+        public OutcomeData onFailure;
 
-        [Header("엔딩 요약 텍스트 (판정 기록 패널용)")]
-        public string endingSummary_success;
-        public string endingSummary_failure;
+        [Header("판정 기록 요약 — EndingScene 히스토리 패널에 표시")]
+        public string summaryText_success;
+        public string summaryText_failure;
     }
+
+    // ─────────────────────────────────────────────────────────
+    // OutcomeData
+    // Check / Auto 모두 이 구조로 결과를 표현.
+    // ─────────────────────────────────────────────────────────
 
     [System.Serializable]
-    public class StepOutcome
+    public class OutcomeData
     {
-        public OutcomeType type;
-        public int nextStepIndex;       // GoToStep 일 때 사용 (-1 = 없음)
-        public string endingID;         // Death / Escape 시 EndingData roomID와 매칭
+        [Header("결과 나레이션 — 분기 전 출력")]
+        [TextArea(2, 6)] public string[] narration;
 
-        [TextArea(2, 6)] public string[] narration; // 결과 나레이터 텍스트 (블록 단위)
+        [Header("결과 타입")]
+        public OutcomeType type;
+
+        [Header("PhaseTo 전용 — 이동할 Phase의 phaseID")]
+        public string targetPhaseID;
+
+        [Header("Death / Escape 전용 — EndingData roomID와 매칭")]
+        public string endingID;
     }
+
+    // ─────────────────────────────────────────────────────────
+    // OutcomeType
+    // 새 타입이 필요하면 enum에 추가 후 BaseRoomRunner.HandleOutcome()에 케이스 추가.
+    // ─────────────────────────────────────────────────────────
 
     public enum OutcomeType
     {
-        NextRoom,   // 다음 방으로
-        Death,      // 게임 오버 (사망 포함 통합)
-        Escape,     // 탈출 (클리어)
-        GoToStep,   // 같은 방 내 다른 단계로
+        PhaseTo,        // 특정 Phase로 이동 — targetPhaseID로 매칭
+        ReturnToWait,   // 대기 상태로 전환 — 플레이어 자유 이동, 다음 상호작용 대기
+        NextRoom,       // 다음 방으로 이동
+        Escape,         // 탈출 — 게임 클리어
+        Death,          // 사망 — 게임 오버
     }
 }

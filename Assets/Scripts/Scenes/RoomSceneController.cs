@@ -1,204 +1,66 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 /// <summary>
-/// RoomScene 총괄 컨트롤러.
-/// - GameFlowManager.IsEncoreLoop 가 true면 EncoreSceneController에 위임.
-/// - GameFlowManager.CurrentRoomData 로 현재 방 데이터를 받음 (Inspector 연결 불필요)
-/// - RoomData의 CheckStep 배열을 순서대로 실행
+/// RoomScene 총괄 디스패처.
+/// 현재 방이 일반 방인지 앙코르 루프인지 판단해서 적절한 Runner에 위임.
+/// 실제 방 진행 로직은 Runner가 담당 — 이 클래스는 얇게 유지.
 ///
-/// [Inspector 연결 목록]
-///   - narratorUI       : NarratorUI
-///   - continueButton   : 다음 단계 진행 버튼
-///   - inputBlocker     : 판정 중 클릭 방지 CanvasGroup (선택)
-///   - roomAnimator     : 연출 담당 (없으면 자동 스킵)
-///   - encoreController : EncoreSceneController (앙코르 루프 위임용)
+/// 새 방 타입이 생기면 IRoomRunner 구현체를 추가하고 Start()에 분기만 추가.
+///
+/// [Inspector 연결]
+///   - narratorUI        : NarratorUI
+///   - continueButton    : 진행 버튼
+///   - bridge            : RoomBridge
+///   - playerController  : PlayerControllerStub (3D 구현 전까지)
 /// </summary>
 public class RoomSceneController : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private NarratorUI narratorUI;
-    [SerializeField] private UnityEngine.UI.Button continueButton;
-    [SerializeField] private CanvasGroup inputBlocker;
+    [SerializeField] private Button continueButton;
 
-    [Header("Animator (연출용 — 없으면 스킵)")]
-    [SerializeField] private RoomAnimator roomAnimator;
-
-    [Header("앙코르 루프 위임")]
-    [SerializeField] private EncoreRoomController encoreController;
-
-    // ── 런타임 상태 ───────────────────────────────────────
-    private RoomData currentRoom;
-    private bool waitingForContinue = false;
-
-    // ── 테스트용 판정 오버라이드 ──────────────────────────
-    public enum ForceResult { None, Success, Failure, Skip }
-    public ForceResult TestForceResult { get; set; } = ForceResult.None;
+    [Header("Bridge / Controller")]
+    [SerializeField] private RoomBridge bridge;
+    [SerializeField] private PlayerControllerStub playerController;
 
     private void Start()
     {
-        var flow = GameFlowManager.Instance;
+        // 이전 씬 구독 잔류 방지
+        RoomEventBus.Clear();
 
-        // 앙코르 루프 중이면 EncoreSceneController에 위임
-        if (flow != null && flow.IsEncoreLoop)
+        var context = new RoomRunContext(
+            narratorUI,
+            continueButton,
+            bridge,
+            playerController
+        );
+
+        IRoomRunner runner = SelectRunner();
+
+        if (runner == null)
         {
-            if (encoreController != null)
-            {
-                encoreController.Run(narratorUI, continueButton);
-                Debug.Log("[RoomScene] IsEncoreLoop 감지");
-            }
-            else
-                Debug.LogError("[RoomScene] IsEncoreLoop=true인데 EncoreSceneController 연결 안 됨");
+            Debug.LogError("[RoomSceneController] Runner 선택 실패.");
             return;
         }
 
-        currentRoom = flow?.CurrentRoomData;
-
-        if (currentRoom == null)
-        {
-            Debug.LogError("[RoomScene] CurrentRoomData가 null. GameFlowManager의 roomSequence 확인 필요.");
-            return;
-        }
-
-        continueButton.onClick.AddListener(OnContinueClicked);
-        SetContinueVisible(false);
-
-        StartCoroutine(RunRoom());
+        StartCoroutine(runner.Run(context));
     }
 
-    // ══════════════════════════════════════════════════════
-    // 방 진행 메인 루프
-    // ══════════════════════════════════════════════════════
-
-    private IEnumerator RunRoom()
+    /// <summary>
+    /// 현재 상태에 맞는 Runner 반환.
+    /// 새 방 타입 추가 시 여기에 분기 추가.
+    /// </summary>
+    private IRoomRunner SelectRunner()
     {
-        if (currentRoom.entryNarration != null && currentRoom.entryNarration.Length > 0)
-        {
-            yield return ShowNarration(currentRoom.entryNarration);
-            yield return WaitForContinue();
-        }
+        if (bridge.IsEncoreLoop)
+            return new EncoreRoomRunner();
 
-        if (roomAnimator) yield return roomAnimator.OnRoomEnter(currentRoom.roomID);
+        if (bridge.CurrentRoomData != null)
+            return new NormalRoomRunner();
 
-        yield return ExecuteStep(0);
-    }
-
-    private IEnumerator ExecuteStep(int index)
-    {
-        if (index < 0 || index >= currentRoom.steps.Length)
-        {
-            Debug.LogError($"[RoomScene] step 인덱스 {index} 없음 (roomID: {currentRoom.roomID})");
-            yield break;
-        }
-
-        RoomData.CheckStep step = currentRoom.steps[index];
-
-        if (step.narration != null && step.narration.Length > 0)
-        {
-            yield return ShowNarration(step.narration);
-            yield return WaitForContinue();
-        }
-
-        if (roomAnimator) yield return roomAnimator.OnBeforeCheck(currentRoom.roomID, index);
-
-        // 판정
-        bool success;
-        string log;
-
-        if (TestForceResult == ForceResult.Skip)
-        {
-            GameFlowManager.Instance?.OnRoomClear_NextRoom();
-            yield break;
-        }
-        else if (TestForceResult == ForceResult.Success)
-        {
-            success = true;
-            log = "[CheckOverride] FORCE SUCCESS";
-            Debug.Log(log);
-        }
-        else if (TestForceResult == ForceResult.Failure)
-        {
-            success = false;
-            log = "[CheckOverride] FORCE FAILURE";
-            Debug.Log(log);
-        }
-        else if (step.checkType == CheckSystem.CheckType.Compound)
-            success = CheckSystem.RollCompoundDebug(step.stat, step.threshold, step.stat2, step.threshold2, out log);
-        else
-            success = CheckSystem.RollDebug(step.stat, step.checkType, step.threshold, out log);
-
-        string summary = success ? step.endingSummary_success : step.endingSummary_failure;
-        GameFlowManager.Instance?.RecordCheck(step.stat, success, $"{currentRoom.roomID}_step{index}", summary);
-
-        RoomData.StepOutcome outcome = success ? step.onSuccess : step.onFailure;
-        if (outcome.narration != null && outcome.narration.Length > 0)
-        {
-            yield return ShowNarration(outcome.narration);
-            yield return WaitForContinue();
-        }
-
-        if (roomAnimator) yield return roomAnimator.OnAfterCheck(currentRoom.roomID, index, success);
-
-        yield return HandleOutcome(outcome);
-    }
-
-    private IEnumerator HandleOutcome(RoomData.StepOutcome outcome)
-    {
-        switch (outcome.type)
-        {
-            case RoomData.OutcomeType.NextRoom:
-                GameFlowManager.Instance?.OnRoomClear_NextRoom();
-                break;
-
-            case RoomData.OutcomeType.Death:
-                GameFlowManager.Instance?.OnDeath(outcome.endingID);
-                break;
-
-            case RoomData.OutcomeType.GoToStep:
-                yield return ExecuteStep(outcome.nextStepIndex);
-                break;
-
-            case RoomData.OutcomeType.Escape:
-                GameFlowManager.Instance?.OnEscape(outcome.endingID);
-                break;
-        }
-    }
-
-    // ══════════════════════════════════════════════════════
-    // UI 헬퍼
-    // ══════════════════════════════════════════════════════
-
-    private IEnumerator ShowNarration(string[] blocks)
-    {
-        SetInputBlock(true);
-        yield return narratorUI.ShowBlocks(blocks);
-        SetInputBlock(false);
-    }
-
-    private IEnumerator WaitForContinue()
-    {
-        waitingForContinue = true;
-        SetContinueVisible(true);
-        yield return new WaitUntil(() => !waitingForContinue);
-        SetContinueVisible(false);
-    }
-
-    private void OnContinueClicked()
-    {
-        if (waitingForContinue) waitingForContinue = false;
-    }
-
-    private void SetContinueVisible(bool v)
-    {
-        if (continueButton) continueButton.gameObject.SetActive(v);
-    }
-
-    private void SetInputBlock(bool block)
-    {
-        if (inputBlocker)
-        {
-            inputBlocker.interactable = !block;
-            inputBlocker.blocksRaycasts = !block;
-        }
+        Debug.LogError("[RoomSceneController] IsEncoreLoop=false인데 CurrentRoomData도 null.");
+        return null;
     }
 }
