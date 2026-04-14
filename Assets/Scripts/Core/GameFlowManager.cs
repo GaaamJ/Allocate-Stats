@@ -6,10 +6,11 @@ using System.Collections.Generic;
 /// 방을 roomSequence 순서대로 진행. 복도 씬 없음.
 ///
 /// [Inspector 연결 목록]
-///   - roomSequence    : 방 진행 순서 (RoomData 배열)
-///   - encoreRoomData  : 영원 방 앙코르 루프용 SO
-///   - roomSceneName   : "RoomScene"
-///   - endingSceneName : "EndingScene" (클리어/게임오버 통합)
+///   - roomSequence       : 방 진행 순서 (RoomData 배열)
+///   - layoutDataSequence : 방별 오브젝트 배치 데이터 (roomSequence와 동일 순서)
+///   - encoreRoomData     : 영원 방 앙코르 루프용 SO
+///   - roomSceneName      : "RoomScene"
+///   - endingSceneName    : "EndingScene"
 /// </summary>
 public class GameFlowManager : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class GameFlowManager : MonoBehaviour
     [Header("방 순서 (인덱스 순서대로 진행)")]
     [SerializeField] private RoomData[] roomSequence;
 
+    [Header("방별 Layout 데이터 — roomSequence와 동일 순서로 등록")]
+    // null 허용 — 해당 방에 RoomLayoutData 없으면 오브젝트 생성 스킵
+    [SerializeField] private RoomLayoutData[] layoutDataSequence;
+
     [Header("영원 방 앙코르 루프")]
     [SerializeField] private EncoreRoomData encoreRoomData;
 
@@ -25,23 +30,29 @@ public class GameFlowManager : MonoBehaviour
     public int CurrentRoomIndex { get; private set; } = 0;
     public bool IsGameOver { get; private set; } = false;
     public bool IsEscaped { get; private set; } = false;
-
     public string LastEndingID { get; private set; } = "";
 
     // ── 앙코르 상태 ───────────────────────────────────────
     public bool IsEncoreLoop { get; private set; } = false;
     public int EncoreCounter { get; private set; } = 0;
 
-    /// <summary>
-    /// 현재 방 데이터. RoomSceneController에서 참조.
-    /// 앙코르 루프 중이면 null 반환 — RoomSceneController에서 IsEncoreLoop로 분기.
-    /// </summary>
+    /// <summary>현재 방 RoomData. 앙코르 루프 중이면 null.</summary>
     public RoomData CurrentRoomData =>
         (!IsEncoreLoop && CurrentRoomIndex >= 0 && CurrentRoomIndex < roomSequence.Length)
         ? roomSequence[CurrentRoomIndex]
         : null;
 
-    /// <summary>EncoreSceneController에서 참조.</summary>
+    /// <summary>
+    /// 현재 방 RoomLayoutData.
+    /// null이면 RoomSceneController에서 오브젝트 생성 스킵.
+    /// </summary>
+    public RoomLayoutData CurrentLayoutData =>
+        (!IsEncoreLoop && layoutDataSequence != null &&
+         CurrentRoomIndex >= 0 && CurrentRoomIndex < layoutDataSequence.Length)
+        ? layoutDataSequence[CurrentRoomIndex]
+        : null;
+
+    /// <summary>앙코르 루프 데이터.</summary>
     public EncoreRoomData EncoreRoomData => encoreRoomData;
 
     // ── 판정 기록 ─────────────────────────────────────────
@@ -84,7 +95,7 @@ public class GameFlowManager : MonoBehaviour
     {
         IsEncoreLoop = true;
         EncoreCounter = 0;
-        LoadRoomScene(); // RoomScene 재사용 — EncoreSceneController가 IsEncoreLoop 감지
+        LoadRoomScene();
     }
 
     /// <summary>앙코르 방 하나 클리어 → 카운터 올리고 다시 로드.</summary>
@@ -92,11 +103,10 @@ public class GameFlowManager : MonoBehaviour
     {
         EncoreCounter++;
         Debug.Log($"[GameFlow] OnEncoreClear → EncoreCounter: {EncoreCounter}");
-
         LoadRoomScene();
     }
 
-    /// <summary>게임 오버 (사망 포함). endingID → EndingData 매칭.</summary>
+    /// <summary>게임 오버. endingID → EndingData 매칭.</summary>
     public void OnDeath(string endingID)
     {
         IsGameOver = true;
