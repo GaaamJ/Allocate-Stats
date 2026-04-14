@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// 방 실행 공통 로직 베이스 클래스.
@@ -22,6 +23,9 @@ public abstract class BaseRoomRunner : IRoomRunner
     private string pendingPhaseID;
     private bool waitingForInteract = false;
     private bool isWaiting = false;
+
+    // 완료된 Phase 기록 — requiredPhaseIDs 체크용
+    private readonly HashSet<string> completedPhaseIDs = new HashSet<string>();
 
     // ── 서브클래스 구현 ───────────────────────────────────
 
@@ -79,7 +83,6 @@ public abstract class BaseRoomRunner : IRoomRunner
         switch (phase.exitCondition)
         {
             case RoomData.ExitCondition.Auto:
-                // Phase 자체의 outcome으로 분기
                 outcome = phase.outcome;
                 break;
 
@@ -92,8 +95,12 @@ public abstract class BaseRoomRunner : IRoomRunner
         // 종료 연출
         if (phase.animator) yield return phase.animator.OnPhaseExit();
 
-        // Phase 나레이션 클리어
+        // 나레이션 클리어
         ctx.NarratorUI.Clear();
+
+        // Phase 완료 기록
+        if (!string.IsNullOrEmpty(phase.phaseID))
+            completedPhaseIDs.Add(phase.phaseID);
 
         if (outcome != null)
             yield return HandleOutcome(outcome);
@@ -105,8 +112,7 @@ public abstract class BaseRoomRunner : IRoomRunner
 
     /// <summary>
     /// 플레이어 자유 이동 허용 + RoomEventBus 구독 대기.
-    /// 상호작용 발생 시 해당 Phase 실행.
-    /// Phase 완료 후 outcome이 ReturnToWait이면 다시 대기 유지.
+    /// 상호작용 발생 시 requiredPhaseIDs 체크 후 통과하면 Phase 실행.
     /// </summary>
     private IEnumerator EnterWaitState()
     {
@@ -128,8 +134,40 @@ public abstract class BaseRoomRunner : IRoomRunner
                 continue;
             }
 
+            var phase = GetRoomPhases()[targetIndex];
+
+            // 이미 완료된 Phase 재실행 차단
+            if (!string.IsNullOrEmpty(phase.phaseID) && completedPhaseIDs.Contains(phase.phaseID))
+            {
+                Debug.Log($"[{GetType().Name}] '{pendingPhaseID}' 이미 완료된 Phase — 재실행 차단.");
+                waitingForInteract = false;
+                continue;
+            }
+
+            // 선행 조건 체크 — 미충족 시 나레이션 출력 후 대기 유지
+            if (!IsRequirementMet(phase))
+            {
+                Debug.Log($"[{GetType().Name}] '{pendingPhaseID}' 선행 조건 미충족 — 대기 유지.");
+                if (phase.requirementFailNarration != null && phase.requirementFailNarration.Length > 0)
+                    yield return ctx.NarratorUI.ShowBlocks(phase.requirementFailNarration);
+                waitingForInteract = false;
+                continue;
+            }
+
             yield return RunPhase(targetIndex);
         }
+    }
+
+    /// <summary>requiredPhaseIDs 전부 완료됐는지 확인.</summary>
+    private bool IsRequirementMet(RoomData.PhaseData phase)
+    {
+        if (phase.requiredPhaseIDs == null || phase.requiredPhaseIDs.Length == 0)
+            return true;
+
+        foreach (var id in phase.requiredPhaseIDs)
+            if (!completedPhaseIDs.Contains(id)) return false;
+
+        return true;
     }
 
     /// <summary>대기 상태 종료 — NextRoom / Escape / Death 시 호출.</summary>

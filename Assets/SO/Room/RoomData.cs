@@ -24,22 +24,30 @@ public class RoomData : ScriptableObject
     [System.Serializable]
     public class PhaseData
     {
-        [Header("디버깅 및 RoomEventBus 매칭 키")]
+        [Header("디버깅용 식별자 — 로그 및 RoomEventBus 매칭 키")]
         public string phaseID;
 
-        [Header("페이즈 트리거 조건")]
+        [Header("트리거 조건 — 이 Phase는 어떻게 시작되는가")]
         public TriggerCondition triggerCondition;
+
+        [Header("선행 조건")]
+        // 비워두면 조건 없음. TriggerCondition == Interact일 때만 유효.
+        public string[] requiredPhaseIDs;
+
+        [Header("선행 조건 미충족 시 출력할 나레이션")]
+        // 비워두면 스킵. requiredPhaseIDs가 있을 때만 유효.
+        [TextArea(2, 6)] public string[] requirementFailNarration;
 
         [Header("진입 나레이션 (블록 단위)")]
         [TextArea(2, 6)] public string[] onEnter;
 
-        [Header("페이즈 종료 조건")]
+        [Header("종료 조건 — 이 Phase는 어떻게 끝나는가")]
         public ExitCondition exitCondition;
 
-        [Header("exitCondition == Check 일 때만 사용")]
+        [Header("판정 데이터 — exitCondition == Check 일 때만 사용")]
         public CheckData checkData;
 
-        [Header("exitCondition == Auto일 때 사용")]
+        [Header("완료 결과 — exitCondition == Auto 일 때 사용")]
         public OutcomeData outcome;
 
         [Header("연출 — 없으면 스킵")]
@@ -48,7 +56,6 @@ public class RoomData : ScriptableObject
 
     // ─────────────────────────────────────────────────────────
     // TriggerCondition
-    // 새 트리거가 필요하면 enum에 추가 후 BaseRoomRunner에 처리 추가.
     // ─────────────────────────────────────────────────────────
 
     public enum TriggerCondition
@@ -60,7 +67,6 @@ public class RoomData : ScriptableObject
 
     // ─────────────────────────────────────────────────────────
     // ExitCondition
-    // 새 조건이 필요하면 enum에 추가 후 BaseRoomRunner.RunPhase()에 케이스 추가.
     // ─────────────────────────────────────────────────────────
 
     public enum ExitCondition
@@ -102,7 +108,6 @@ public class RoomData : ScriptableObject
 
     // ─────────────────────────────────────────────────────────
     // OutcomeData
-    // Check / Auto 모두 이 구조로 결과를 표현.
     // ─────────────────────────────────────────────────────────
 
     [System.Serializable]
@@ -123,13 +128,12 @@ public class RoomData : ScriptableObject
 
     // ─────────────────────────────────────────────────────────
     // OutcomeType
-    // 새 타입이 필요하면 enum에 추가 후 BaseRoomRunner.HandleOutcome()에 케이스 추가.
     // ─────────────────────────────────────────────────────────
 
     public enum OutcomeType
     {
         PhaseTo,        // 특정 Phase로 이동 — targetPhaseID로 매칭
-        ReturnToWait,   // 대기 상태로 전환 — 플레이어 자유 이동, 다음 상호작용 대기
+        ReturnToWait,   // 대기 상태로 전환
         NextRoom,       // 다음 방으로 이동
         Escape,         // 탈출 — 게임 클리어
         Death,          // 사망 — 게임 오버
