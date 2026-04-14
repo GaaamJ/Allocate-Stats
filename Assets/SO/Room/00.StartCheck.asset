@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
-  m_Name: 00.Start
+  m_Name: 00.StartCheck
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
   roomID: Start
   displayName: "\uAC1C\uC2DC"
   phases:
   - phaseID: Enter
     triggerCondition: 0
+    requiredPhaseIDs: []
+    requirementFailNarration: []
     onEnter:
     - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uD478\uB978
       \uC6B0\uC8FC. \n\uB098\uBB34 \uD0C1\uC790. \uD0C1\uC790 \uC704\uC758 \uC811\uD78C
@@ -53,6 +55,8 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: Paper
     triggerCondition: 1
+    requiredPhaseIDs: []
+    requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC885\uC774\uB97C \uC9D1\uC5B4\uB4ED\uB2C8\uB2E4."
     exitCondition: 1
@@ -94,6 +98,8 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: LeftDoor
     triggerCondition: 1
+    requiredPhaseIDs: []
+    requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC67C\uCABD \uBB38\uC73C\uB85C \uB2E4\uAC00\uAC11\uB2C8\uB2E4."
     exitCondition: 1
@@ -112,7 +118,7 @@ MonoBehaviour:
         narration:
         - "\uB2F9\uC2E0\uC740 \uB530\uB73B\uD55C \uD488\uC5D0 \uC548\uAE30\uB294
           \uAE30\uBD84\uC774 \uB4ED\uB2C8\uB2E4."
-        type: 2
+        type: 3
         targetPhaseID: 
         endingID: "\uBC31\uC77C\uBABD"
       onFailure:
@@ -134,6 +140,8 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: RightDoor
     triggerCondition: 1
+    requiredPhaseIDs: []
+    requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC624\uB978\uCABD \uBB38\uC73C\uB85C \uB2E4\uAC00\uAC11\uB2C8\uB2E4."
     exitCondition: 1
@@ -152,7 +160,7 @@ MonoBehaviour:
         narration:
         - "\uB2F9\uC2E0\uC740 \uB530\uB73B\uD55C \uD488\uC5D0 \uC548\uAE30\uB294
           \uAE30\uBD84\uC774 \uB4ED\uB2C8\uB2E4."
-        type: 2
+        type: 3
         targetPhaseID: 
         endingID: "\uBC31\uC77C\uBABD"
       onFailure:

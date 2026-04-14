@@ -24,8 +24,11 @@ public class PhaseDataDrawer : PropertyDrawer
 
         float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
+        // 항상 표시
         height += GetPropertyHeightOf(property, "phaseID");
         height += GetPropertyHeightOf(property, "triggerCondition");
+        height += GetPropertyHeightOf(property, "requiredPhaseIDs");
+        height += GetPropertyHeightOf(property, "requirementFailNarration");
         height += GetPropertyHeightOf(property, "onEnter");
         height += GetPropertyHeightOf(property, "exitCondition");
         height += GetPropertyHeightOf(property, "animator");
@@ -33,6 +36,7 @@ public class PhaseDataDrawer : PropertyDrawer
         // HelpBox
         height += HelpBoxHeight + EditorGUIUtility.standardVerticalSpacing;
 
+        // 조건부
         var exitCondition = property.FindPropertyRelative("exitCondition");
         bool isCheck = exitCondition != null &&
             exitCondition.enumValueIndex == (int)RoomData.ExitCondition.Check;
@@ -64,8 +68,11 @@ public class PhaseDataDrawer : PropertyDrawer
         EditorGUI.indentLevel++;
         float y = position.y + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
+        // 항상 표시
         y = DrawProperty(position, y, property, "phaseID");
         y = DrawProperty(position, y, property, "triggerCondition");
+        y = DrawProperty(position, y, property, "requiredPhaseIDs");
+        y = DrawProperty(position, y, property, "requirementFailNarration");
         y = DrawProperty(position, y, property, "onEnter");
         y = DrawProperty(position, y, property, "exitCondition");
         y = DrawProperty(position, y, property, "animator");
