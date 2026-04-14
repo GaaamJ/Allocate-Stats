@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// IRoomRunner 구현체들이 공통으로 필요한 의존성 묶음.
@@ -11,12 +10,6 @@ public class RoomRunContext
 {
     /// <summary>나레이션 출력 담당.</summary>
     public NarratorUI NarratorUI { get; }
-
-    /// <summary>
-    /// Interact / Check Phase에서 플레이어 입력 대기용 버튼.
-    /// 추후 PlayerController.OnInteract() 이벤트로 교체 예정.
-    /// </summary>
-    public Button ContinueButton { get; }
 
     /// <summary>
     /// 씬 전환 / 판정 기록 등 GameFlowManager 래핑.
@@ -32,12 +25,10 @@ public class RoomRunContext
 
     public RoomRunContext(
         NarratorUI narratorUI,
-        Button continueButton,
         RoomBridge bridge,
         PlayerControllerStub playerController)
     {
         NarratorUI = narratorUI;
-        ContinueButton = continueButton;
         Bridge = bridge;
         PlayerController = playerController;
     }

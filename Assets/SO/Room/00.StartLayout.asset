@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
+  m_Name: 00.StartLayout
+  m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
+  interactables:
+  - prefab: {fileID: 5777991522815128305, guid: cb49cb22ec0e14a46ad8655afc394ff0, type: 3}
+    phaseID: LeftDoor
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 5777991522815128305, guid: d4a707993e4848b40a4dbce303426868, type: 3}
+    phaseID: RightDoor
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 1653822621507704015, guid: fc8e2b9e6caf7f6448db1b34a671c33d, type: 3}
+    phaseID: Paper
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

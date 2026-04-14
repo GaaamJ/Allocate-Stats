@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
-  m_Name: 01.Altar
+  m_Name: 01.AltarCheck
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
   roomID: Altar
   displayName: "\uC81C\uB2E8"

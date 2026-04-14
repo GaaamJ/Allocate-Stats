@@ -5,9 +5,6 @@ using UnityEngine;
 /// Runner는 GameFlowManager를 직접 참조하지 않고 이 클래스만 사용.
 ///
 /// GameFlowManager 리팩토링 시 이 파일 내부만 교체하면 Runner는 건드리지 않아도 됨.
-///
-/// [Inspector 연결]
-///   RoomSceneController 에 컴포넌트로 추가.
 /// </summary>
 public class RoomBridge : MonoBehaviour
 {
@@ -55,6 +52,9 @@ public class RoomBridge : MonoBehaviour
 
     /// <summary>현재 방 RoomData.</summary>
     public RoomData CurrentRoomData => GameFlowManager.Instance?.CurrentRoomData;
+
+    /// <summary>현재 방 RoomLayoutData. null이면 오브젝트 생성 스킵.</summary>
+    public RoomLayoutData CurrentLayoutData => GameFlowManager.Instance?.CurrentLayoutData;
 
     /// <summary>앙코르 루프 데이터.</summary>
     public EncoreRoomData EncoreRoomData => GameFlowManager.Instance?.EncoreRoomData;

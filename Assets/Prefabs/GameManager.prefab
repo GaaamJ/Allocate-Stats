@@ -72,7 +72,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87c6e10dd20adff4cb17563e1c4d9931, type: 2}
   - {fileID: 11400000, guid: c65bd39e901037e429374f27d7066e49, type: 2}
   - {fileID: 11400000, guid: 0a8737ded282cfe42a6346b99a8d6ac2, type: 2}
-  - {fileID: 11400000, guid: b095972eded430f43ad117151b98ce1d, type: 2}
+  layoutDataSequence:
+  - {fileID: 11400000, guid: cd5a9645b40225b46bdec81996b2c89e, type: 2}
+  - {fileID: 11400000, guid: d1765d31e37c61848b0062063201afc5, type: 2}
+  encoreRoomData: {fileID: 11400000, guid: ed50645900356e44483055c97dae1ab7, type: 2}
   roomSceneName: RoomScene
-  clearSceneName: ClearScene
-  gameOverSceneName: GameOverScene
+  endingSceneName: EndingScene
