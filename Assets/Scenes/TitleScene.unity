@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 1004763073}
   - component: {fileID: 1004763072}
   m_Layer: 5
-  m_Name: ConfirmButton (2)
+  m_Name: PaperClick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -916,7 +916,7 @@ GameObject:
   - component: {fileID: 1010263864}
   - component: {fileID: 1010263863}
   m_Layer: 5
-  m_Name: ConfirmButton (1)
+  m_Name: GameStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 1345680091}
   - component: {fileID: 1345680090}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GameStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1721,7 +1721,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1572851381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c78a8d190dcfaf94aa4670ec4b994961, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bd760d9d3466be40871c319913dccae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhaseTest
   controller: {fileID: 463445417}
