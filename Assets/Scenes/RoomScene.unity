@@ -267,10 +267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  phaseID: LeftDoor
+  phaseID: Idol
   button: {fileID: 43065392}
   labelTMP: {fileID: 43065390}
-  label: GoldenCow
+  label: Idol
 --- !u!1001 &89668164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1928,10 +1928,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  phaseID: AltarDoor
+  phaseID: Door
   button: {fileID: 2053946317}
   labelTMP: {fileID: 2053946315}
-  label: AltarDoor
+  label: Door
 --- !u!1 &2072322805
 GameObject:
   m_ObjectHideFlags: 0
