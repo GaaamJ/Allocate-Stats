@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  phaseID: RightDoor
+  objectID: (Test)RightDoor
   button: {fileID: 8889876623891336376}
   labelTMP: {fileID: 368134116374376511}
   label: RightDoor

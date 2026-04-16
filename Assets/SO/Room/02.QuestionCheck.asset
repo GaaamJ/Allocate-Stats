@@ -19,6 +19,7 @@ MonoBehaviour:
     triggerCondition: 0
     triggerObjectID: 
     requiredPhaseIDs: []
+    requiredSuccessPhaseIDs: []
     isRepeatable: 0
     requirementFailNarration: []
     onEnter:
@@ -58,6 +59,7 @@ MonoBehaviour:
     triggerCondition: 1
     triggerObjectID: (Test)Phone
     requiredPhaseIDs: []
+    requiredSuccessPhaseIDs: []
     isRepeatable: 0
     requirementFailNarration: []
     onEnter:
@@ -104,7 +106,8 @@ MonoBehaviour:
   - phaseID: CORRECTLEFTDOOR
     triggerCondition: 1
     triggerObjectID: (Test)LeftDoor
-    requiredPhaseIDs:
+    requiredPhaseIDs: []
+    requiredSuccessPhaseIDs:
     - PHONE
     isRepeatable: 0
     requirementFailNarration: []
@@ -154,7 +157,8 @@ MonoBehaviour:
   - phaseID: CORRECTRIGHTDOOR
     triggerCondition: 1
     triggerObjectID: (Test)RightDoor
-    requiredPhaseIDs:
+    requiredPhaseIDs: []
+    requiredSuccessPhaseIDs:
     - PHONE
     isRepeatable: 0
     requirementFailNarration: []
@@ -206,6 +210,7 @@ MonoBehaviour:
     triggerObjectID: (Test)LeftDoor
     requiredPhaseIDs:
     - PHONE
+    requiredSuccessPhaseIDs: []
     isRepeatable: 0
     requirementFailNarration: []
     onEnter:
@@ -255,6 +260,7 @@ MonoBehaviour:
     triggerObjectID: (Test)RightDoor
     requiredPhaseIDs:
     - PHONE
+    requiredSuccessPhaseIDs: []
     isRepeatable: 0
     requirementFailNarration: []
     onEnter:

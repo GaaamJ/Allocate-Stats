@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: 03.MonsterLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 0}
-    objectID: 
+  - prefab: {fileID: 4656798384836858223, guid: b476a9d11627f194393c5b64357685d8, type: 3}
+    objectID: (Test)Door
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 7419073070472929652, guid: 90b6de08977fddf4e81efd101a64595f, type: 3}
+    objectID: (Test)Monster
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 4707779947446128111, guid: a6308bd219f6ac045ab8001cfbf3f924, type: 3}
     objectID: 
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}

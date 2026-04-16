@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
   m_Name: 09.EncoreLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
-  interactables: []
+  interactables:
+  - prefab: {fileID: 5715654372802251455, guid: 308c53c78b194104c9723f428b83f89d, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

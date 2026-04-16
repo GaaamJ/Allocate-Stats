@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  objectID: 
+  objectID: (Test)QuestionRoom
   button: {fileID: 3659696908206062750}
   labelTMP: {fileID: 6919808300236760844}
   label: 

@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  objectID: 
+  objectID: (Test)EncoreRoom
   button: {fileID: 2028795795356574748}
   labelTMP: {fileID: 3816016458960490523}
-  label: 
+  label: (Test)EncoreRoom

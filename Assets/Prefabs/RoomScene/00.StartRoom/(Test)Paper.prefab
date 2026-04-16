@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  phaseID: Paper
+  objectID: (Test)Paper
   button: {fileID: 138817361717813767}
   labelTMP: {fileID: 2697980295157195360}
   label: Paper

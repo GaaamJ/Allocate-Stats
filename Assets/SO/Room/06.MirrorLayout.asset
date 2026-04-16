@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
   m_Name: 06.MirrorLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
-  interactables: []
+  interactables:
+  - prefab: {fileID: 2071147483722108295, guid: 8879990525ef44f499ff7a10a7127145, type: 3}
+    objectID: (Test)Door
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 514860977077075806, guid: c16a5a284b4e5ae4d92570503e67677f, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 2407847718445918829, guid: 9cf4640b4a91c96459e8451063935b1c, type: 3}
+    objectID: (Test)NormalMirror
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 8398486466664307022, guid: e90f9889525771446a17f6e4b81412fd, type: 3}
+    objectID: (Test)UpendedMirror
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

@@ -35,8 +35,12 @@ public class RoomData : ScriptableObject
         public string triggerObjectID;
 
         [Header("선행 조건 — 이 Phase 트리거 전 완료돼야 하는 phaseID 목록")]
-        // 비워두면 조건 없음. TriggerCondition == Interact일 때만 유효.
+        // 비워두면 조건 없음. 성공/실패 무관하게 완료 여부만 체크.
         public string[] requiredPhaseIDs;
+
+        [Header("성공 선행 조건 — 이 Phase 트리거 전 성공으로 완료돼야 하는 phaseID 목록")]
+        // 비워두면 조건 없음. 반드시 성공한 경우에만 조건 충족.
+        public string[] requiredSuccessPhaseIDs;
 
         [Header("반복 실행 가능 여부 — true면 완료 후에도 재실행 가능")]
         public bool isRepeatable;

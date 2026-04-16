@@ -134,10 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  objectID: 
+  objectID: (Test)MirrorRoom
   button: {fileID: 656993907996011993}
   labelTMP: {fileID: 9106305356053707772}
-  label: 
+  label: (Test)MirrorRoom
 --- !u!1 &4199736486540138720
 GameObject:
   m_ObjectHideFlags: 0

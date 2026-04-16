@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
   m_Name: 07.IdentityLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
-  interactables: []
+  interactables:
+  - prefab: {fileID: 865307015384170067, guid: 02165a751784c004a8905b23ec955114, type: 3}
+    objectID: (Test)Door
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 8658712739657987178, guid: 1c73da1306d3f384aaf2ac146e923920, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 1070520055950082741, guid: 6350dbc49605f234da24a80fab866c12, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 5699582081118630954, guid: 4bd33520e6e85ee4bb692f40ee0e5de7, type: 3}
+    objectID: (Test)PaperUI
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

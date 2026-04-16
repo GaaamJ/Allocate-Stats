@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
   m_Name: 08.MercyLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
-  interactables: []
+  interactables:
+  - prefab: {fileID: 7981320379478458322, guid: 5ef690616e64ecf4a90bb2e1d9b44779, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

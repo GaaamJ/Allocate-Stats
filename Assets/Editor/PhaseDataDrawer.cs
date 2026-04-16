@@ -29,6 +29,7 @@ public class PhaseDataDrawer : PropertyDrawer
         height += GetPropertyHeightOf(property, "triggerCondition");
         height += GetPropertyHeightOf(property, "triggerObjectID");
         height += GetPropertyHeightOf(property, "requiredPhaseIDs");
+        height += GetPropertyHeightOf(property, "requiredSuccessPhaseIDs");
         height += GetPropertyHeightOf(property, "requirementFailNarration");
         height += GetPropertyHeightOf(property, "isRepeatable");
         height += GetPropertyHeightOf(property, "onEnter");
@@ -75,6 +76,7 @@ public class PhaseDataDrawer : PropertyDrawer
         y = DrawProperty(position, y, property, "triggerCondition");
         y = DrawProperty(position, y, property, "triggerObjectID");
         y = DrawProperty(position, y, property, "requiredPhaseIDs");
+        y = DrawProperty(position, y, property, "requiredSuccessPhaseIDs");
         y = DrawProperty(position, y, property, "requirementFailNarration");
         y = DrawProperty(position, y, property, "isRepeatable");
         y = DrawProperty(position, y, property, "onEnter");

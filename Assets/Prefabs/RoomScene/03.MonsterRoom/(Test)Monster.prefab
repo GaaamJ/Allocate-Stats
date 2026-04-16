@@ -134,10 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  objectID: 
+  objectID: (Test)Monster
   button: {fileID: 2055399198494466320}
   labelTMP: {fileID: 7451397398442345068}
-  label: 
+  label: Monster
 --- !u!1 &7605332332361111414
 GameObject:
   m_ObjectHideFlags: 0

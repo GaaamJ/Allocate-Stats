@@ -137,7 +137,7 @@ MonoBehaviour:
   objectID: (Test)Shape
   button: {fileID: 6447046096018526955}
   labelTMP: {fileID: 4154824781053651638}
-  label: Shape
+  label: (Test)Shape
 --- !u!1 &5073652812236978677
 GameObject:
   m_ObjectHideFlags: 0

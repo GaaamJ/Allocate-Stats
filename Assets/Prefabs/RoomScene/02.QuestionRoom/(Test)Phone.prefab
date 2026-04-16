@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e88ea56a928136408a3498b42873ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  phaseID: Phone
+  objectID: (Test)Phone
   button: {fileID: 4216247440115248649}
   labelTMP: {fileID: 4814528359724767183}
   label: Phone
