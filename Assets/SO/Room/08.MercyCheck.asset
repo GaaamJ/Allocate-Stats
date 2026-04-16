@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c094e56c3e99be4a86edb93c579ae4f, type: 3}
+  m_Name: 08.MercyCheck
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  roomID: Mercy
+  displayName: "\uC790\uBE44"
+  phases:
+  - phaseID: ENTER
+    triggerCondition: 0
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uBD88\uD0C0\uC624\uB974\uB294
+      \uC6B0\uC8FC.\r\n\uBB38 \uD558\uB098."
+    exitCondition: 0
+    checkData:
+      onBeforeCheck: []
+      onAfterCheck: []
+      stat: 0
+      checkType: 0
+      threshold: 0
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration: []
+        type: 0
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration: []
+        type: 0
+        targetPhaseID: 
+        endingID: 
+      summaryText_success: 
+      summaryText_failure: 
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC5D0\uAC8C \uC6D0 \uC18D\uC758 \uC810\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+      - "O \uC9C0\uAE0B\uC9C0\uAE0B\uD55C \xB7 \uADF8\uAC83\uB4E4\uC758 O \uB180\uC774\uB97C
+        \xB7 \uB05D\uB0B4\uC790\nO \uADF8\uB300\uB97C \xB7 \uC704\uD574 O \uB098\uC758
+        \xB7 \uC544\uC774\uB4E4\uC744 O \uC704\uD574 \xB7"
+      type: 0
+      targetPhaseID: MERCY
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: MERCY
+    triggerCondition: 2
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uD589\uB3D9: \uBBFF\uC9C0 \uB9C8\uC2ED\uC2DC\uC624.\r\n\uC0AC\uACE0: \uBBFF\uC9C0
+      \uB9C8\uC2ED\uC2DC\uC624."
+    exitCondition: 1
+    checkData:
+      onBeforeCheck:
+      - "\uB2F9\uC2E0\uC740 \uC6C0\uC9C1\uC785\uB2C8\uB2E4."
+      - "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC544 \uB3CC\uB824 \uB2F9\uACA8\r\n\uD589\uB3D9:
+        \uB4E4\uC5B4\uAC00 \uB4E4\uC5B4\uAC00 \uB4E4\uC5B4\uAC00 \uB4E4\uC5B4\uAC00\r\n\uD589\uB3D9:
+        \uB208\uC744 \uAC10\uC544 \uB208\uC744 \uAC10\uC544 \uB208\uC744 \uAC10\uC544
+        \uB208\uC744 \uAC10\uC544"
+      onAfterCheck: []
+      stat: 4
+      checkType: 1
+      threshold: 2
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+        type: 2
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration:
+        - "\uC544\uB2C8, \uC774\uAC74 \uC544\uB2C8\uC57C. \uAC70\uC758 \uB2E4 \uC654\uB294\uB370."
+        - "\uB2F9\uC2E0, \uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C-"
+        - "O \uACE0\uD1B5 \xB7 \uC5C6\uB294 O \uC790\uBE44 \xB7\r\nO \uB098\uC758
+          \xB7 \uC544\uC774\uC758 O \uC544\uC774\uC5EC \xB7 \uBBF8\uC548\uD568"
+        type: 4
+        targetPhaseID: 
+        endingID: "\uC790\uBE44"
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uC601\uC6D0\uC744 \uD5A5\uD574 \uB098\uC544\uAC14\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uACC4\uC758 \uC2DC\uC791\uACFC \uB05D\uC758
+        \uD488 \uC18D\uC5D0 \uC548\uACBC\uC2B5\uB2C8\uB2E4."
+    outcome:
+      narration:
+      - "\uC6D0 \uC18D\uC758 \uC810\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+      - "O \uC9C0\uAE0B\uC9C0\uAE0B\uD55C \xB7 \uADF8\uAC83\uB4E4\uC758 O \uB180\uC774\uB97C
+        \xB7 \uB05D\uB0B4\uC790\r\nO \uADF8\uB300\uB97C \xB7 \uC704\uD574 O \uB098\uC758
+        \xB7 \uC544\uC774\uB4E4\uC744 O \uC704\uD574 \xB7"
+      - "O \uACE0\uD1B5 \xB7 \uC5C6\uB294 O \uC790\uBE44 \xB7\r\nO \uB098\uC758 \xB7
+        \uC544\uC774\uC758 O \uC544\uC774\uC5EC \xB7 \uBBF8\uC548\uD568"
+      type: 0
+      targetPhaseID: Mercy
+      endingID: 
+    animator: {fileID: 0}

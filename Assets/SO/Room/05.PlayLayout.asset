@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
+  m_Name: 05.PlayLayout
+  m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
+  interactables:
+  - prefab: {fileID: 4405238789323919349, guid: 15592b84fe257064fa78a64d754f3f47, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 2954680438911808211, guid: 7edee4baad3f0464580d29e043846676, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 2061099430840324860, guid: 8dca362c44f23864c8b14efd454986f1, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 4746858146035444198, guid: f4eecb1d68f21f34fa3d5b350588a87b, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 7637496445559740836, guid: 715d7e5d56259ee458abbcf9f9f15759, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

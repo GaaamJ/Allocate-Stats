@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
   - prefab: {fileID: 5777991522815128305, guid: cb49cb22ec0e14a46ad8655afc394ff0, type: 3}
-    phaseID: LeftDoor
+    objectID: (Test)LeftDoor
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
   - prefab: {fileID: 5777991522815128305, guid: d4a707993e4848b40a4dbce303426868, type: 3}
-    phaseID: RightDoor
+    objectID: (Test)RightDoor
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
   - prefab: {fileID: 1653822621507704015, guid: fc8e2b9e6caf7f6448db1b34a671c33d, type: 3}
-    phaseID: Paper
+    objectID: (Test)Paper
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}

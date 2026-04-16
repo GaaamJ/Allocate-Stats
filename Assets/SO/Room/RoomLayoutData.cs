@@ -24,8 +24,8 @@ public class RoomLayoutData : ScriptableObject
         [Header("프리팹 — InteractableObject 컴포넌트 포함")]
         public GameObject prefab;
 
-        [Header("연결할 phaseID — RoomData.PhaseData.phaseID와 매칭")]
-        public string phaseID;
+        [Header("오브젝트 식별자 — RoomData.PhaseData.triggerObjectID와 매칭")]
+        public string objectID;
 
         [Header("배치 위치 / 회전")]
         public Vector3 position;

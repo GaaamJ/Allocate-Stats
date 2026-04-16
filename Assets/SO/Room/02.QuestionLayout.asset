@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0ca47494118394badccca3797f2be0, type: 3}
+  m_Name: 02.QuestionLayout
+  m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
+  interactables:
+  - prefab: {fileID: 8563676989483993857, guid: d0f308017b16664479487cf319f84172, type: 3}
+    objectID: (Test)LeftDoor
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 4263620357521825673, guid: d4e002d722c3c514c9b2aa61e0b9eacf, type: 3}
+    objectID: (Test)Phone
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 3082494948231135652, guid: d600951ca32f9cc4a9b3e15f1e9d4fe6, type: 3}
+    objectID: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 9050851099509390156, guid: d7a80d5829652d24f90e36857c05cd26, type: 3}
+    objectID: (Test)RightDoor
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}

@@ -2,22 +2,34 @@ using System;
 
 /// <summary>
 /// 방 내 상호작용 이벤트 창구.
-/// 플레이어가 오브젝트와 상호작용하면 phaseID를 발행.
-/// NormalRoomRunner / EncoreRoomRunner가 구독해서 해당 Phase로 분기.
 ///
-/// 현재는 버튼 프리팹(DoorButtonUI)에서 Trigger() 호출.
-/// 추후 InteractableObject(3D)로 교체 시 Trigger() 호출부만 변경.
+/// 두 가지 채널:
+///   TriggerObject  : InteractableObject가 objectID를 발행 → BaseRoomRunner가 Phase 결정
+///   TriggerPhase   : phaseID를 직접 발행 (레거시 / 특수 케이스용)
+///
+/// 추후 InteractableObject(3D)로 교체 시 TriggerObject() 호출부만 변경.
 /// </summary>
 public static class RoomEventBus
 {
     /// <summary>
-    /// phaseID를 키로 Phase 분기 요청.
-    /// 구독자(NormalRoomRunner)가 수신해서 해당 Phase 실행.
+    /// objectID 기반 상호작용 이벤트.
+    /// BaseRoomRunner가 objectID를 받아서 어떤 Phase로 연결할지 결정.
+    /// </summary>
+    public static event Action<string> OnObjectInteracted;
+
+    /// <summary>
+    /// phaseID 직접 발행 — RoomStart / PhaseComplete 등 내부 흐름용.
     /// </summary>
     public static event Action<string> OnPhaseRequested;
 
-    /// <summary>phaseID에 해당하는 Phase 실행 요청.</summary>
-    public static void Trigger(string phaseID)
+    /// <summary>오브젝트 상호작용 발행 — InteractableObject에서 호출.</summary>
+    public static void TriggerObject(string objectID)
+    {
+        OnObjectInteracted?.Invoke(objectID);
+    }
+
+    /// <summary>phaseID 직접 발행 — 내부 흐름용.</summary>
+    public static void TriggerPhase(string phaseID)
     {
         OnPhaseRequested?.Invoke(phaseID);
     }
@@ -25,6 +37,7 @@ public static class RoomEventBus
     /// <summary>씬 전환 시 이벤트 구독 초기화 — RoomSceneController에서 호출.</summary>
     public static void Clear()
     {
+        OnObjectInteracted = null;
         OnPhaseRequested = null;
     }
 }
