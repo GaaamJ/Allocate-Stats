@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Phase 02의 스탯 분배 UI.
-/// 
-/// [Inspector 연결 목록]
-///   - statData          : StatData ScriptableObject
-///   - statRowPrefab     : StatRowUI 프리팹 (바 1줄)
-///   - rowParent         : 행 부모 Transform (VerticalLayoutGroup 권장)
-///   - remainingPointsTMP: 남은 포인트 표시 TextMeshPro
-///   - confirmButton     : 배분 완료 버튼
-///   - narratorUI        : 마우스 오버 설명 전달용
+///
+/// [Inspector 연결]
+///   statData           : StatData SO
+///   statRowPrefab      : StatRowUI 프리팹
+///   rowParent          : 행 부모 Transform (VerticalLayoutGroup 권장)
+///   remainingPointsTMP : 남은 포인트 표시 TMP
+///   confirmButton      : 배분 완료 버튼
+///   screenNarrator     : ScreenNarrator — 호버 설명 전달용
 /// </summary>
 public class StatAllocatorUI : MonoBehaviour
 {
@@ -24,9 +24,10 @@ public class StatAllocatorUI : MonoBehaviour
     [SerializeField] private Transform rowParent;
     [SerializeField] private TextMeshProUGUI remainingPointsTMP;
     [SerializeField] private Button confirmButton;
-    [SerializeField] private NarratorUI narratorUI;
 
-    // ── 런타임 상태 ─────────────────────────────────────
+    [Header("Narrator — 호버 설명 전달 (ScreenNarrator)")]
+    [SerializeField] private ScreenNarrator screenNarrator;
+
     private readonly Dictionary<StatType, int> allocation = new();
     private readonly Dictionary<StatType, StatRowUI> rows = new();
     private int remainingPoints;
@@ -60,12 +61,12 @@ public class StatAllocatorUI : MonoBehaviour
     {
         foreach (var entry in statData.stats)
         {
-            StatRowUI row = Instantiate(statRowPrefab, rowParent);
+            var row = Instantiate(statRowPrefab, rowParent);
             row.Init(
                 entry,
-                onValueChanged: (newVal) => TrySet(entry.type, newVal),
-                onHover: () => narratorUI.ShowStatDescription(entry.description),
-                onExit: () => narratorUI.RestoreText()
+                onValueChanged: newVal => TrySet(entry.type, newVal),
+                onHover: () => screenNarrator?.ShowStatDescription(entry.description),
+                onExit: () => screenNarrator?.RestoreText()
             );
             rows[entry.type] = row;
         }
@@ -116,6 +117,6 @@ public class StatAllocatorUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        FindFirstObjectByType<TitleSceneController>().OnAllocateConfirmed();
+        FindFirstObjectByType<TitleSceneController>()?.OnAllocateConfirmed();
     }
 }

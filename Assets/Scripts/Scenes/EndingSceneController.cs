@@ -13,11 +13,9 @@ using System.Text;
 ///   - 판정 기록 표시
 ///   - HUM 분기 나레이션 (탈출 시, EndingData 매칭 시에만)
 ///
-/// 방별 엔딩 나레이션은 RoomScene에서 StepOutcome.narration[]으로 이미 출력됨.
-///
 /// [Inspector 연결 목록]
 ///   - endingData        : EndingData SO (HUM 분기 엔딩만 등록)
-///   - narratorUI        : NarratorUI
+///   - narrator          : NarratorRouter
 ///   - humEndingBadge    : HUM 특수엔딩 전용 UI (없으면 스킵)
 ///   - resultLabel       : "CLEAR" / "GAME OVER" 텍스트
 ///   - statsDisplayTMP   : 최종 스탯 텍스트
@@ -31,7 +29,7 @@ public class EndingSceneController : MonoBehaviour
     [SerializeField] private EndingData endingData;
 
     [Header("UI")]
-    [SerializeField] private NarratorUI narratorUI;
+    [SerializeField] private NarratorRouter narrator;
     [SerializeField] private GameObject humEndingBadge;
     [SerializeField] private TextMeshProUGUI resultLabel;
     [SerializeField] private TextMeshProUGUI statsDisplayTMP;
@@ -55,13 +53,13 @@ public class EndingSceneController : MonoBehaviour
         // ── HUM 분기 나레이션 (탈출 + EndingData 매칭 시만) ──
         bool isHumEnding = false;
 
-        if (!flow.IsGameOver && endingData != null)
+        if (flow != null && !flow.IsGameOver && endingData != null)
         {
             int hum = stats != null ? stats.HUM : 0;
-            string[] humBlocks = endingData.GetEscapeNarration(flow.LastEndingID, hum, out isHumEnding);
+            var blocks = endingData.GetEscapeNarration(flow.LastEndingID, hum, out isHumEnding);
 
-            if (humBlocks != null)
-                yield return narratorUI.ShowBlocks(humBlocks);
+            if (blocks != null)
+                yield return narrator.ShowBlocks(blocks);
         }
 
         if (humEndingBadge) humEndingBadge.SetActive(isHumEnding);
