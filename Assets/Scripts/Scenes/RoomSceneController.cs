@@ -11,15 +11,15 @@ using UnityEngine.UI;
 /// 새 방 타입이 생기면 IRoomRunner 구현체를 추가하고 SelectRunner()에 분기만 추가.
 ///
 /// [Inspector 연결]
-///   - narratorUI       : NarratorUI
-///   - bridge           : RoomBridge
-///   - playerController : PlayerControllerStub (3D 구현 전까지)
-///   - layoutParent     : 생성된 오브젝트의 부모 Transform (없으면 씬 루트)
+///   - narratorRouter     : NarratorRouter
+///   - bridge             : RoomBridge
+///   - playerController   : PlayerControllerStub (3D 구현 전까지)
+///   - layoutParent       : 생성된 오브젝트의 부모 Transform (없으면 씬 루트)
 /// </summary>
 public class RoomSceneController : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private NarratorUI narratorUI;
+    [Header("Narrator")]
+    [SerializeField] private NarratorRouter narratorRouter;
 
     [Header("Bridge / Controller")]
     [SerializeField] private RoomBridge bridge;
@@ -30,14 +30,11 @@ public class RoomSceneController : MonoBehaviour
 
     private void Start()
     {
-        // 이전 씬 구독 잔류 방지
         RoomEventBus.Clear();
-
-        // RoomLayoutData 기반 오브젝트 생성
         SpawnInteractables();
 
         var context = new RoomRunContext(
-            narratorUI,
+            narratorRouter,
             bridge,
             playerController
         );
@@ -55,10 +52,6 @@ public class RoomSceneController : MonoBehaviour
 
     // ── 오브젝트 동적 생성 ────────────────────────────────
 
-    /// <summary>
-    /// RoomLayoutData SO를 읽어서 InteractableObject 프리팹 생성 후 phaseID 주입.
-    /// 앙코르 루프는 layoutData 없음 — 스킵.
-    /// </summary>
     private void SpawnInteractables()
     {
         if (bridge.IsEncoreLoop) return;
@@ -80,23 +73,17 @@ public class RoomSceneController : MonoBehaviour
                 continue;
             }
 
-            var obj = Object.Instantiate(
-                entry.prefab,
-                layoutParent
-            );
+            var obj = Object.Instantiate(entry.prefab, layoutParent);
 
-            // 임시 UI 배치 — 3D 교체 시 아래 두 줄 제거 후 position/rotation 사용
             var rect = obj.GetComponent<RectTransform>();
             if (rect != null)
                 rect.anchoredPosition = Vector2.zero;
             else
             {
-                // 3D 오브젝트일 때 — 현재는 미사용
                 obj.transform.position = entry.position;
                 obj.transform.rotation = Quaternion.Euler(entry.rotation);
             }
 
-            // InteractableObject에 objectID 주입
             var interactable = obj.GetComponent<InteractableObject>();
             if (interactable != null)
                 interactable.SetObjectID(entry.objectID);
@@ -107,10 +94,6 @@ public class RoomSceneController : MonoBehaviour
 
     // ── Runner 선택 ───────────────────────────────────────
 
-    /// <summary>
-    /// 현재 상태에 맞는 Runner 반환.
-    /// 새 방 타입 추가 시 여기에 분기 추가.
-    /// </summary>
     private IRoomRunner SelectRunner()
     {
         if (bridge.IsEncoreLoop)

@@ -8,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public class RoomRunContext
 {
-    /// <summary>나레이션 출력 담당.</summary>
-    public NarratorUI NarratorUI { get; }
+    /// <summary>채널 라우팅 나레이터. Screen / World / Paper 채널 통합 접근.</summary>
+    public NarratorRouter Narrator { get; }
 
     /// <summary>
     /// 씬 전환 / 판정 기록 등 GameFlowManager 래핑.
@@ -17,18 +17,15 @@ public class RoomRunContext
     /// </summary>
     public RoomBridge Bridge { get; }
 
-    /// <summary>
-    /// 플레이어 이동 제어 — 3D 구현 전까지 stub.
-    /// 추후 PlayerController 컴포넌트로 교체.
-    /// </summary>
+    /// <summary>플레이어 이동 제어 — 3D 구현 전까지 stub.</summary>
     public PlayerControllerStub PlayerController { get; }
 
     public RoomRunContext(
-        NarratorUI narratorUI,
+        NarratorRouter narrator,
         RoomBridge bridge,
         PlayerControllerStub playerController)
     {
-        NarratorUI = narratorUI;
+        Narrator = narrator;
         Bridge = bridge;
         PlayerController = playerController;
     }

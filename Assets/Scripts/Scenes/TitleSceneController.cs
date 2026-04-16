@@ -4,22 +4,22 @@ using System.Collections;
 /// <summary>
 /// TitleScene 총괄 컨트롤러.
 ///
-/// Phase 흐름:
-///   P00_Title   → 타이틀 화면 (게임 시작 버튼 대기)
-///   P01_Intro   → 나레이터 인트로 + 공책 등장
-///   P02_Allocate→ 스탯 분배 (타이머)
-///   P03_Random  → 타이머 만료 시 남은 포인트 랜덤 배분
-///   P04_Confirm → 최종 스탯 확인 (종이 클릭 → 게임 시작)
+/// Phase 흐름 (선형, 분기 없음):
+///   P00_Title    → 타이틀 화면 (게임 시작 버튼 대기)
+///   P01_Intro    → 나레이터 인트로 + 공책 등장
+///   P02_Allocate → 스탯 분배 (타이머)
+///   P03_Random   → 타이머 만료 시 남은 포인트 랜덤 배분
+///   P04_Confirm  → 최종 스탯 확인 (종이 클릭 → 게임 시작)
 ///
-/// [Inspector 연결 목록]
-///   - titleData          : TitleData ScriptableObject
-///   - narratorUI         : NarratorUI
-///   - statAllocator      : StatAllocatorUI
-///   - timerUI            : TimerUI
-///   - titleAnimator      : TitleAnimator (없으면 연출 스킵)
-///   - titleScreenGroup   : Phase 00 타이틀 CanvasGroup (없으면 스킵)
-///   - p01NarratorDuration: 인트로 나레이터 최대 지속 시간 (초)
-///   - allocateTimerSeconds: 스탯 분배 타이머 (초)
+/// [Inspector 연결]
+///   titleData           : TitleData SO
+///   narrator            : NarratorRouter
+///   statAllocator       : StatAllocatorUI
+///   timerUI             : TimerUI
+///   titleAnimator       : TitleAnimator (없으면 연출 스킵)
+///   titleScreenGroup    : Phase 00 타이틀 CanvasGroup (없으면 스킵)
+///   p01NarratorDuration : 인트로 나레이터 최대 지속 시간(초)
+///   allocateTimerSeconds: 스탯 분배 타이머(초)
 /// </summary>
 public class TitleSceneController : MonoBehaviour
 {
@@ -29,13 +29,13 @@ public class TitleSceneController : MonoBehaviour
     [SerializeField] private TitleData titleData;
 
     [Header("Sub-Controllers")]
-    [SerializeField] private NarratorUI narratorUI;
+    [SerializeField] private NarratorRouter narrator;
     [SerializeField] private StatAllocatorUI statAllocator;
     [SerializeField] private TimerUI timerUI;
-    [SerializeField] private TitleAnimator titleAnimator;  // 없으면 연출 스킵
+    [SerializeField] private TitleAnimator titleAnimator;
 
     [Header("Phase 00")]
-    [SerializeField] private CanvasGroup titleScreenGroup;  // 없으면 스킵
+    [SerializeField] private CanvasGroup titleScreenGroup;
 
     [Header("Timing")]
     [SerializeField] private float p01NarratorDuration = 15f;
@@ -54,7 +54,7 @@ public class TitleSceneController : MonoBehaviour
     public void OnAllocateConfirmed()
     {
         if (CurrentPhase != Phase.P02_Allocate) return;
-        if (timerUI) timerUI.Stop();
+        timerUI?.Stop();
         StartCoroutine(RunP04());
     }
 
@@ -76,10 +76,10 @@ public class TitleSceneController : MonoBehaviour
             titleScreenGroup.gameObject.SetActive(false);
         }
 
-        if (titleAnimator) titleAnimator.ShowNotebook();
+        titleAnimator?.ShowNotebook();
 
-        if (narratorUI && titleData != null)
-            yield return narratorUI.PlayIntro(titleData.introBlocks, p01NarratorDuration);
+        if (titleData?.introBlocks?.Length > 0)
+            yield return RunBlocksWithDuration(titleData.introBlocks, p01NarratorDuration);
 
         StartCoroutine(RunP02());
     }
@@ -90,11 +90,11 @@ public class TitleSceneController : MonoBehaviour
 
         if (titleAnimator) yield return titleAnimator.SummonObjects();
 
-        if (narratorUI && titleData != null)
-            yield return narratorUI.ShowBlocks(titleData.allocateBlocks);
+        if (titleData?.allocateBlocks?.Length > 0)
+            yield return narrator.ShowBlocks(titleData.allocateBlocks);
 
-        if (timerUI) timerUI.StartTimer(allocateTimerSeconds, OnTimerExpired);
-        if (statAllocator) statAllocator.Activate();
+        timerUI?.StartTimer(allocateTimerSeconds, OnTimerExpired);
+        statAllocator?.Activate();
     }
 
     private void OnTimerExpired()
@@ -107,12 +107,11 @@ public class TitleSceneController : MonoBehaviour
     {
         CurrentPhase = Phase.P03_Random;
 
-        if (statAllocator) statAllocator.Deactivate();
+        statAllocator?.Deactivate();
         if (titleAnimator) yield return titleAnimator.ScatterMarbles();
-        if (statAllocator) statAllocator.RandomizeRemaining();
+        statAllocator?.RandomizeRemaining();
 
         yield return new WaitForSeconds(1f);
-
         StartCoroutine(RunP04());
     }
 
@@ -120,7 +119,7 @@ public class TitleSceneController : MonoBehaviour
     {
         CurrentPhase = Phase.P04_Confirm;
 
-        if (statAllocator) statAllocator.CommitStats();
+        statAllocator?.CommitStats();
 
         if (titleAnimator)
         {
@@ -129,11 +128,31 @@ public class TitleSceneController : MonoBehaviour
             titleAnimator.EnablePaperClick(OnPaperClicked);
         }
 
-        if (narratorUI && titleData != null)
-            yield return narratorUI.PlayConfirm(titleData.confirmBlocks);
+        if (titleData?.confirmBlocks?.Length > 0)
+            yield return narrator.ShowBlocks(titleData.confirmBlocks);
     }
 
     // ── 헬퍼 ─────────────────────────────────────────────
+
+    /// <summary>
+    /// 블록 배열을 maxDuration 시간 내에서 순서대로 출력.
+    /// maxDuration이 0이면 끝날 때까지 출력.
+    /// </summary>
+    private IEnumerator RunBlocksWithDuration(NarrationBlock[] blocks, float maxDuration)
+    {
+        float elapsed = 0f;
+        foreach (var block in blocks)
+        {
+            if (block == null || string.IsNullOrEmpty(block.text)) continue;
+            if (maxDuration > 0f && elapsed >= maxDuration) yield break;
+
+            yield return narrator.ShowText(block);
+
+            float pause = block.pauseAfter > 0f ? block.pauseAfter : 0.8f;
+            elapsed += pause;
+            yield return new WaitForSeconds(pause);
+        }
+    }
 
     private IEnumerator FadeCanvasGroup(CanvasGroup cg, float from, float to, float duration)
     {
