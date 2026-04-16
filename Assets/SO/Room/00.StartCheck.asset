@@ -25,7 +25,7 @@ MonoBehaviour:
     onEnter:
     - text: "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uD478\uB978
         \uC6B0\uC8FC.\r\n\uBB38 \uB450 \uAC1C. \uC885\uC774 \uD55C \uC7A5."
-      channel: 0
+      channel: 1
       pauseAfter: 1.5
       shakeIntensity: 0.3
       shakeFrequency: 8
