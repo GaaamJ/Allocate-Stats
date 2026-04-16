@@ -17,7 +17,9 @@ MonoBehaviour:
   phases:
   - phaseID: Enter
     triggerCondition: 0
+    triggerObjectID: 
     requiredPhaseIDs: []
+    isRepeatable: 0
     requirementFailNarration: []
     onEnter:
     - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uD478\uB978
@@ -55,7 +57,9 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: Paper
     triggerCondition: 1
+    triggerObjectID: 
     requiredPhaseIDs: []
+    isRepeatable: 0
     requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC885\uC774\uB97C \uC9D1\uC5B4\uB4ED\uB2C8\uB2E4."
@@ -84,9 +88,9 @@ MonoBehaviour:
         narration:
         - "\uC544\uBB34\uAC83\uB3C4 \uC778\uC9C0\uD558\uC9C0 \uBABB\uD558\uB294 \uC790.\n\uAC8C\uC784\uC744
           \uD558\uC9C0 \uBABB\uD558\uB294 \uC6B0\uB454\uD55C \uC790."
-        type: 3
+        type: 4
         targetPhaseID: 
-        endingID: 
+        endingID: "\uD574\uCEE4 \uB140\uC11D. \uD310\uC744 \uB4A4\uC9D1\uB294 \uB140\uC11D\uB4E4."
       summaryText_success: "\uB2F9\uC2E0\uC740 \uC2DC\uC791\uC5D0\uC11C \uC885\uC774\uB97C
         \uD3BC\uCE58\uACE0 \uC774\uD574\uD588\uC2B5\uB2C8\uB2E4."
       summaryText_failure: 
@@ -98,7 +102,9 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: LeftDoor
     triggerCondition: 1
+    triggerObjectID: 
     requiredPhaseIDs: []
+    isRepeatable: 0
     requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC67C\uCABD \uBB38\uC73C\uB85C \uB2E4\uAC00\uAC11\uB2C8\uB2E4."
@@ -140,7 +146,9 @@ MonoBehaviour:
     animator: {fileID: 0}
   - phaseID: RightDoor
     triggerCondition: 1
+    triggerObjectID: 
     requiredPhaseIDs: []
+    isRepeatable: 0
     requirementFailNarration: []
     onEnter:
     - "\uB2F9\uC2E0\uC740 \uC624\uB978\uCABD \uBB38\uC73C\uB85C \uB2E4\uAC00\uAC11\uB2C8\uB2E4."

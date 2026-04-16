@@ -172,8 +172,8 @@ MonoBehaviour:
           \u25A0\u25A0\uD574\uC11C \u25A0\u25A0\uD55C \uB4A4 \u25A0\u25A0\uAC00 \uB420
           \uAC83\uC785\uB2C8\uB2E4."
         type: 3
-        targetPhaseID: "\uC2E0\uC131 \uBAA8"
-        endingID: 
+        targetPhaseID: 
+        endingID: "\uC2E0\uC131 \uBAA8\uB3C5"
       onFailure:
         narration:
         - "\uB2F9\uC2E0\uC740 \uB137\uC5D0\uAC8C \uC2E0\uC131 \uBAA8\uB3C5\uC744
