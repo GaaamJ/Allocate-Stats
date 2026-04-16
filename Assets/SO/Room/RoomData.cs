@@ -30,9 +30,16 @@ public class RoomData : ScriptableObject
         [Header("트리거 조건 — 이 Phase는 어떻게 시작되는가")]
         public TriggerCondition triggerCondition;
 
-        [Header("선행 조건")]
+        [Header("트리거 오브젝트 — triggerCondition == Interact일 때 매칭할 objectID")]
+        // InteractableObject.objectID와 매칭. 비워두면 모든 오브젝트에 반응.
+        public string triggerObjectID;
+
+        [Header("선행 조건 — 이 Phase 트리거 전 완료돼야 하는 phaseID 목록")]
         // 비워두면 조건 없음. TriggerCondition == Interact일 때만 유효.
         public string[] requiredPhaseIDs;
+
+        [Header("반복 실행 가능 여부 — true면 완료 후에도 재실행 가능")]
+        public bool isRepeatable;
 
         [Header("선행 조건 미충족 시 출력할 나레이션")]
         // 비워두면 스킵. requiredPhaseIDs가 있을 때만 유효.

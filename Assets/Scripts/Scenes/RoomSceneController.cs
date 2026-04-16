@@ -76,7 +76,7 @@ public class RoomSceneController : MonoBehaviour
         {
             if (entry.prefab == null)
             {
-                Debug.LogWarning($"[RoomSceneController] phaseID '{entry.phaseID}' 프리팹이 null.");
+                Debug.LogWarning($"[RoomSceneController] objectID '{entry.objectID}' 프리팹이 null.");
                 continue;
             }
 
@@ -96,10 +96,10 @@ public class RoomSceneController : MonoBehaviour
                 obj.transform.rotation = Quaternion.Euler(entry.rotation);
             }
 
-            // InteractableObject에 phaseID 주입
+            // InteractableObject에 objectID 주입
             var interactable = obj.GetComponent<InteractableObject>();
             if (interactable != null)
-                interactable.SetPhaseID(entry.phaseID);
+                interactable.SetObjectID(entry.objectID);
             else
                 Debug.LogWarning($"[RoomSceneController] '{entry.prefab.name}'에 InteractableObject 컴포넌트 없음.");
         }

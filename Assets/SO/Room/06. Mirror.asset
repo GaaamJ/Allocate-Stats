@@ -14,90 +14,326 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
   roomID: Mirror
   displayName: "\uAC70\uC6B8"
-  entryNarration:
-  - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uB4A4\uC9D1\uD78C
-    \uC6B0\uC8FC.\n\uBB34\uC218\uD55C \uAC70\uC6B8. \uAC70\uC6B8\uC5D0 \uBE44\uCE58\uB294
-    \uB2F9\uC2E0."
-  - "\uB4A4\uC9D1\uD78C \uAC83\uC774 \uB9D0\uD569\uB2C8\uB2E4."
-  - "\uC778\uAE68\uB4E4\uC9C4\n\uC9C0\uBD80\uC5B4\uC2E4\n\uD574\uC234\uAC00."
-  steps:
-  - narration:
-    - "\uC778\uC9C0: \uC774\uC0C1\uD55C \uAC83\uC744 \uB208\uCE58\uCC44\uC138\uC694."
-    - "\uD589\uB3D9: \uB2E4\uAC00\uAC00\uC138\uC694."
-    stat: 2
-    checkType: 0
-    threshold: 3
-    stat2: 0
-    threshold2: 0
-    onSuccess:
-      type: 3
-      nextStepIndex: 1
-      endingID: 
+  phases:
+  - phaseID: ENTER
+    triggerCondition: 0
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uD770\uC0C9 \uBC29. \uB6AB\uB9B0 \uCC9C\uC7A5 \uB108\uBA38\uC758 \uB4A4\uC9D1\uD78C
+      \uC6B0\uC8FC.\r\n\uBB34\uC218\uD55C \uAC70\uC6B8. \uAC70\uC6B8\uC5D0 \uBE44\uCE58\uB294
+      \uB2F9\uC2E0\uB4E4. \uBB38 \uD558\uB098."
+    exitCondition: 0
+    checkData:
+      onBeforeCheck: []
+      onAfterCheck: []
+      stat: 0
+      checkType: 0
+      threshold: 0
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration: []
+        type: 0
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration: []
+        type: 0
+        targetPhaseID: 
+        endingID: 
+      summaryText_success: 
+      summaryText_failure: 
+    outcome:
       narration:
-      - "\uB2F9\uC2E0\uC740 \uC774\uC0C1\uD55C \uAC70\uC6B8\uC744 \uCC3E\uC544\uB0C5\uB2C8\uB2E4.\n"
-      - "\uB2F9\uC2E0\uC758 \uB4B7\uBAA8\uC2B5\uC774 \uBE44\uCE69\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC758
-        \uB4B7\uBAA8\uC2B5\uC774 \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
-      - "\uC704\uB294 \uC544\uB798, \uC544\uB798\uB294 \uC704.\n\uC624\uB978\uCABD\uC740
-        \uC67C\uCABD, \uC67C\uCABD\uC740 \uC624\uB978\uCABD."
-    onFailure:
-      type: 1
-      nextStepIndex: -1
-      endingID: "\uB4A4\uC9D1\uD78C \uAC83"
-      narration:
-      - "\uB2F9\uC2E0\uC740 \uC774\uC0C1\uD55C \uC810\uC744 \uB208\uCE58\uCC44\uC9C0
-        \uBABB\uD588\uC2B5\uB2C8\uB2E4."
-      - "\uB2F9\uC2E0\uC740 \uB4A4\uC9D1\uD799\uB2C8\uB2E4.\n(PER \uBD80\uC871)"
-    endingSummary_success: 
-    endingSummary_failure: 
-  - narration:
-    - "\uD5F9\uB3D9: \uC190\uC744 \uB4E4\uC5B4 \uAC70\uC6B8\uC744 \uB0B4\uB9AC\uCE58\uC138\uC694."
-    - "\uD589\uB3D9: \uBC18\uBCF5\uD558\uC138\uC694."
-    stat: 0
-    checkType: 0
-    threshold: 2
-    stat2: 0
-    threshold2: 0
-    onSuccess:
-      type: 3
-      nextStepIndex: 2
-      endingID: 
-      narration:
-      - "\uAC70\uC6B8\uC5D0 \uAE08\uC774 \uAC11\uB2C8\uB2E4."
-      - "\uAC70\uC6B8\uC774 \uBD80\uC234\uC9D1\uB2C8\uB2E4."
-      - "\uAC70\uC6B8 \uC548\uC5D0 \uBB38\uC774 \uBCF4\uC785\uB2C8\uB2E4."
-    onFailure:
-      type: 1
-      nextStepIndex: -1
-      endingID: "\uB4A4\uC9D1\uD78C \uAC83"
-      narration:
-      - "\uAC70\uC6B8\uC740 \uBD80\uC234\uC9C0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
-      - "\uB2F9\uC2E0\uC740 \uB4A4\uC9D1\uD799\uB2C8\uB2E4.\n(STR \uBD80\uC871)"
-    endingSummary_success: 
-    endingSummary_failure: 
-  - narration:
-    - "\uD589\uB3D9: \uAC70\uC6B8 \uC548\uC73C\uB85C \uB4E4\uC5B4\uAC00\uC138\uC694."
-    - "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB208\uC744 \uAC10\uC73C\uC138\uC694."
-    - "\uD589\uB3D9: \uBB38\uC744 \uC5F4\uACE0 \uB4E4\uC5B4\uAC00\uC138\uC694."
-    stat: 4
-    checkType: 2
-    threshold: 3
-    stat2: 0
-    threshold2: 0
-    onSuccess:
-      type: 2
-      nextStepIndex: -1
-      endingID: "\uD14C\uC138\uC6B0\uC2A4\uC758 \uBC30"
-      narration:
-      - "\uB2F9\uC2E0\uC740 \uB2F9\uC2E0\uC744 \uC78A\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4."
-      - "\uB2F9\uC2E0\uC740 \uC774\uC804\uC758 \uB2F9\uC2E0\uACFC \uB2EC\uB77C\uC84C\uC2B5\uB2C8\uB2E4."
-      - "\uADF8\uAC83\uC774 \uC5EC\uC804\uD788 \uB2F9\uC2E0\uC77C\uC9C0\uB294 \uBAA8\uB974\uC9C0\uB9CC,\n\uB2F9\uC2E0\uC740
-        \uADC0\uD658\uD588\uC2B5\uB2C8\uB2E4."
-    onFailure:
+      - "\uB2F9\uC2E0\uC5D0\uAC8C \uB4A4\uC9D1\uD78C \uAC83\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+      - ".\uB77C\uC5B4\uB4E4\uB9CC \uB85C\uC73C\uAC83 \uC758\uB108 \uACE0\uB9AC\uADF8\r\n.\uB77C\uC5EC\uC8FD\r\n.\uB77C\uC544\uCC3E
+        \uB97C\uB108 \uC740\uC9D1\uB4A4 \uC774\uB4E4\uADF8"
       type: 0
-      nextStepIndex: -1
+      targetPhaseID: PERCEPTIONMIRROR
       endingID: 
+    animator: {fileID: 0}
+  - phaseID: PERCEPTIONMIRROR
+    triggerCondition: 2
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter: []
+    exitCondition: 1
+    checkData:
+      onBeforeCheck: []
+      onAfterCheck: []
+      stat: 2
+      checkType: 0
+      threshold: 4
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB9D0\uB3C4 \uC548 \uB3FC. \uC774\uB7F4 \uC21C \uC5C6\uC5B4."
+        type: 1
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uC774\uC0C1\uD568\uC744 \uB290\uB07C\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+        type: 1
+        targetPhaseID: 
+        endingID: 
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uB208\uC744 \uB5B4\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uB208\uC744 \uB728\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+    outcome:
       narration:
-      - "\uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4.\n(LUK \uBD80\uC871)"
-    endingSummary_success: 
-    endingSummary_failure: 
-  canEscape: 1
+      - "\uB2F9\uC2E0\uC5D0\uAC8C \uB4A4\uC9D1\uD78C \uAC83\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+      - ".\uB77C\uC5B4\uB4E4\uB9CC \uB85C\uC73C\uAC83 \uC758\uB108 \uACE0\uB9AC\uADF8\r\n.\uB77C\uC5EC\uC8FD\r\n.\uB77C\uC544\uCC3E
+        \uB97C\uB108 \uC740\uC9D1\uB4A4 \uC774\uB4E4\uADF8"
+      type: 1
+      targetPhaseID: 
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: NORMALMIRROR
+    triggerCondition: 1
+    triggerObjectID: (Test)NormalMirror
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uC0AC\uACE0: \uAC70\uC6B8\uC744 \uBC14\uB77C\uBCF4\uC138\uC694."
+    exitCondition: 0
+    checkData:
+      onBeforeCheck: []
+      onAfterCheck: []
+      stat: 2
+      checkType: 0
+      threshold: 4
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB9D0\uB3C4 \uC548 \uB3FC. \uC774\uB7F4 \uC21C \uC5C6\uC5B4."
+        type: 1
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uC774\uC0C1\uD568\uC744 \uB290\uB07C\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+        type: 1
+        targetPhaseID: 
+        endingID: 
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uB208\uC744 \uB5B4\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uB208\uC744 \uB728\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC774 \uAC70\uC6B8\uC5D0 \uBE44\uCE69\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uC55E\uB4A4\uB9CC \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
+      type: 0
+      targetPhaseID: PERCEPTIONUPENDED
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: PERCEPTIONUPENDED
+    triggerCondition: 2
+    triggerObjectID: (Test)NormalMirror
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uC0AC\uACE0: \uC774\uC0C1\uD568\uC744 \uB290\uB07C\uC138\uC694."
+    exitCondition: 1
+    checkData:
+      onBeforeCheck:
+      - "\uB2F9\uC2E0\uC740 \uAC10\uAC01\uC744 \uC9D1\uC911\uD569\uB2C8\uB2E4."
+      onAfterCheck: []
+      stat: 2
+      checkType: 0
+      threshold: 2
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uBB34\uC5B8\uAC00\uB97C \uB208\uCE58\uCC55\uB2C8\uB2E4."
+        type: 0
+        targetPhaseID: RUN
+        endingID: 
+      onFailure:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uC774\uC0C1\uD568\uC744 \uB290\uB07C\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+        - "\uB2F9\uC2E0\uC740 \uB208\uCE58\uCC44\uC9C0\uB3C4 \uBABB\uD55C \uCC44
+          .\uB2E4\uB2C8\uD799\uC9D1\uB4A4"
+        type: 4
+        targetPhaseID: 
+        endingID: "\uB4A4\uC9D1\uD78C "
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uD0DC\uC544 \uC0C1\uD0DC\uC758 \uB4A4\uC9D1\uD78C
+        \uAC83\uC744 \uB208\uCE58\uCC58\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uB2F9\uC2E0\uC774 \uBB34\uC5C7\uC744
+        \uBCF4\uB294\uC9C0\uC870\uCC28 \uBAB0\uB790\uC2B5\uB2C8\uB2E4."
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC774 \uAC70\uC6B8\uC5D0 \uBE44\uCE69\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uC55E\uB4A4\uB9CC \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
+      type: 0
+      targetPhaseID: PERCEPTIONUPENDED
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: RUN
+    triggerCondition: 2
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uD589\uB3D9: \uB6F0\uC138\uC694.\r\n\uD589\uB3D9: \uB6F0\uC138\uC694.\r\n\uD589\uB3D9:
+      \uB6F0\uC138\uC694."
+    exitCondition: 1
+    checkData:
+      onBeforeCheck:
+      - "\uB2F9\uC2E0\uC740 \uB6F0\uC5B4\uAC11\uB2C8\uB2E4."
+      onAfterCheck: []
+      stat: 1
+      checkType: 0
+      threshold: 2
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC2B5\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9BD\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740
+          \uBB38\uACE0\uB9AC\uB97C \uB2F9\uAE41\uB2C8\uB2E4."
+        - "\uB2F9\uC2E0\uC740 \uBB38\uC5D0 \uB4E4\uC5B4\uAC11\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740
+          \uB208\uC744 \uAC10\uC2B5\uB2C8\uB2E4."
+        - "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+        type: 2
+        targetPhaseID: 
+        endingID: 
+      onFailure:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uB4A4\uC9D1\uD78C \uAC83\uC5D0 \uBD99\uC7A1\uD799\uB2C8\uB2E4."
+        - ".\uB2E4\uB2C8\uD799\uC7A1\uBD99 \uC5D0\uAC83 \uD78C\uC9D1\uB4A4 \uC740\uC2E0\uB2F9"
+        type: 4
+        targetPhaseID: 
+        endingID: "\uB4A4\uC9D1\uD78C \uAC83"
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uB4A4\uC9D1\uD78C \uAC83\uC744 \uBC84\uB824
+        \uB450\uACE0 \uB3C4\uB9DD\uAC14\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uB4A4\uC9D1\uD614\uC2B5\uB2C8\uB2E4."
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC774 \uAC70\uC6B8\uC5D0 \uBE44\uCE69\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uC55E\uB4A4\uB9CC \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
+      type: 0
+      targetPhaseID: PERCEPTIONUPENDED
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: UPENDEDMIRROR
+    triggerCondition: 1
+    triggerObjectID: (Test)UpendedMirror
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - "\uC544\uB2C8, \uC774\uAC74 \uC544\uB2C8\uC57C. \uBC14\uB77C\uBCF4\uC9C0 \uB9C8.
+      \uC800\uAC74 \uB124\uAC00 \uC544\uB2C8\uC57C."
+    - ".\uB77C\uC234\uBD80\uAE68\r\n.\uB77C\uC5B4\uBBFF \uB97C\uB098 .\uB77C\uC5B4\uBBFF
+      \uB97C\uB2C8\uBA38\uC5B4 \uC758\uB108 .\uB2E4\uC774\uD3B8 \uB294\uB9AC\uC6B0"
+    exitCondition: 1
+    checkData:
+      onBeforeCheck:
+      - "\uB2F9\uC2E0\uC740 \uBD80\uC218\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740
+        \uBD80\uC220 \uC758\uC9C0\uB97C \uC783\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740
+        \uBD80\uC234\uC57C \uD560 \uC774\uC720\uB97C \uCC3E\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+      onAfterCheck: []
+      stat: 0
+      checkType: 0
+      threshold: 2
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB2F9\uC2E0\uC740
+          \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740 \uBD80\uC220
+          \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218
+          \uC5C6\uC2B5\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.
+          \uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+        - ".\uB2E4\uC788 \uC218 \uC220\uBD80 \uB294\uB108"
+        - ".\uB2E4\uC788 \uC218\uD560 \uB294\uB108"
+        type: 0
+        targetPhaseID: EARTH
+        endingID: 
+      onFailure:
+        narration:
+        - "\uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB2F9\uC2E0\uC740
+          \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740 \uBD80\uC220
+          \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218
+          \uC5C6\uC2B5\uB2C8\uB2E4.\n\uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.
+          \uB2F9\uC2E0\uC740 \uBD80\uC220 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+        - "\uB2F9\uC2E0\uC740 \uBD80\uC218\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+        type: 0
+        targetPhaseID: RUN
+        endingID: "\uB4A4\uC9D1\uD78C \uAC83"
+      summaryText_success: "\uB2F9\uC2E0\uC740 \uB2F9\uC2E0\uC744 \uB9C8\uC8FC\uBD24\uC2B5\uB2C8\uB2E4."
+      summaryText_failure: "\uB2F9\uC2E0\uC740 \uB9C8\uC8FC\uBCFC \uC218 \uC5C6\uC5C7\uC2B5\uB2C8\uB2E4."
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC774 \uAC70\uC6B8\uC5D0 \uBE44\uCE69\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uC55E\uB4A4\uB9CC \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
+      type: 0
+      targetPhaseID: PERCEPTIONUPENDED
+      endingID: 
+    animator: {fileID: 0}
+  - phaseID: EARTH
+    triggerCondition: 2
+    triggerObjectID: 
+    requiredPhaseIDs: []
+    isRepeatable: 0
+    requirementFailNarration: []
+    onEnter:
+    - ".\uB77C\uC544\uAC10 \uC744\uB208\r\n.\uB77C\uB824\uC62C\uB5A0"
+    exitCondition: 1
+    checkData:
+      onBeforeCheck:
+      - "O \uB098\uC758 + \uC544\uC774\uC5D0\uAC8C O \uB9D0 + \uD55C\uB2E4\r\nO \uB108\uD76C\uB97C
+        + \uC704\uD574 O \uC6B0\uB9AC\uB97C + \uC704\uD574"
+      onAfterCheck:
+      - "\uC544\uB2C8, \uC544\uB2C8, \uC544\uB2C8, \uC544\uB2C8, \uC544\uB2C8."
+      - "\uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4. \uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4.
+        \uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4.\r\n\uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4.
+        \uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4. \uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4.\r\n\uADF8\uB7EC\uBA74
+        \uC8FD\uB294\uB2E4. \uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4. \uADF8\uB7EC\uBA74
+        \uC8FD\uB294\uB2E4."
+      stat: 4
+      checkType: 2
+      threshold: 2
+      stat2: 0
+      threshold2: 0
+      onSuccess:
+        narration:
+        - "\uADF8\uB7EC\uBA74 \uC8FD\uB294\uB2E4. \uADF8\uB7EC\uBA74-"
+        - "O \uB098\uC758 + \uC544\uC774\uC5D0\uAC8C\r\nO \uB098\uB97C + \uC704\uD574
+          O \uB098\uC758 + \uAC80\uC774 O \uB418\uC5B4 + \uB2E4\uC624\r\nO \uB108\uB97C
+          + \uC704\uD574 O \uB108\uD76C\uC758 + \uBC29\uD328\uAC00 O \uB418\uC5B4
+          + \uB2E4\uC624"
+        - "O \uB098\uC758 + \uC544\uC774\uC5D0\uAC8C O \uBBF8\uC548 + \uD558\uB2E4\nO
+          \uAC00\uD639\uD55C + \uC6B4\uBA85 O \uC774\uB2E4 +"
+        - ".\uB2E4\uC774\uBA85\uC6B4 \uAC74\uC774"
+        - "Z \uC774\uAC83\uC740! | \uC6B4\uBA85! Z \uC774\uB2E4! |"
+        type: 3
+        targetPhaseID: 
+        endingID: "\uBCC0\uC99D\uBC95"
+      onFailure:
+        narration:
+        - "\uB108\uB294 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC00\uC57C
+          \uD55C\uB2E4."
+        type: 2
+        targetPhaseID: 
+        endingID: 
+      summaryText_success: 
+      summaryText_failure: 
+    outcome:
+      narration:
+      - "\uB2F9\uC2E0\uC774 \uAC70\uC6B8\uC5D0 \uBE44\uCE69\uB2C8\uB2E4."
+      - "\uB2F9\uC2E0\uC740 \uC55E\uB4A4\uB9CC \uB4A4\uC9D1\uD600 \uC788\uC2B5\uB2C8\uB2E4."
+      type: 0
+      targetPhaseID: PERCEPTIONUPENDED
+      endingID: 
+    animator: {fileID: 0}
