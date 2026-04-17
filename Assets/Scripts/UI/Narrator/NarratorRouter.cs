@@ -42,9 +42,17 @@ public class NarratorRouter : MonoBehaviour
             var narrator = Resolve(block.channel);
             if (narrator == null) continue;
 
-            // ShowText + pause 대기를 BaseNarrator에 위임 — Skip 처리 포함
+            // 이 블록 채널 제외 나머지 클리어
+            ClearExcept(block.channel);
+
             yield return narrator.ShowBlocks(new[] { block });
         }
+    }
+    private void ClearExcept(NarratorChannel channel)
+    {
+        if (channel != NarratorChannel.Screen) screenNarrator?.Clear();
+        if (channel != NarratorChannel.World) worldNarrator?.Clear();
+        if (channel != NarratorChannel.Paper) paperNarrator?.Clear();
     }
 
     /// <summary>단일 블록을 채널에 맞게 출력.</summary>
