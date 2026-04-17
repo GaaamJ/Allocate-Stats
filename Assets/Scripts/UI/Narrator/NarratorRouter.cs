@@ -36,21 +36,14 @@ public class NarratorRouter : MonoBehaviour
     {
         if (blocks == null) yield break;
 
-        // 채널이 하나라면 그 채널에 한 번에 위임 (순서 보장)
-        // 채널이 섞여 있으면 블록 단위로 순서대로 처리
         foreach (var block in blocks)
         {
             if (block == null || string.IsNullOrEmpty(block.text)) continue;
             var narrator = Resolve(block.channel);
-            if (narrator == null)
-            {
-                Debug.LogWarning($"[NarratorRouter] {block.channel} 채널 Narrator가 연결되지 않았습니다.");
-                continue;
-            }
-            yield return narrator.ShowText(block);
+            if (narrator == null) continue;
 
-            float pause = block.pauseAfter > 0f ? block.pauseAfter : 0f;
-            if (pause > 0f) yield return new WaitForSeconds(pause);
+            // ShowText + pause 대기를 BaseNarrator에 위임 — Skip 처리 포함
+            yield return narrator.ShowBlocks(new[] { block });
         }
     }
 
@@ -96,8 +89,8 @@ public class NarratorRouter : MonoBehaviour
     private INarrator Resolve(NarratorChannel channel) => channel switch
     {
         NarratorChannel.Screen => screenNarrator,
-        NarratorChannel.World  => worldNarrator,
-        NarratorChannel.Paper  => paperNarrator,
+        NarratorChannel.World => worldNarrator,
+        NarratorChannel.Paper => paperNarrator,
         _ => null,
     };
 }
