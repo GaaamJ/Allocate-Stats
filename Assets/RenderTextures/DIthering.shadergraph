@@ -1042,10 +1042,10 @@
     "m_ShaderOutputName": "Steps",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 6.0,
-        "y": 6.0,
-        "z": 6.0,
-        "w": 6.0
+        "x": 15.0,
+        "y": 15.0,
+        "z": 15.0,
+        "w": 15.0
     },
     "m_DefaultValue": {
         "x": 0.0,
