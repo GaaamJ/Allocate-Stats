@@ -20,6 +20,13 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
     [SerializeField] protected float charInterval = 0.035f;
     [SerializeField] protected float defaultPauseAfter = 0.8f;
 
+    /// <summary>
+    /// 글자당 타이핑 간격의 랜덤 편차 (0이면 균일).
+    /// 실제 간격 = charInterval ± charVariance 범위 랜덤.
+    /// 뚝뚝 끊기는 느낌은 0.05~0.1 권장.
+    /// </summary>
+    [SerializeField] protected float charVariance = 0f;
+
     // ── 내부 상태 ─────────────────────────────────────────
 
     private Coroutine typingCoroutine;
@@ -31,9 +38,12 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
     /// <summary>ShowBlocks에서 현재 블록을 완성 후 다음으로 넘길 플래그.</summary>
     private bool advanceBlock = false;
 
+    /// <summary>ShakeLoop 시작 시점의 TMP anchoredPosition. 복원에 사용.</summary>
+    private Vector2 shakeOrigin = Vector2.zero;
+
     // ── INarrator 구현 ────────────────────────────────────
 
-    public IEnumerator ShowBlocks(NarrationBlock[] blocks)
+    public virtual IEnumerator ShowBlocks(NarrationBlock[] blocks)
     {
         if (blocks == null) yield break;
 
@@ -57,7 +67,7 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         }
     }
 
-    public IEnumerator ShowText(NarrationBlock block)
+    public virtual IEnumerator ShowText(NarrationBlock block)
     {
         if (block == null || string.IsNullOrEmpty(block.text)) yield break;
 
@@ -68,7 +78,10 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         if (tmp == null) yield break;
 
         skipTyping = false;
-        typingCoroutine = StartCoroutine(TypeText(block.text, tmp));
+        // 타이핑 시작 전 origin 저장 — 흔들림 복원 기준점
+        var rect = tmp.rectTransform;
+        if (rect != null) shakeOrigin = rect.anchoredPosition;
+        typingCoroutine = StartCoroutine(TypeText(block.text, tmp, block.shakeIntensity));
         yield return typingCoroutine;
         typingCoroutine = null;
 
@@ -116,9 +129,11 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
 
     // ── 타이핑 코루틴 ────────────────────────────────────
 
-    private IEnumerator TypeText(string text, TextMeshProUGUI tmp)
+    private IEnumerator TypeText(string text, TextMeshProUGUI tmp, float shakeIntensity = 0f)
     {
         tmp.text = "";
+        // 타이핑 시작 시 origin 저장 — 흔들림 복원 기준점
+        shakeOrigin = tmp.rectTransform.anchoredPosition;
 
         foreach (char c in text)
         {
@@ -126,11 +141,24 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
             {
                 tmp.text = text;
                 skipTyping = false;
+                // 흔들림 위치 복원
+                if (shakeIntensity > 0f)
+                    tmp.rectTransform.anchoredPosition = shakeOrigin;
                 yield break;
             }
 
             tmp.text += c;
-            yield return new WaitForSeconds(charInterval);
+
+            // 타이핑 중 미세 흔들림
+            if (shakeIntensity > 0f)
+                tmp.rectTransform.anchoredPosition = shakeOrigin + new Vector2(
+                    Random.Range(-shakeIntensity, shakeIntensity),
+                    Random.Range(-shakeIntensity, shakeIntensity));
+
+            float interval = charVariance > 0f
+                ? Mathf.Max(0f, charInterval + Random.Range(-charVariance, charVariance))
+                : charInterval;
+            yield return new WaitForSeconds(interval);
         }
     }
 
@@ -144,7 +172,8 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
     {
         float interval = 1f / Mathf.Max(frequency, 0.1f);
         var rect = tmp.rectTransform;
-        var origin = rect.anchoredPosition;
+        shakeOrigin = rect.anchoredPosition;
+        var origin = shakeOrigin;
 
         while (true)
         {
@@ -169,9 +198,9 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         {
             StopCoroutine(shakeCoroutine);
             shakeCoroutine = null;
-            // 흔들림으로 이동한 위치 복원
+            // 흔들림으로 이동한 위치 복원 (origin 기준)
             var tmp = GetTMP();
-            if (tmp != null) tmp.rectTransform.anchoredPosition = Vector2.zero;
+            if (tmp != null) tmp.rectTransform.anchoredPosition = shakeOrigin;
         }
         skipTyping = false;
     }

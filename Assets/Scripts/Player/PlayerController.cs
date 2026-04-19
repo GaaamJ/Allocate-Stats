@@ -20,11 +20,6 @@ using Unity.Cinemachine;
 ///   └─ CameraHolder (빈 Transform) ← 수직 회전 pivot
 ///       └─ CinemachineCamera
 ///
-/// [Cinemachine 6.x Inspector 설정]
-///   Body → Do Nothing
-///   Aim  → Do Nothing
-///   CinemachineInputAxisController → 제거 또는 비활성화
-///
 /// [Inspector 연결]
 ///   cinemachineCamera : 플레이어 전용 CinemachineCamera
 ///   cameraHolder      : 수직 회전 pivot Transform
@@ -34,19 +29,10 @@ using Unity.Cinemachine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerController : PlayerControllerStub
 {
-    // ════════════════════════════════════════════════════════
-    //  열거형
-    // ════════════════════════════════════════════════════════
-
     public enum ControlMode { Title, FPS }
-
-    // ════════════════════════════════════════════════════════
-    //  Inspector 필드
-    // ════════════════════════════════════════════════════════
 
     [Header("Cinemachine")]
     [SerializeField] private CinemachineCamera cinemachineCamera;
-    /// <summary>수직 회전 pivot — CinemachineCamera의 직접 부모.</summary>
     [SerializeField] private Transform cameraHolder;
 
     [Header("Mode")]
@@ -71,16 +57,8 @@ public class PlayerController : PlayerControllerStub
     [SerializeField] private float interactRange = 3f;
     [SerializeField] private LayerMask interactLayer = ~0;
 
-    // ════════════════════════════════════════════════════════
-    //  이벤트 — PlayerInputHandler가 구독
-    // ════════════════════════════════════════════════════════
-
-    /// <summary>Skip 버튼 pressed 시 발행. PlayerInputHandler가 NarratorRouter에 전달.</summary>
+    /// <summary>Skip 버튼 pressed 시 발행.</summary>
     public event System.Action OnSkipPressed;
-
-    // ════════════════════════════════════════════════════════
-    //  내부 상태
-    // ════════════════════════════════════════════════════════
 
     private Rigidbody _rb;
     private ControlMode _currentMode;
@@ -92,10 +70,6 @@ public class PlayerController : PlayerControllerStub
     private float _yaw;
     private float _pitch;
     private float _titleBaseYaw;
-
-    // ════════════════════════════════════════════════════════
-    //  Unity Lifecycle
-    // ════════════════════════════════════════════════════════
 
     private void Awake()
     {
@@ -123,7 +97,6 @@ public class PlayerController : PlayerControllerStub
     private void Update()
     {
         Vector2 lookDelta = _player.Look.ReadValue<Vector2>() * sensitivity;
-
         switch (_currentMode)
         {
             case ControlMode.Title: UpdateTitleLook(lookDelta); break;
@@ -137,10 +110,6 @@ public class PlayerController : PlayerControllerStub
         UpdateFPSMove();
     }
 
-    // ════════════════════════════════════════════════════════
-    //  PlayerControllerStub override
-    // ════════════════════════════════════════════════════════
-
     public override void EnableMovement()
     {
         _movementEnabled = true;
@@ -152,34 +121,18 @@ public class PlayerController : PlayerControllerStub
         _movementEnabled = false;
         if (_rb) _rb.linearVelocity = Vector3.zero;
         SetCursorLocked(false);
-        // _actions는 Disable하지 않음 — Skip은 나레이션 중에도 수신해야 함
     }
 
-    // ════════════════════════════════════════════════════════
-    //  공개 API
-    // ════════════════════════════════════════════════════════
-
-    /// <summary>
-    /// 씬 전환 시 모드 변경.
-    ///   TitleSceneController → SetMode(ControlMode.Title)
-    ///   RoomSceneController  → SetMode(ControlMode.FPS)
-    /// </summary>
     public void SetMode(ControlMode mode)
     {
         _currentMode = mode;
-
         if (mode == ControlMode.Title)
         {
             _titleBaseYaw = _yaw;
             if (_rb) _rb.linearVelocity = Vector3.zero;
         }
-
         SetCursorLocked(mode == ControlMode.FPS);
     }
-
-    // ════════════════════════════════════════════════════════
-    //  Title 모드 — Look only
-    // ════════════════════════════════════════════════════════
 
     private void UpdateTitleLook(Vector2 delta)
     {
@@ -189,61 +142,38 @@ public class PlayerController : PlayerControllerStub
         float rel = Mathf.DeltaAngle(_titleBaseYaw, _yaw);
         rel = Mathf.Clamp(rel, -titleYawClamp, titleYawClamp);
         _yaw = _titleBaseYaw + rel;
-
         _pitch = Mathf.Clamp(_pitch, -titlePitchClamp, titlePitchClamp);
 
         ApplyRotation();
     }
-
-    // ════════════════════════════════════════════════════════
-    //  FPS 모드 — Look
-    // ════════════════════════════════════════════════════════
 
     private void UpdateFPSLook(Vector2 delta)
     {
         _yaw += delta.x;
         _pitch -= delta.y;
         _pitch = Mathf.Clamp(_pitch, fpsPitchMin, fpsPitchMax);
-
         ApplyRotation();
     }
-
-    // ════════════════════════════════════════════════════════
-    //  FPS 모드 — Move
-    // ════════════════════════════════════════════════════════
 
     private void UpdateFPSMove()
     {
         Vector2 input = _player.Move.ReadValue<Vector2>();
         Vector3 dir = (transform.right * input.x + transform.forward * input.y).normalized;
-
         Vector3 vel = dir * moveSpeed;
         vel.y = _rb.linearVelocity.y + gravity * Time.fixedDeltaTime;
         _rb.linearVelocity = vel;
     }
 
-    // ════════════════════════════════════════════════════════
-    //  Interact — Raycast
-    // ════════════════════════════════════════════════════════
-
     private void HandleInteract()
     {
         if (!_movementEnabled || _currentMode != ControlMode.FPS) return;
-
         Transform origin = cinemachineCamera ? cinemachineCamera.transform
                          : cameraHolder ? cameraHolder
                          : transform;
-
         if (Physics.Raycast(origin.position, origin.forward,
                             out RaycastHit hit, interactRange, interactLayer))
-        {
             hit.collider.GetComponentInParent<InteractableObject>()?.OnInteract();
-        }
     }
-
-    // ════════════════════════════════════════════════════════
-    //  유틸
-    // ════════════════════════════════════════════════════════
 
     private void ApplyRotation()
     {
@@ -260,4 +190,8 @@ public class PlayerController : PlayerControllerStub
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !locked;
     }
+
+#if UNITY_EDITOR
+    // 에디터 전용 — 추후 테스트용
+#endif
 }

@@ -29,6 +29,7 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.3
       shakeFrequency: 8
+      appendMode: 1
     exitCondition: 0
     checkData:
       onBeforeCheck: []
@@ -43,11 +44,13 @@ MonoBehaviour:
         type: 0
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration: []
         type: 0
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: 
       summaryText_failure: 
     outcome:
@@ -57,6 +60,7 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.3
         shakeFrequency: 8
+        appendMode: 1
       - text: "O \uB098\uC758 + \uC544\uC774\uC57C \r\nO \uB098\uC758 + \uAC00\uC5FE\uC740
           O \uC544\uC774\uC57C +\r\nO \uADF8\uB300\uB97C + \uC704\uD55C O \uAE30\uD68C
           +"
@@ -64,9 +68,11 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.3
         shakeFrequency: 8
+        appendMode: 1
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: PAPER
     triggerCondition: 1
@@ -82,6 +88,7 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -90,12 +97,14 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
       onAfterCheck:
       - text: "\uB2F9\uC2E0\uC740 \uC885\uC774\uC5D0 \uC801\uD78C \uAC83\uC744 \uBD05\uB2C8\uB2E4."
-        channel: 0
+        channel: 1
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
       stat: 2
       checkType: 0
       threshold: 0
@@ -104,13 +113,15 @@ MonoBehaviour:
       onSuccess:
         narration:
         - text: "O \uBB38\uC744 + \uACE0\uB974\uAC70\uB77C"
-          channel: 0
+          channel: 2
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uD574\uCEE4 \uB140\uC11D."
@@ -118,9 +129,11 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 4
         targetPhaseID: 
         endingID: "\uD574"
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uC2ED\uC790\uB3D9\uADF8\uB77C\uBBF8\uC758
         \uC885\uC774\uB97C \uD3BC\uCCE4\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uD574\uCEE4 \uB140\uC11D. \uD310\uC744 \uB4A4\uC9D1\uB294
@@ -130,6 +143,7 @@ MonoBehaviour:
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: LEFTDOOR
     triggerCondition: 1
@@ -146,12 +160,14 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -161,6 +177,7 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
       onAfterCheck: []
       stat: 4
       checkType: 2
@@ -175,9 +192,11 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 3
         targetPhaseID: 
         endingID: "\uBC31\uC77C\uBABD"
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
@@ -185,9 +204,11 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 2
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       summaryText_failure: "\uD589\uC6B4\uC774 \uB2F9\uC2E0\uC758 \uD3B8\uC744 \uB4E4\uC5B4\uC8FC\uC9C0
         \uC54A\uC558\uC2B5\uB2C8\uB2E4."
@@ -196,6 +217,7 @@ MonoBehaviour:
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: RIGHTDOOR
     triggerCondition: 1
@@ -212,12 +234,14 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -227,6 +251,7 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
       onAfterCheck: []
       stat: 4
       checkType: 2
@@ -241,9 +266,11 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 3
         targetPhaseID: 
         endingID: "\uBC31\uC77C\uBABD"
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
@@ -251,9 +278,11 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
         type: 2
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       summaryText_failure: "\uD589\uC6B4\uC774 \uB2F9\uC2E0\uC758 \uD3B8\uC744 \uB4E4\uC5B4\uC8FC\uC9C0
         \uC54A\uC558\uC2B5\uB2C8\uB2E4."
@@ -262,4 +291,5 @@ MonoBehaviour:
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}

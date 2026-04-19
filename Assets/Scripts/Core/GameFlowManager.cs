@@ -80,30 +80,30 @@ public class GameFlowManager : MonoBehaviour
     }
 
     /// <summary>방 클리어 → 다음 방으로. 마지막 방이면 앙코르 루프 진입.</summary>
-    public void OnRoomClear_NextRoom()
+    public void OnRoomClear_NextRoom(NarrationBlock[] transitionNarration = null)
     {
         CurrentRoomIndex++;
 
         if (CurrentRoomIndex >= roomSequence.Length)
-            EnterEncoreLoop();
+            EnterEncoreLoop(transitionNarration);
         else
-            LoadRoomScene();
+            LoadRoomScene(transitionNarration);
     }
 
     /// <summary>앙코르 루프 진입.</summary>
-    public void EnterEncoreLoop()
+    public void EnterEncoreLoop(NarrationBlock[] transitionNarration = null)
     {
         IsEncoreLoop = true;
         EncoreCounter = 0;
-        LoadRoomScene();
+        LoadRoomScene(transitionNarration);
     }
 
     /// <summary>앙코르 방 하나 클리어 → 카운터 올리고 다시 로드.</summary>
-    public void OnEncoreClear()
+    public void OnEncoreClear(NarrationBlock[] transitionNarration = null)
     {
         EncoreCounter++;
         Debug.Log($"[GameFlow] OnEncoreClear → EncoreCounter: {EncoreCounter}");
-        LoadRoomScene();
+        LoadRoomScene(transitionNarration);
     }
 
     /// <summary>게임 오버. endingID → EndingData 매칭.</summary>
@@ -114,7 +114,10 @@ public class GameFlowManager : MonoBehaviour
         LastEndingID = endingID;
 
         SnapshotFinalStats();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
+        if (SceneTransitioner.Instance != null)
+            SceneTransitioner.Instance.TransitionTo(endingSceneName);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
     }
 
     /// <summary>탈출 (클리어). endingID → EndingData 매칭.</summary>
@@ -125,12 +128,22 @@ public class GameFlowManager : MonoBehaviour
         LastEndingID = endingID;
 
         SnapshotFinalStats();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
+        if (SceneTransitioner.Instance != null)
+            SceneTransitioner.Instance.TransitionTo(endingSceneName);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene(endingSceneName);
     }
 
-    private void LoadRoomScene()
+    /// <summary>
+    /// 방 전환 트랜지션.
+    /// transitionNarration이 있으면 암전 중 Screen 채널로 출력.
+    /// </summary>
+    private void LoadRoomScene(NarrationBlock[] transitionNarration = null)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(roomSceneName);
+        if (SceneTransitioner.Instance != null)
+            SceneTransitioner.Instance.TransitionTo(roomSceneName, transitionNarration);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene(roomSceneName);
     }
 
     // ── 판정 기록 ─────────────────────────────────────────

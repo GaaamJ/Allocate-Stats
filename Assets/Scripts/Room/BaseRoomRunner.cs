@@ -51,7 +51,7 @@ public abstract class BaseRoomRunner : IRoomRunner
 
     protected abstract RoomData.PhaseData[] GetRoomPhases();
     protected abstract string GetRoomLabel();
-    protected abstract void OnRoomComplete();
+    protected abstract void OnRoomComplete(NarrationBlock[] transitionNarration = null);
 
     // ── 대기 루프 ─────────────────────────────────────────
 
@@ -184,7 +184,7 @@ public abstract class BaseRoomRunner : IRoomRunner
                 break;
 
             case RoomData.OutcomeType.NextRoom:
-                OnRoomComplete();
+                OnRoomComplete(outcome.transitionNarration);
                 break;
 
             case RoomData.OutcomeType.Death:

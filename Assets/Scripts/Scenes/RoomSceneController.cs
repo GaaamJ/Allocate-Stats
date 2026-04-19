@@ -28,10 +28,14 @@ public class RoomSceneController : MonoBehaviour
     [Header("Layout — 오브젝트 동적 생성 부모 (없으면 씬 루트)")]
     [SerializeField] private Transform layoutParent;
 
+    [Header("방 이름 UI")]
+    [SerializeField] private RoomNameUI roomNameUI;
+
     private void Start()
     {
         RoomEventBus.Clear();
         SpawnInteractables();
+        InitRoomNameUI();
 
         var context = new RoomRunContext(
             narratorRouter,
@@ -93,6 +97,15 @@ public class RoomSceneController : MonoBehaviour
     }
 
     // ── Runner 선택 ───────────────────────────────────────
+
+    private void InitRoomNameUI()
+    {
+        if (roomNameUI == null) return;
+        string name = bridge.IsEncoreLoop
+            ? "영원의 방"
+            : (bridge.CurrentRoomData?.displayName ?? "");
+        roomNameUI.Init(name);
+    }
 
     private IRoomRunner SelectRunner()
     {

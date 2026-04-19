@@ -131,6 +131,9 @@ public class RoomData : ScriptableObject
 
         [Header("Death / Escape 전용 — EndingData roomID와 매칭")]
         public string endingID;
+
+        [Header("NextRoom 전용 — 암전 중 출력할 트랜지션 나레이션")]
+        public NarrationBlock[] transitionNarration;
     }
 
     // ─────────────────────────────────────────────────────────
