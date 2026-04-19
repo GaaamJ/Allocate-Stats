@@ -11,6 +11,6 @@ public class NormalRoomRunner : BaseRoomRunner
     protected override string GetRoomLabel() =>
         ctx.Bridge.CurrentRoomData?.roomID ?? "unknown";
 
-    protected override void OnRoomComplete() =>
-        ctx.Bridge.OnRoomComplete();
+    protected override void OnRoomComplete(NarrationBlock[] transitionNarration = null) =>
+        ctx.Bridge.OnRoomComplete(transitionNarration);
 }

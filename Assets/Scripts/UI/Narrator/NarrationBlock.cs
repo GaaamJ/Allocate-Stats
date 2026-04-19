@@ -28,6 +28,9 @@ public class NarrationBlock
     [Range(1f, 30f)]
     public float shakeFrequency = 10f;
 
+    [Tooltip("Paper 채널 전용 — true면 기존 내용에 누적, false면 덮어쓰기.")]
+    public bool appendMode = true;
+
     // ── 편의 생성자 ───────────────────────────────────────
 
     public NarrationBlock() { }

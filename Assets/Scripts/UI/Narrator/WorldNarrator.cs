@@ -1,31 +1,90 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 /// <summary>
 /// World 채널 나레이터.
-/// 플레이어 행동 결과를 해당 오브젝트 위에 출력 (당신은 ~했습니다.).
-/// WorldSpace Canvas에 붙어서 동작.
+/// 플레이어 행동 결과를 좌하단에 출력 (당신은 ~했습니다.).
 ///
-/// 각 InteractableObject마다 인스턴스를 가지거나,
-/// 씬에 하나만 두고 위치를 동적으로 이동시키는 방식 둘 다 가능.
-/// 현재는 단일 인스턴스 기준으로 구현 — 위치는 SetTarget()으로 지정.
+/// 타이핑 완료 후 fadeHold 초 유지 → fadeDuration 초에 걸쳐 사라짐.
+/// 불규칙 타이핑은 BaseNarrator.charVariance로 조정.
 ///
 /// [Inspector 연결]
-///   narratorTMP : TextMeshPro (WorldSpace Canvas 안에 배치)
+///   narratorTMP  : TextMeshProUGUI
+///   canvasGroup  : CanvasGroup (FadeOut용 — TMP와 같은 오브젝트 또는 부모)
+///   fadeHold     : 타이핑 완료 후 유지 시간 (초)
+///   fadeDuration : FadeOut 소요 시간 (초)
 /// </summary>
 public class WorldNarrator : BaseNarrator
 {
-    [Header("World 채널 TMP (WorldSpace Canvas)")]
+    [Header("World 채널 TMP")]
     [SerializeField] private TextMeshProUGUI narratorTMP;
+
+    [Header("FadeOut 설정")]
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float fadeHold = 1.5f;
+    [SerializeField] private float fadeDuration = 0.8f;
+
+    private Coroutine fadeCoroutine;
 
     protected override TextMeshProUGUI GetTMP() => narratorTMP;
 
+    // ── 훅 ───────────────────────────────────────────────
+
+    protected override void OnBlockStart(NarrationBlock block)
+    {
+        // 이전 FadeOut 중단 후 즉시 불투명으로 복원
+        if (fadeCoroutine != null)
+        {
+            StopCoroutine(fadeCoroutine);
+            fadeCoroutine = null;
+        }
+        if (canvasGroup) canvasGroup.alpha = 1f;
+    }
+
+    protected override void OnBlockEnd(NarrationBlock block)
+    {
+        if (canvasGroup)
+        {
+            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+            fadeCoroutine = StartCoroutine(FadeOut());
+        }
+    }
+
+    // ── FadeOut 코루틴 ────────────────────────────────────
+
+    private IEnumerator FadeOut()
+    {
+        // 유지
+        yield return new WaitForSeconds(fadeHold);
+
+        // 페이드
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+            yield return null;
+        }
+        canvasGroup.alpha = 0f;
+        fadeCoroutine = null;
+    }
+
+    // ── Clear 오버라이드 — FadeOut도 함께 중단 ────────────
+
+    public new void Clear()
+    {
+        if (fadeCoroutine != null)
+        {
+            StopCoroutine(fadeCoroutine);
+            fadeCoroutine = null;
+        }
+        if (canvasGroup) canvasGroup.alpha = 1f;
+        base.Clear();
+    }
+
     // ── 위치 지정 ─────────────────────────────────────────
 
-    /// <summary>
-    /// 나레이션을 출력할 월드 좌표 설정.
-    /// 3D 씬 구성 전까지는 호출하지 않아도 무방.
-    /// </summary>
     public void SetTarget(Vector3 worldPosition)
     {
         transform.position = worldPosition;

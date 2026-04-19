@@ -25,6 +25,12 @@ public class NarratorRouter : MonoBehaviour
     public WorldNarrator World => worldNarrator;
     public PaperNarrator Paper => paperNarrator;
 
+    /// <summary>
+    /// Screen / World 채널 나레이션 재생 중 여부.
+    /// PaperNarrator가 이 값을 확인해서 Tab 토글을 차단한다.
+    /// </summary>
+    public bool IsNarrating { get; private set; } = false;
+
     // ── 라우팅 ────────────────────────────────────────────
 
     /// <summary>
@@ -34,34 +40,37 @@ public class NarratorRouter : MonoBehaviour
     /// </summary>
     public IEnumerator ShowBlocks(NarrationBlock[] blocks)
     {
+        IsNarrating = true;
         if (blocks == null) yield break;
 
+        // 채널이 하나라면 그 채널에 한 번에 위임 (순서 보장)
+        // 채널이 섞여 있으면 블록 단위로 순서대로 처리
         foreach (var block in blocks)
         {
             if (block == null || string.IsNullOrEmpty(block.text)) continue;
             var narrator = Resolve(block.channel);
-            if (narrator == null) continue;
+            if (narrator == null)
+            {
+                Debug.LogWarning($"[NarratorRouter] {block.channel} 채널 Narrator가 연결되지 않았습니다.");
+                continue;
+            }
+            yield return narrator.ShowText(block);
 
-            // 이 블록 채널 제외 나머지 클리어
-            ClearExcept(block.channel);
-
-            yield return narrator.ShowBlocks(new[] { block });
+            float pause = block.pauseAfter > 0f ? block.pauseAfter : 0f;
+            if (pause > 0f) yield return new WaitForSeconds(pause);
         }
-    }
-    private void ClearExcept(NarratorChannel channel)
-    {
-        if (channel != NarratorChannel.Screen) screenNarrator?.Clear();
-        if (channel != NarratorChannel.World) worldNarrator?.Clear();
-        if (channel != NarratorChannel.Paper) paperNarrator?.Clear();
+        IsNarrating = false;
     }
 
     /// <summary>단일 블록을 채널에 맞게 출력.</summary>
     public IEnumerator ShowText(NarrationBlock block)
     {
-        if (block == null) yield break;
+        IsNarrating = true;
+        if (block == null) { IsNarrating = false; yield break; }
         var narrator = Resolve(block.channel);
-        if (narrator == null) yield break;
+        if (narrator == null) { IsNarrating = false; yield break; }
         yield return narrator.ShowText(block);
+        IsNarrating = false;
     }
 
     /// <summary>지정 채널 클리어.</summary>
@@ -70,8 +79,16 @@ public class NarratorRouter : MonoBehaviour
         Resolve(channel)?.Clear();
     }
 
-    /// <summary>모든 채널 클리어.</summary>
+    /// <summary>Screen / World 채널 클리어. Paper는 유지 (Phase 종료 시 호출).</summary>
     public void ClearAll()
+    {
+        screenNarrator?.Clear();
+        worldNarrator?.Clear();
+        // Paper는 Phase 종료 시 초기화하지 않음 — PaperNarrator.Clear() 별도 호출 필요
+    }
+
+    /// <summary>Paper 포함 모든 채널 클리어 (방 전환 시 호출).</summary>
+    public void ClearAllIncludingPaper()
     {
         screenNarrator?.Clear();
         worldNarrator?.Clear();

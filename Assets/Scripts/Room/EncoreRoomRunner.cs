@@ -18,6 +18,6 @@ public class EncoreRoomRunner : BaseRoomRunner
     protected override string GetRoomLabel() =>
         planet?.planetName ?? "encore_unknown";
 
-    protected override void OnRoomComplete() =>
-        ctx.Bridge.OnEncoreComplete();
+    protected override void OnRoomComplete(NarrationBlock[] transitionNarration = null) =>
+        ctx.Bridge.OnEncoreComplete(transitionNarration);
 }

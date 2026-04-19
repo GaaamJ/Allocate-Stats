@@ -11,15 +11,17 @@ public class RoomBridge : MonoBehaviour
     // ── 흐름 제어 ─────────────────────────────────────────
 
     /// <summary>현재 방 클리어 → 다음 방 또는 앙코르 루프 진입.</summary>
-    public void OnRoomComplete()
+    /// <param name="transitionNarration">암전 중 출력할 나레이션. null이면 holdDuration 대기.</param>
+    public void OnRoomComplete(NarrationBlock[] transitionNarration = null)
     {
-        GameFlowManager.Instance?.OnRoomClear_NextRoom();
+        GameFlowManager.Instance?.OnRoomClear_NextRoom(transitionNarration);
     }
 
     /// <summary>앙코르 방 클리어 → 다음 앙코르.</summary>
-    public void OnEncoreComplete()
+    /// <param name="transitionNarration">암전 중 출력할 나레이션. null이면 holdDuration 대기.</param>
+    public void OnEncoreComplete(NarrationBlock[] transitionNarration = null)
     {
-        GameFlowManager.Instance?.OnEncoreClear();
+        GameFlowManager.Instance?.OnEncoreClear(transitionNarration);
     }
 
     /// <summary>사망 — EndingScene으로 전환.</summary>

@@ -68,10 +68,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 0.4
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.6
   rounded:
     m_OverrideState: 0
     m_Value: 1
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ColorAdjustments
   active: 1
   postExposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -0.3
   contrast:
     m_OverrideState: 1
     m_Value: 15
@@ -119,4 +119,4 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: -80
+    m_Value: -40
