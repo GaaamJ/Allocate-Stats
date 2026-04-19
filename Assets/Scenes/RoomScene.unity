@@ -2794,7 +2794,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9746071673690904, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 257810789811433213, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
       propertyPath: m_SortingOrder
@@ -2979,6 +2979,22 @@ PrefabInstance:
     - target: {fileID: 4052659765991705535, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173077236012390665, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173077236012390665, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173077236012390665, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173077236012390665, guid: f71abccc43076344b8a75c4cb8cb38ee, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
