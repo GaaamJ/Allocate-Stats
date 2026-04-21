@@ -2,83 +2,114 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// P02 스탯 분배 UI.
-/// 스탯 로직만 담당 — 흐름 제어는 TitleP02Controller.
+/// P02 스탯 분배 UI. 씬에 미리 배치된 StatRowUI 배열을 순서대로 reveal.
+///
+/// 동작 흐름:
+///   Activate() 호출
+///   → 각 StatRowUI 순서대로 Reveal() (타이핑 → 세그먼트 등장)
+///   → 세그먼트 클릭 → TrySet() → allocation 갱신 → scratch 표시
+///   → 하단 서명 버튼 클릭 → ■ 타이핑 → CommitStats() → onConfirm 콜백
 ///
 /// [Inspector 연결]
-///   statData           : StatData SO
-///   statRowPrefab      : StatRowUI 프리팹
-///   rowParent          : 행 부모 Transform
-///   remainingPointsTMP : 남은 포인트 표시 TMP
-///   confirmButton      : 배분 완료 버튼
-///   screenNarrator     : ScreenNarrator — 호버 설명용
+///   statData          : StatData SO
+///   rows              : 씬에 배치된 StatRowUI 배열 (StatType 순서대로)
+///   signatureButton   : 하단 밑줄 이미지 Button
+///   signatureTMP      : 밑줄 위 TMP (■ 타이핑 표시)
+///
+/// [Reveal 설정]
+///   rowRevealInterval : Row 간 딜레이. 0이면 순서대로 완료 후 다음 시작.
+///   signatureCount    : ■ 개수 (기본 12)
+///   signatureInterval : ■ 하나 나오는 간격 (기본 0.08s)
 /// </summary>
 public class StatAllocatorUI : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private StatData statData;
 
-    [Header("UI")]
-    [SerializeField] private StatRowUI statRowPrefab;
-    [SerializeField] private Transform rowParent;
-    [SerializeField] private TextMeshProUGUI remainingPointsTMP;
-    [SerializeField] private Button confirmButton;
+    [Header("UI — 씬에 배치된 Row (StatType 순서대로)")]
+    [SerializeField] private StatRowUI[] rows;
 
-    [Header("Narrator")]
-    [SerializeField] private ScreenNarrator screenNarrator;
+    [Header("Signature")]
+    [SerializeField] private Button signatureButton;
+    [SerializeField] private TextMeshProUGUI signatureTMP;
+    [SerializeField] private string signatureString = "■■■■■■■■■■■■";
+    [SerializeField] private float signatureInterval = 0.08f;
+
+    [Header("Reveal")]
+    [Tooltip("Row 간 reveal 시작 딜레이. 0이면 순서대로 완료 후 다음 시작.")]
+    [SerializeField] private float rowRevealInterval = 0.0f;
 
     private readonly Dictionary<StatType, int> allocation = new();
-    private readonly Dictionary<StatType, StatRowUI> rows = new();
+    private readonly Dictionary<StatType, StatRowUI> rowMap = new();
     private int remainingPoints;
-    private Action onConfirm;
 
     private void Awake()
     {
         foreach (StatType t in Enum.GetValues(typeof(StatType)))
             allocation[t] = 0;
-
         remainingPoints = PlayerStats.TOTAL_POINTS;
+
+        if (signatureTMP) signatureTMP.text = "";
+        if (signatureButton) signatureButton.interactable = false;
     }
 
     // ── 공개 API ──────────────────────────────────────────
 
-    public void Activate(Action onConfirmCallback = null)
+    /// <summary>
+    /// 타이핑 reveal → 서명 대기 → ■ 타이핑 → CommitStats → onConfirm 호출.
+    /// yield return StartCoroutine(statAllocatorUI.Activate(...))
+    /// </summary>
+    public IEnumerator Activate(Action onConfirm = null)
     {
-        onConfirm = onConfirmCallback;
-        gameObject.SetActive(true);
-        BuildRows();
-        UpdateRemaining();
-        confirmButton.onClick.AddListener(OnConfirmClicked);
+        InitRows();
+        yield return StartCoroutine(RevealAllRows());
+
+        // 서명 버튼 활성화 + 클릭 대기
+        if (signatureButton != null)
+        {
+            signatureButton.interactable = true;
+
+            bool signed = false;
+            signatureButton.onClick.AddListener(() => signed = true);
+            yield return new WaitUntil(() => signed);
+            signatureButton.onClick.RemoveAllListeners();
+            signatureButton.interactable = false;
+        }
+
+        // ■ 타이핑
+        yield return StartCoroutine(RevealSignature());
+
+        CommitStats();
+        onConfirm?.Invoke();
     }
 
-    public void Deactivate()
-    {
-        confirmButton.onClick.RemoveListener(OnConfirmClicked);
-        gameObject.SetActive(false);
-    }
+    public void Deactivate() => gameObject.SetActive(false);
 
-    public void CommitStats()
-    {
-        PlayerStats.Instance.Apply(allocation);
-    }
+    public void CommitStats() => PlayerStats.Instance.Apply(allocation);
 
     // ── 내부 ──────────────────────────────────────────────
 
-    private void BuildRows()
+    private void InitRows()
     {
-        foreach (var entry in statData.stats)
+        rowMap.Clear();
+
+        for (int i = 0; i < rows.Length; i++)
         {
-            var row = Instantiate(statRowPrefab, rowParent);
-            row.Init(
+            if (rows[i] == null) continue;
+            var entry = i < statData.stats.Length ? statData.stats[i] : null;
+            if (entry == null) continue;
+
+            rowMap[entry.type] = rows[i];
+            rows[i].Init(
                 entry,
                 onValueChanged: newVal => TrySet(entry.type, newVal),
-                onHover: () => screenNarrator?.ShowStatDescription(entry.description),
-                onExit: () => screenNarrator?.RestoreText()
+                onHover: null,
+                onExit: null
             );
-            rows[entry.type] = row;
         }
     }
 
@@ -94,21 +125,40 @@ public class StatAllocatorUI : MonoBehaviour
         allocation[type] = newVal;
         remainingPoints = newRemain;
 
-        rows[type].SetValue(newVal);
-        UpdateRemaining();
+        rowMap[type].SetValue(newVal);
     }
 
-    private void UpdateRemaining()
+    private IEnumerator RevealSignature()
     {
-        if (remainingPointsTMP)
-            remainingPointsTMP.text = $"남은 포인트: {remainingPoints}";
+        if (signatureTMP == null) yield break;
 
-        confirmButton.interactable = true;
+        signatureTMP.text = "";
+        foreach (char c in signatureString)
+        {
+            signatureTMP.text += c;
+            yield return new WaitForSeconds(signatureInterval);
+        }
     }
 
-    private void OnConfirmClicked()
+    private IEnumerator RevealAllRows()
     {
-        CommitStats();
-        onConfirm?.Invoke();
+        if (rowRevealInterval <= 0f)
+        {
+            foreach (var row in rows)
+            {
+                if (row == null) continue;
+                yield return StartCoroutine(row.Reveal());
+            }
+        }
+        else
+        {
+            foreach (var row in rows)
+            {
+                if (row == null) continue;
+                StartCoroutine(row.Reveal());
+                yield return new WaitForSeconds(rowRevealInterval);
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

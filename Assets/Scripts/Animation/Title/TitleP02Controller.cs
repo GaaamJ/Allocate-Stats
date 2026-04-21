@@ -1,24 +1,27 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
+using MoreMountains.Feedbacks;
 
 /// <summary>
 /// P02 스탯 분배 페이즈 — 흐름 제어만 담당.
 ///
 /// 흐름:
 ///   1. 나레이터 (구슬 등장 전)
-///   2. 구슬/별똥별 등장 (TODO)
+///   2. 구슬 등장 (MarbleSpawner)
 ///   3. 나레이터 (공책 클릭 유도)
-///   4. Look + 공책 클릭 대기
-///   5. 공책 확대 애니메이션 (TODO)
-///   6. StatAllocatorUI 활성화 → 확정 대기
+///   4. 공책 클릭 대기 (notebookButton)
+///   5. 카메라 전환 (cameraTransition MMF)
+///   6. StatAllocatorUI 활성화 → 타이핑 reveal
 ///
 /// [Inspector 연결]
 ///   narrator        : NarratorRouter
 ///   titleData       : TitleData
-///   titlePlayer     : TitlePlayerController
-///   notebook        : 공책 오브젝트의 NotebookInteractable
+///   marbleSpawner   : MarbleSpawner
+///   notebookButton  : NoteBook 오브젝트 위에 붙은 Button
 ///   statAllocatorUI : StatAllocatorUI
+///   cameraTransition : 공책 클릭 후 카메라 확대 MMF_Player
 /// </summary>
 public class TitleP02Controller : MonoBehaviour
 {
@@ -27,13 +30,14 @@ public class TitleP02Controller : MonoBehaviour
     [SerializeField] private TitleData titleData;
 
     [Header("Interact")]
-    [SerializeField] private TitlePlayerController titlePlayer;
-    [SerializeField] private NotebookInteractable notebook;
     [SerializeField] private MarbleSpawner marbleSpawner;
-
+    [SerializeField] private Button notebookButton;
 
     [Header("UI")]
     [SerializeField] private StatAllocatorUI statAllocatorUI;
+
+    [Header("Feel")]
+    [SerializeField] private MMF_Player cameraTransition;
 
     public IEnumerator Run(Action onComplete)
     {
@@ -41,7 +45,7 @@ public class TitleP02Controller : MonoBehaviour
         if (narrator != null && titleData?.p02PreBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.p02PreBlocks);
 
-        // 2. 구슬/별똥별 등장 (TODO)
+        // 2. 구슬 등장
         if (marbleSpawner != null)
             yield return StartCoroutine(marbleSpawner.SpawnAll());
 
@@ -49,40 +53,27 @@ public class TitleP02Controller : MonoBehaviour
         if (narrator != null && titleData?.p02PostBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.p02PostBlocks);
 
-        // 4. Look + 공책 클릭 대기
-        if (notebook != null && titlePlayer != null)
+        // 4. 공책 클릭 대기    
+        if (notebookButton != null)
         {
             bool clicked = false;
-            Action onClicked = () => clicked = true;
-            notebook.OnClicked += onClicked;
+            notebookButton.onClick.AddListener(() => clicked = true);
 
-            titlePlayer.EnableLook();
-            titlePlayer.EnableInteract();
-
-            Debug.Log("[TitleP02] 공책 클릭 대기 중...");
             yield return new WaitUntil(() => clicked);
 
-            titlePlayer.DisableInteract();
-            titlePlayer.DisableLook();
-            notebook.OnClicked -= onClicked;
-            Debug.Log("[TitleP02] 공책 클릭 확인, 다음 단계로");
-        }
-        else
-        {
-            Debug.LogWarning("[TitleP02] notebook 또는 titlePlayer 미연결 — 클릭 단계 스킵");
-        }
+            notebookButton.onClick.RemoveAllListeners();
 
-        // 5. 공책 확대 애니메이션 (TODO)
-        // yield return notebookAnimator.Open();
+            // 5. 카메라 전환
+            if (cameraTransition != null)
+            {
+                cameraTransition.PlayFeedbacks();
+                yield return new WaitForSeconds(cameraTransition.TotalDuration + 0.1f);
+            }
+        }   
 
         // 6. 스탯 분배 UI
-        // if (statAllocatorUI != null)
-        // {
-        //     bool confirmed = false;
-        //     statAllocatorUI.Activate(onConfirmCallback: () => confirmed = true);
-        //     yield return new WaitUntil(() => confirmed);
-        //     statAllocatorUI.Deactivate();
-        // }
+        if (statAllocatorUI != null)
+            yield return StartCoroutine(statAllocatorUI.Activate());
 
         onComplete?.Invoke();
     }
