@@ -29,6 +29,8 @@ public class TitleP02Controller : MonoBehaviour
     [Header("Interact")]
     [SerializeField] private TitlePlayerController titlePlayer;
     [SerializeField] private NotebookInteractable notebook;
+    [SerializeField] private MarbleSpawner marbleSpawner;
+
 
     [Header("UI")]
     [SerializeField] private StatAllocatorUI statAllocatorUI;
@@ -40,7 +42,8 @@ public class TitleP02Controller : MonoBehaviour
             yield return narrator.ShowBlocks(titleData.p02PreBlocks);
 
         // 2. 구슬/별똥별 등장 (TODO)
-        // yield return marbleAnimator.Appear();
+        if (marbleSpawner != null)
+            yield return StartCoroutine(marbleSpawner.SpawnAll());
 
         // 3. 나레이터 (공책 클릭 유도)
         if (narrator != null && titleData?.p02PostBlocks?.Length > 0)
