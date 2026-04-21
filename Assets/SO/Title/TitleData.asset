@@ -12,16 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9e06fd6d96b9d4e98e5263df8f96cb, type: 3}
   m_Name: TitleData
   m_EditorClassIdentifier: Assembly-CSharp::TitleData
-  introBlocks: []
+  introBlocks:
+  - text: 
+    channel: 1
+    pauseAfter: 0
+    shakeIntensity: 0
+    shakeFrequency: 0
+    appendMode: 0
+  postNotebookBlocks: []
   allocateBlocks:
   - text: 
     channel: 0
     pauseAfter: 0
     shakeIntensity: 0
     shakeFrequency: 10
+    appendMode: 1
   confirmBlocks:
   - text: 
     channel: 0
     pauseAfter: 0
     shakeIntensity: 0
     shakeFrequency: 10
+    appendMode: 1

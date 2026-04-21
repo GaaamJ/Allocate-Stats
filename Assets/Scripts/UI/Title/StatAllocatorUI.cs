@@ -1,49 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
-/// Phase 02의 스탯 분배 UI.
+/// P02 스탯 분배 UI.
+/// 스탯 로직만 담당 — 흐름 제어는 TitleP02Controller.
 ///
 /// [Inspector 연결]
 ///   statData           : StatData SO
 ///   statRowPrefab      : StatRowUI 프리팹
-///   rowParent          : 행 부모 Transform (VerticalLayoutGroup 권장)
+///   rowParent          : 행 부모 Transform
 ///   remainingPointsTMP : 남은 포인트 표시 TMP
 ///   confirmButton      : 배분 완료 버튼
-///   screenNarrator     : ScreenNarrator — 호버 설명 전달용
+///   screenNarrator     : ScreenNarrator — 호버 설명용
 /// </summary>
 public class StatAllocatorUI : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private StatData statData;
 
-    [Header("UI References")]
+    [Header("UI")]
     [SerializeField] private StatRowUI statRowPrefab;
     [SerializeField] private Transform rowParent;
     [SerializeField] private TextMeshProUGUI remainingPointsTMP;
     [SerializeField] private Button confirmButton;
 
-    [Header("Narrator — 호버 설명 전달 (ScreenNarrator)")]
+    [Header("Narrator")]
     [SerializeField] private ScreenNarrator screenNarrator;
 
     private readonly Dictionary<StatType, int> allocation = new();
     private readonly Dictionary<StatType, StatRowUI> rows = new();
     private int remainingPoints;
+    private Action onConfirm;
 
     private void Awake()
     {
-        foreach (StatType t in System.Enum.GetValues(typeof(StatType)))
+        foreach (StatType t in Enum.GetValues(typeof(StatType)))
             allocation[t] = 0;
 
         remainingPoints = PlayerStats.TOTAL_POINTS;
     }
 
-    // ── 활성화 / 비활성화 ────────────────────────────────
+    // ── 공개 API ──────────────────────────────────────────
 
-    public void Activate()
+    public void Activate(Action onConfirmCallback = null)
     {
+        onConfirm = onConfirmCallback;
         gameObject.SetActive(true);
         BuildRows();
         UpdateRemaining();
@@ -52,10 +56,16 @@ public class StatAllocatorUI : MonoBehaviour
 
     public void Deactivate()
     {
+        confirmButton.onClick.RemoveListener(OnConfirmClicked);
         gameObject.SetActive(false);
     }
 
-    // ── 행 생성 ──────────────────────────────────────────
+    public void CommitStats()
+    {
+        PlayerStats.Instance.Apply(allocation);
+    }
+
+    // ── 내부 ──────────────────────────────────────────────
 
     private void BuildRows()
     {
@@ -71,8 +81,6 @@ public class StatAllocatorUI : MonoBehaviour
             rows[entry.type] = row;
         }
     }
-
-    // ── 포인트 조작 ──────────────────────────────────────
 
     private void TrySet(StatType type, int newVal)
     {
@@ -98,25 +106,9 @@ public class StatAllocatorUI : MonoBehaviour
         confirmButton.interactable = true;
     }
 
-    // ── 랜덤 배분 (Phase 03) ─────────────────────────────
-
-    public void RandomizeRemaining()
-    {
-        PlayerStats.Instance.RandomizeRemaining(new Dictionary<StatType, int>(allocation), remainingPoints);
-        foreach (var kv in allocation)
-            if (rows.TryGetValue(kv.Key, out var row))
-                row.SetValue(PlayerStats.Instance.Get(kv.Key));
-    }
-
-    // ── 확정 (Phase 04) ──────────────────────────────────
-
-    public void CommitStats()
-    {
-        PlayerStats.Instance.Apply(allocation);
-    }
-
     private void OnConfirmClicked()
     {
-        FindFirstObjectByType<TitleSceneController>()?.OnAllocateConfirmed();
+        CommitStats();
+        onConfirm?.Invoke();
     }
 }

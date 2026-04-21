@@ -6,8 +6,14 @@ using Unity.Cinemachine;
 /// 1인칭 플레이어 컨트롤러. PlayerControllerStub 교체 구현체.
 ///
 /// [모드]
-///   Title : Look만 가능. 초기 forward 기준 Yaw/Pitch clamp.
+///   Title : Look 가능 (Yaw/Pitch clamp). 이동 없음.
 ///   FPS   : WASD 이동 + Look + Interact(Raycast) 가능.
+///
+/// [Look 잠금]
+///   DisableLook() — Look 입력 차단. 모드 무관하게 동작.
+///   EnableLook()  — Look 입력 복원.
+///   TitleScene 전체에서 DisableLook() 기본 적용,
+///   P02에서만 EnableLook() / DisableLook() 으로 제어.
 ///
 /// [입력 — PlayerInputActions.Player 액션맵]
 ///   Move     — Vector2 : WASD 이동
@@ -63,6 +69,7 @@ public class PlayerController : PlayerControllerStub
     private Rigidbody _rb;
     private ControlMode _currentMode;
     private bool _movementEnabled = true;
+    private bool _lookEnabled = true;
 
     private PlayerInput _actions;
     private PlayerInput.PlayerActions _player;
@@ -96,6 +103,8 @@ public class PlayerController : PlayerControllerStub
 
     private void Update()
     {
+        if (!_lookEnabled) return;
+
         Vector2 lookDelta = _player.Look.ReadValue<Vector2>() * sensitivity;
         switch (_currentMode)
         {
@@ -109,6 +118,13 @@ public class PlayerController : PlayerControllerStub
         if (!_movementEnabled || _currentMode != ControlMode.FPS) return;
         UpdateFPSMove();
     }
+
+    // ── Look 잠금 ─────────────────────────────────────────
+
+    public void DisableLook() => _lookEnabled = false;
+    public void EnableLook() => _lookEnabled = true;
+
+    // ── Movement ─────────────────────────────────────────
 
     public override void EnableMovement()
     {
@@ -134,6 +150,8 @@ public class PlayerController : PlayerControllerStub
         SetCursorLocked(mode == ControlMode.FPS);
     }
 
+    // ── Look ─────────────────────────────────────────────
+
     private void UpdateTitleLook(Vector2 delta)
     {
         _yaw += delta.x;
@@ -155,6 +173,8 @@ public class PlayerController : PlayerControllerStub
         ApplyRotation();
     }
 
+    // ── Move ─────────────────────────────────────────────
+
     private void UpdateFPSMove()
     {
         Vector2 input = _player.Move.ReadValue<Vector2>();
@@ -163,6 +183,8 @@ public class PlayerController : PlayerControllerStub
         vel.y = _rb.linearVelocity.y + gravity * Time.fixedDeltaTime;
         _rb.linearVelocity = vel;
     }
+
+    // ── Interact ─────────────────────────────────────────
 
     private void HandleInteract()
     {
@@ -174,6 +196,8 @@ public class PlayerController : PlayerControllerStub
                             out RaycastHit hit, interactRange, interactLayer))
             hit.collider.GetComponentInParent<InteractableObject>()?.OnInteract();
     }
+
+    // ── 헬퍼 ─────────────────────────────────────────────
 
     private void ApplyRotation()
     {
