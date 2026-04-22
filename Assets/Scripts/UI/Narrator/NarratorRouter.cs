@@ -84,7 +84,6 @@ public class NarratorRouter : MonoBehaviour
     {
         screenNarrator?.Clear();
         worldNarrator?.Clear();
-        // Paper는 Phase 종료 시 초기화하지 않음 — PaperNarrator.Clear() 별도 호출 필요
     }
 
     /// <summary>Paper 포함 모든 채널 클리어 (방 전환 시 호출).</summary>
