@@ -114,7 +114,6 @@ public class MarbleSpawner : MonoBehaviour
 
         yield return new WaitUntil(() => settledCount >= total);
 
-        Debug.Log("[MarbleSpawner] 전체 구슬 안착 완료");
         OnAllSettled?.Invoke();
         onAllSettled?.Invoke();
     }

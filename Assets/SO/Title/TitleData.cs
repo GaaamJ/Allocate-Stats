@@ -2,7 +2,10 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "TitleData", menuName = "AllocateStats/TitleData")]
 public class TitleData : ScriptableObject
-{
+{   
+    [Header("P00 — 프롤로그")]
+    public NarrationBlock[] prologueBlocks;
+
     [Header("P01 — 가면 등장 후")]
     public NarrationBlock[] introBlocks;
 
@@ -15,6 +18,12 @@ public class TitleData : ScriptableObject
     [Header("P02 — 구슬 등장 후 / 공책 클릭 유도")]
     public NarrationBlock[] p02PostBlocks;
 
-    [Header("P03 — 스탯 확정")]
-    public NarrationBlock[] confirmBlocks;
+    [Header("P02 - 공책 클릭 후 공책에 띄울 텍스트")]
+    public NarrationBlock[] p02NotebookBlocks;
+
+    [Header("P03_01")]
+    public NarrationBlock[] p03_01Blocks;
+
+    [Header("P03_02")]
+    public NarrationBlock[] p03_02Blocks;
 }

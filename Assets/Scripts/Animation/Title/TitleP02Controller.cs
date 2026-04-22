@@ -69,12 +69,18 @@ public class TitleP02Controller : MonoBehaviour
                 cameraTransition.PlayFeedbacks();
                 yield return new WaitForSeconds(cameraTransition.TotalDuration + 0.1f);
             }
-        }   
+        }
+
+        // 5-1. 나레이터 (공책 클릭 후)
+        if (narrator != null && titleData?.p02NotebookBlocks?.Length > 0)
+            yield return narrator.ShowBlocks(titleData.p02NotebookBlocks);
+
 
         // 6. 스탯 분배 UI
         if (statAllocatorUI != null)
             yield return StartCoroutine(statAllocatorUI.Activate());
 
+        narrator.ClearAllIncludingPaper();
         onComplete?.Invoke();
     }
 }

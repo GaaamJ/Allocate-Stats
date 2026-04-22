@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 
 /// <summary>
 /// P02 스탯 분배 UI. 씬에 미리 배치된 StatRowUI 배열을 순서대로 reveal.
@@ -38,6 +39,8 @@ public class StatAllocatorUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI signatureTMP;
     [SerializeField] private string signatureString = "■■■■■■■■■■■■";
     [SerializeField] private float signatureInterval = 0.08f;
+    [Header("Signature")]
+    [SerializeField] private MMF_Player signatureAppearFeel;
 
     [Header("Reveal")]
     [Tooltip("Row 간 reveal 시작 딜레이. 0이면 순서대로 완료 후 다음 시작.")]
@@ -65,8 +68,16 @@ public class StatAllocatorUI : MonoBehaviour
     /// </summary>
     public IEnumerator Activate(Action onConfirm = null)
     {
+        signatureButton.gameObject.SetActive(false);
         InitRows();
         yield return StartCoroutine(RevealAllRows());
+
+        signatureButton.gameObject.SetActive(true); // 켜도 alpha 0이라 안 보임
+        if (signatureAppearFeel != null)
+        {
+            signatureAppearFeel.PlayFeedbacks();
+            yield return new WaitForSeconds(signatureAppearFeel.TotalDuration);
+        }
 
         // 서명 버튼 활성화 + 클릭 대기
         if (signatureButton != null)

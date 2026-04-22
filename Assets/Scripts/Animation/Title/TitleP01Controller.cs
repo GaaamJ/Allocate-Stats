@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
+using MoreMountains.Feedbacks;
 
 public class TitleP01Controller : MonoBehaviour
 {
@@ -10,9 +12,22 @@ public class TitleP01Controller : MonoBehaviour
     [Header("Narration")]
     [SerializeField] private NarratorRouter narrator;
     [SerializeField] private TitleData titleData;
+    [Header("FEEL")]
+    [SerializeField] private MMF_Player appearBlackScreen;
+    [SerializeField] private MMF_Player blackScreenFadeout;
 
     public IEnumerator Run(Action onComplete)
     {
+        if (appearBlackScreen != null)
+            appearBlackScreen.PlayFeedbacks();
+
+        if (narrator != null && titleData?.prologueBlocks?.Length > 0)
+            yield return narrator.ShowBlocks(titleData.prologueBlocks);
+
+
+        if (blackScreenFadeout != null)
+            blackScreenFadeout.PlayFeedbacks();
+
         // 1. 가면 등장
         if (maskAnimator)
             yield return maskAnimator.Appear();
@@ -29,6 +44,7 @@ public class TitleP01Controller : MonoBehaviour
         if (narrator != null && titleData?.postNotebookBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.postNotebookBlocks);
 
+        narrator.ClearAllIncludingPaper();
         onComplete?.Invoke();
     }
 }

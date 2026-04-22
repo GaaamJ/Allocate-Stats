@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ public class TitleP00Controller : MonoBehaviour
 {
     [SerializeField] private TitleSceneController titleSceneController;
     [SerializeField] private GameObject p00Canvas;
+    [SerializeField] private MMF_Player fadeIn;
 
     private bool _done = false;
 
