@@ -13,13 +13,10 @@ public class TitleP01Controller : MonoBehaviour
     [SerializeField] private NarratorRouter narrator;
     [SerializeField] private TitleData titleData;
     [Header("FEEL")]
-    [SerializeField] private MMF_Player appearBlackScreen;
     [SerializeField] private MMF_Player blackScreenFadeout;
 
     public IEnumerator Run(Action onComplete)
     {
-        if (appearBlackScreen != null)
-            appearBlackScreen.PlayFeedbacks();
 
         if (narrator != null && titleData?.prologueBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.prologueBlocks);

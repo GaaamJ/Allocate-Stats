@@ -18,6 +18,12 @@ public class TitleP00Controller : MonoBehaviour
 
     private bool _done = false;
 
+    private void Start()
+    {
+        if (fadeIn != null)
+            fadeIn.PlayFeedbacks();
+    }
+
     private void Update()
     {
         if (_done) return;
