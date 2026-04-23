@@ -73,3 +73,26 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+*.md
+Assets/Docs.meta
+Assets/Docs/Narrator Sys.md.meta
+Assets/Docs/Pixelation.md.meta
+Assets/Docs/Player Sys.md.meta
+Assets/Docs/Room.md.meta
+Assets/Docs/Stat Design.md.meta
+Assets/Docs/Stroy.md.meta
+Assets/Docs/Title.md.meta
+Assets/Docs/개시.md.meta
+Assets/Docs/거울.md.meta
+Assets/Docs/괴물.md.meta
+Assets/Docs/기획서.md.meta
+Assets/Docs/속삭임.md.meta
+Assets/Docs/앙코르.md.meta
+Assets/Docs/엔딩.md.meta
+Assets/Docs/연극.md.meta
+Assets/Docs/오늘 작업 정리 (26.04.22).md.meta
+Assets/Docs/자비.md.meta
+Assets/Docs/정체성.md.meta
+Assets/Docs/제단.md.meta
+Assets/Docs/질문.md.meta
+Assets/Docs/할 일.md.meta
