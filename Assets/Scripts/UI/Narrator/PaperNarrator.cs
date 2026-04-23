@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Paper 채널 나레이터.
 /// PaperMesh(3D) 위 Canvas에 지시사항을 타이핑으로 표시.
-/// 블록마다 초기화 (appendMode = false 기본값).
+/// 기본값 appendMode = true (누적 모드). false로 설정 시 블록마다 초기화.
 /// 타이핑 완료 후 흔들림 — NarrationBlock.shakeIntensity로 조정.
 ///
 /// [씬 구조]
