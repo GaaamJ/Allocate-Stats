@@ -16,8 +16,8 @@ TagManager:
   - Interactable
   - Entity
   - Trigger
-  - TextLayer
-  - 
+  - PaperTextLayer
+  - PaperBGLayer
   - 
   - 
   - 
