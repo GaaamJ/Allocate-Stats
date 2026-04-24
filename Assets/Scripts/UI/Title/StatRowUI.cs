@@ -132,6 +132,15 @@ public class StatRowUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     // ── 값 갱신 ──────────────────────────────────────────
 
+    public void ShowImmediate(int val)
+    {
+        if (labelTMP) labelTMP.maxVisibleCharacters = int.MaxValue;
+        foreach (var bg in segmentBGs)
+            if (bg) bg.gameObject.SetActive(true);
+        SetSegmentsInteractable(false);
+        SetValue(val);
+    }
+
     public void SetValue(int val)
     {
         currentValue = Mathf.Clamp(val, 0, PlayerStats.MAX_STAT);
