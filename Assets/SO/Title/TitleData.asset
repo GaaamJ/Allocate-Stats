@@ -83,8 +83,8 @@ MonoBehaviour:
       \uD6C4\uC5D4 \uB3CC\uC774\uD0AC \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
     channel: 2
     pauseAfter: 2
-    shakeIntensity: 2
-    shakeFrequency: 10
+    shakeIntensity: 0
+    shakeFrequency: 1
     appendMode: 0
   p03_01Blocks:
   - text: "\uB2F9\uC2E0\uC740 \uACB0\uC815\uC744 \uB0B4\uB838\uC2B5\uB2C8\uB2E4."
