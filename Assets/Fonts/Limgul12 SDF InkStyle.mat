@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TextMat
+  m_Name: Limgul12 SDF InkStyle
   m_Shader: {fileID: -6465566751694194690, guid: d7d4ca05eb023f04baea814a3d336152, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -99,7 +99,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _BleedScale: 1328
-    - _BleedStrength: 0.0009
+    - _BleedStrength: 0.0004
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1

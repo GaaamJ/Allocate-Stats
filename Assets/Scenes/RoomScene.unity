@@ -2862,8 +2862,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 721058475797753144, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 721058475797753144, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
       propertyPath: m_VerticalAlignment
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1145231771635186795, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1145231771635186795, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2661828294992984644, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
       propertyPath: m_AnchoredPosition.x
