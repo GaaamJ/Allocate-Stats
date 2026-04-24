@@ -20,7 +20,7 @@ public class TitleP01Controller : MonoBehaviour
 
         if (narrator != null && titleData?.prologueBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.prologueBlocks);
-
+        narrator.Clear(NarratorChannel.World);
 
         if (blackScreenFadeout != null)
             blackScreenFadeout.PlayFeedbacks();
@@ -32,6 +32,7 @@ public class TitleP01Controller : MonoBehaviour
         // 2. 나레이터 (가면 후)
         if (narrator != null && titleData?.introBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.introBlocks);
+        narrator.Clear(NarratorChannel.World);
 
         // 3. 공책 날아오기
         if (notebookAnimator)

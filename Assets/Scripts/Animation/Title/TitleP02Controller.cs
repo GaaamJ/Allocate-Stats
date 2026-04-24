@@ -44,6 +44,7 @@ public class TitleP02Controller : MonoBehaviour
         // 1. 나레이터 (구슬 등장 전)
         if (narrator != null && titleData?.p02PreBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.p02PreBlocks);
+        narrator.Clear(NarratorChannel.World);
 
         // 2. 구슬 등장
         if (marbleSpawner != null)
@@ -52,8 +53,9 @@ public class TitleP02Controller : MonoBehaviour
         // 3. 나레이터 (공책 클릭 유도)
         if (narrator != null && titleData?.p02PostBlocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.p02PostBlocks);
+        narrator.Clear(NarratorChannel.World);
 
-        // 4. 공책 클릭 대기    
+        // 4. 공책 클릭 대기
         if (notebookButton != null)
         {
             bool clicked = false;

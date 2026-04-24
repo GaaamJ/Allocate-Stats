@@ -57,6 +57,7 @@ public class TitleP03Controller : MonoBehaviour
         // 3-1. 나레이션 (paper ui)
         if (narrator != null && titleData?.p03_02Blocks?.Length > 0)
             yield return narrator.ShowBlocks(titleData.p03_02Blocks);
+        narrator.Clear(NarratorChannel.World);
 
         //4. 암전 (TODO)
         if (fadeOutFeel != null)
