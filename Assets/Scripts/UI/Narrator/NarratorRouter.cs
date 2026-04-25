@@ -18,6 +18,7 @@ public class NarratorRouter : MonoBehaviour
     [SerializeField] private ScreenNarrator screenNarrator;
     [SerializeField] private WorldNarrator worldNarrator;
     [SerializeField] private PaperNarrator paperNarrator;
+    [SerializeField] private CheckPhaseAnimator checkPhaseAnimator;
 
     // ── 공개 채널 접근 ────────────────────────────────────
 
@@ -54,6 +55,8 @@ public class NarratorRouter : MonoBehaviour
                 Debug.LogWarning($"[NarratorRouter] {block.channel} 채널 Narrator가 연결되지 않았습니다.");
                 continue;
             }
+            if (block.channel == NarratorChannel.Paper)
+                checkPhaseAnimator?.ResetGraphic();
             yield return narrator.ShowText(block);
 
             float pause = block.pauseAfter > 0f ? block.pauseAfter : 0f;
@@ -67,6 +70,8 @@ public class NarratorRouter : MonoBehaviour
     {
         IsNarrating = true;
         if (block == null) { IsNarrating = false; yield break; }
+        if (block.channel == NarratorChannel.Paper)
+            checkPhaseAnimator?.ResetGraphic();
         var narrator = Resolve(block.channel);
         if (narrator == null) { IsNarrating = false; yield break; }
         yield return narrator.ShowText(block);

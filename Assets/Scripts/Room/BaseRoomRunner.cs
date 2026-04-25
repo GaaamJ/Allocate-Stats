@@ -25,6 +25,12 @@ public abstract class BaseRoomRunner : IRoomRunner
     protected readonly HashSet<string> succeededPhases = new();
     protected RoomRunContext ctx;
 
+    /// <summary>
+    /// 판정 연출 담당. RoomSceneController에서 주입.
+    /// null이면 phase.animator 폴백 또는 연출 스킵.
+    /// </summary>
+    public CheckPhaseAnimator CheckAnimator { get; set; }
+
     // ── IRoomRunner ───────────────────────────────────────
 
     public IEnumerator Run(RoomRunContext context)
@@ -139,17 +145,23 @@ public abstract class BaseRoomRunner : IRoomRunner
     {
         var cd = phase.checkData;
 
+        ctx.Narrator.Clear(NarratorChannel.Paper);
+
         if (cd.onBeforeCheck?.Length > 0)
             yield return ctx.Narrator.ShowBlocks(cd.onBeforeCheck);
 
-        if (phase.animator != null)
+        if (CheckAnimator != null)
+            yield return CheckAnimator.OnBeforeCheck();
+        else if (phase.animator != null)
             yield return phase.animator.OnBeforeCheck();
 
         bool success = cd.checkType == CheckSystem.CheckType.Compound
             ? CheckSystem.RollCompound(cd.stat, cd.threshold, cd.stat2, cd.threshold2)
             : CheckSystem.Roll(cd.stat, cd.checkType, cd.threshold);
 
-        if (phase.animator != null)
+        if (CheckAnimator != null)
+            yield return CheckAnimator.OnAfterCheck(success);
+        else if (phase.animator != null)
             yield return phase.animator.OnAfterCheck(success);
 
         if (cd.onAfterCheck?.Length > 0)
