@@ -745,6 +745,7 @@ MonoBehaviour:
   playerController: {fileID: 463445418}
   layoutParent: {fileID: 1961225540}
   roomNameUI: {fileID: 0}
+  checkPhaseAnimator: {fileID: 1388917328}
 --- !u!114 &463445418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +820,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1531,8 +1532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4027559037186766370, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
       propertyPath: m_text
-      value: "\uB098\uB294 \uC77C\uC5B4\uB098 \uACE0\uAC1C\uB97C \uB4E4\uC5B4 \uCC9C\uC7A5\uC744\n\uBC14\uB77C\uBCF4\uB2C8
-        \uADF8\uACF3\uC5D4 \uC544\uBB34\uAC83\uB3C4 \uC5C6\uC5C8\uB2E4."
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4027559037186766370, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
       propertyPath: m_fontStyle
@@ -2208,12 +2208,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9169204907156915043, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1388917327}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
 --- !u!4 &703751537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 944340070900609547, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
+  m_PrefabInstance: {fileID: 703751536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &703751538 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9169204907156915043, guid: bb81bf2aa858be848ae79c2982f48763, type: 3}
   m_PrefabInstance: {fileID: 703751536}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &887446004 stripped
@@ -2311,7 +2319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
   playerController: {fileID: 988000809}
-  narratorRouter: {fileID: 0}
+  narratorRouter: {fileID: 677910714}
 --- !u!114 &988000809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2329,7 +2337,7 @@ MonoBehaviour:
   initialMode: 1
   moveSpeed: 4
   gravity: -20
-  sensitivity: 0.15
+  sensitivity: 0.05
   titleYawClamp: 60
   titlePitchClamp: 30
   fpsPitchMin: -80
@@ -2404,6 +2412,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room
       objectReference: {fileID: 0}
+    - target: {fileID: 2901334149688403482, guid: 06e4dc03923f3d843b767ba4637072b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2932901798692101011, guid: 06e4dc03923f3d843b767ba4637072b5, type: 3}
       propertyPath: m_LocalScale.x
       value: 1600
@@ -2468,6 +2480,132 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 196224476}
   m_SourcePrefab: {fileID: 100100000, guid: 06e4dc03923f3d843b767ba4637072b5, type: 3}
+--- !u!1 &1388917326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1388917327}
+  - component: {fileID: 1388917330}
+  - component: {fileID: 1388917329}
+  - component: {fileID: 1388917328}
+  - component: {fileID: 1388917331}
+  m_Layer: 12
+  m_Name: CheckMarkGraphic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1388917327
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388917326}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 703751538}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 190.2}
+  m_SizeDelta: {x: 0, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1388917328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388917326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7a39fe78fefc04c8afa45a0c41425c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckPhaseAnimator
+  checkMarkGraphic: {fileID: 1388917329}
+  oDrawDuration: 0.55
+  divDrawDuration: 0.18
+  xDrawDuration: 0.45
+  symbolGap: 0.08
+  waitShakeAmount: 2.5
+  waitShakeInterval: 0.07
+  waitDuration: 1.2
+  resistDistance: 24
+  resistDuration: 0.13
+  stepSize: 9
+  stepInterval: 0.5
+  stepIntervalVariance: 0.025
+  noiseAmount: 10
+  noiseFrequency: 2.8
+  overshootAmount: 3
+  overshootDuration: 0.1
+  arrivalPause: 0.35
+  symbolShakeAmount: 2
+  symbolShakeMinInterval: 0.04
+  symbolShakeMaxInterval: 0.1
+  resultColorDuration: 0.5
+--- !u!114 &1388917329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388917326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7391e920f0548414a9fc552405c5a770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckMarkGraphic
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  strokeWidth: 10
+  inkColor: {r: 0.16078432, g: 0.16078432, b: 0.16078432, a: 1}
+  symbolScale: 0.6
+  symbolSpacing: -1
+  judgeLineWidth: 2.5
+  judgeDotRadius: 3.5
+  oSuccessColor: {r: 0, g: 0, b: 0.31132078, a: 1}
+  xFailureColor: {r: 0.3584906, g: 0, b: 0, a: 1}
+--- !u!222 &1388917330
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388917326}
+  m_CullTransparentMesh: 1
+--- !u!114 &1388917331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388917326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe5ac36fa2aa1849b892119e404544d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckTest
+  stat: 0
+  checkType: 0
+  threshold: 2
+  stat2: 1
+  threshold2: 2
+  overrideStat: 0
+  overrideValue: 3
+  checkPhaseAnimator: {fileID: 1388917328}
+  narratorRouter: {fileID: 677910714}
 --- !u!1 &1847586244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,6 +3107,10 @@ PrefabInstance:
       propertyPath: paperNarrator
       value: 
       objectReference: {fileID: 887446004}
+    - target: {fileID: 5687618915527677593, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
+      propertyPath: checkPhaseAnimator
+      value: 
+      objectReference: {fileID: 1388917328}
     - target: {fileID: 5705731440306153192, guid: 6791d63ada89a374e9ca6ce0bb0dfd14, type: 3}
       propertyPath: m_Name
       value: RoomNarratorCanvas

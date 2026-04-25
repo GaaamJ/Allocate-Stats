@@ -31,6 +31,9 @@ public class RoomSceneController : MonoBehaviour
     [Header("방 이름 UI")]
     [SerializeField] private RoomNameUI roomNameUI;
 
+    [Header("판정 연출")]
+    [SerializeField] private CheckPhaseAnimator checkPhaseAnimator;
+
     private void Start()
     {
         RoomEventBus.Clear();
@@ -50,6 +53,9 @@ public class RoomSceneController : MonoBehaviour
             Debug.LogError("[RoomSceneController] Runner 선택 실패.");
             return;
         }
+
+        if (runner is BaseRoomRunner baseRunner)
+            baseRunner.CheckAnimator = checkPhaseAnimator;
 
         StartCoroutine(runner.Run(context));
     }
