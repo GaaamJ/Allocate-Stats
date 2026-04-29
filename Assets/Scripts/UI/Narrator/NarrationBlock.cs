@@ -31,6 +31,14 @@ public class NarrationBlock
     [Tooltip("Paper 채널 전용 — true면 기존 내용에 누적, false면 덮어쓰기.")]
     public bool appendMode = true;
 
+    [Header("스탯 조건부 출력")]
+    [Tooltip("켜면 PlayerStats 값을 기준으로 이 블록 출력 여부를 결정한다.")]
+    public bool useStatGate = false;
+
+    public StatType gateStat;
+    public int minStatValue = 0;
+    public int maxStatValue = PlayerStats.MAX_STAT;
+
     // ── 편의 생성자 ───────────────────────────────────────
 
     public NarrationBlock() { }
@@ -39,5 +47,14 @@ public class NarrationBlock
     {
         this.text = text;
         this.channel = channel;
+    }
+
+    public bool CanShow(PlayerStats stats)
+    {
+        if (!useStatGate) return true;
+        if (stats == null) return false;
+
+        int value = stats.Get(gateStat);
+        return value >= minStatValue && value <= maxStatValue;
     }
 }

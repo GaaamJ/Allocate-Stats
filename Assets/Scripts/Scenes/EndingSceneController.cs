@@ -6,6 +6,13 @@ public class EndingSceneController : MonoBehaviour
     [Header("Stat Paper")]
     [SerializeField] private StatPaperUI statPaperUI;
 
+    [Header("History")]
+    [SerializeField] private HistoryPaper historyPaper;
+
+    [Header("Paper Visual Branch")]
+    [SerializeField] private GameObject clearPaperVisual;
+    [SerializeField] private GameObject gameOverPaperVisual;
+
     [Header("UI")]
     [SerializeField] private Button restartButton;
     [SerializeField] private string titleSceneName = "TitleScene";
@@ -28,6 +35,8 @@ public class EndingSceneController : MonoBehaviour
         if (useTestData)
         {
             statPaperUI?.Populate(testEndingId, testSTR, testDEX, testPER, testINT, testLUK, testHUM);
+            historyPaper?.Populate(null);
+            SetPaperVisual(false);
             SetupRestartButton();
             return;
         }
@@ -45,7 +54,17 @@ public class EndingSceneController : MonoBehaviour
             stats?.HUM ?? 0
         );
 
+        historyPaper?.Populate(flow?.CheckHistory);
+        SetPaperVisual(flow?.IsEscaped == true);
         SetupRestartButton();
+    }
+
+    private void SetPaperVisual(bool isEscaped)
+    {
+        if (clearPaperVisual != null)
+            clearPaperVisual.SetActive(isEscaped);
+        if (gameOverPaperVisual != null)
+            gameOverPaperVisual.SetActive(!isEscaped);
     }
 
     private void SetupRestartButton()

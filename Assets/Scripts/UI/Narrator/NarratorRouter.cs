@@ -42,13 +42,18 @@ public class NarratorRouter : MonoBehaviour
     public IEnumerator ShowBlocks(NarrationBlock[] blocks)
     {
         IsNarrating = true;
-        if (blocks == null) yield break;
+        if (blocks == null)
+        {
+            IsNarrating = false;
+            yield break;
+        }
 
         // 채널이 하나라면 그 채널에 한 번에 위임 (순서 보장)
         // 채널이 섞여 있으면 블록 단위로 순서대로 처리
         foreach (var block in blocks)
         {
             if (block == null || string.IsNullOrEmpty(block.text)) continue;
+            if (!block.CanShow(PlayerStats.Instance)) continue;
             var narrator = Resolve(block.channel);
             if (narrator == null)
             {
@@ -70,6 +75,7 @@ public class NarratorRouter : MonoBehaviour
     {
         IsNarrating = true;
         if (block == null) { IsNarrating = false; yield break; }
+        if (!block.CanShow(PlayerStats.Instance)) { IsNarrating = false; yield break; }
         if (block.channel == NarratorChannel.Paper)
             checkPhaseAnimator?.ResetGraphic();
         var narrator = Resolve(block.channel);
