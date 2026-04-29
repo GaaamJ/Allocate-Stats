@@ -33,7 +33,7 @@ using Unity.Cinemachine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class PlayerController : PlayerControllerStub
+public class PlayerController : MonoBehaviour
 {
     public enum ControlMode { Title, FPS }
 
@@ -126,13 +126,13 @@ public class PlayerController : PlayerControllerStub
 
     // ── Movement ─────────────────────────────────────────
 
-    public override void EnableMovement()
+    public void EnableMovement()
     {
         _movementEnabled = true;
         SetCursorLocked(_currentMode == ControlMode.FPS);
     }
 
-    public override void DisableMovement()
+    public void DisableMovement()
     {
         _movementEnabled = false;
         if (_rb) _rb.linearVelocity = Vector3.zero;
