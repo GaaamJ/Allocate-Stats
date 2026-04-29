@@ -26,6 +26,12 @@ public class TitleSceneController : MonoBehaviour
 
     public Phase CurrentPhase { get; private set; } = Phase.P00;
 
+    private void Start()
+    {
+        AudioManager.PlayCue(AudioCue.TitleBgm);
+        AudioManager.PlayCue(AudioCue.TitleAmbient);
+    }
+
     public void OnP00Complete()
     {
         if (CurrentPhase != Phase.P00) return;

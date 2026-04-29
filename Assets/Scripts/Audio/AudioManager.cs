@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float masterMusicVolume = 1f;
     [SerializeField, Range(0f, 1f)] private float masterAmbientVolume = 1f;
 
+    [Header("Debug")]
+    [SerializeField] private bool logCuePlayback = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,14 +39,47 @@ public class AudioManager : MonoBehaviour
         Instance?.Play(cue);
     }
 
+    public static void StopMusicCue()
+    {
+        Instance?.StopMusic();
+    }
+
+    public static void StopAmbientCue()
+    {
+        Instance?.StopAmbient();
+    }
+
     public void Play(AudioCue cue)
     {
-        if (library == null || !library.TryGetCue(cue, out var entry)) return;
+        if (logCuePlayback)
+            Debug.Log($"[Audio] Cue requested: {cue}");
+
+        if (library == null)
+        {
+            if (logCuePlayback)
+                Debug.LogWarning($"[Audio] No AudioCueLibrary assigned. Cue skipped: {cue}");
+            return;
+        }
+
+        if (!library.TryGetCue(cue, out var entry))
+        {
+            if (logCuePlayback)
+                Debug.LogWarning($"[Audio] Cue not found or has no clips. Cue skipped: {cue}");
+            return;
+        }
 
         var clip = entry.GetRandomClip();
-        if (clip == null) return;
+        if (clip == null)
+        {
+            if (logCuePlayback)
+                Debug.LogWarning($"[Audio] Cue has no playable clip. Cue skipped: {cue}");
+            return;
+        }
 
         EnsureSources();
+
+        if (logCuePlayback)
+            Debug.Log($"[Audio] Playing {cue} as {entry.PlaybackType}: {clip.name}");
 
         switch (entry.PlaybackType)
         {

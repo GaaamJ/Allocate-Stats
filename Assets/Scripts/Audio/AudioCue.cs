@@ -20,7 +20,7 @@ public enum AudioCue
     // Mask
     MaskAppear,
     MaskApproach,
-    MaskDisappear,
+    MaskArrive,
 
     // Paper / Table
     PaperSlideOnTable,
