@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// [Inspector 연결]
 ///   - narratorRouter     : NarratorRouter
 ///   - bridge             : RoomBridge
-///   - playerController   : PlayerControllerStub (3D 구현 전까지)
+///   - playerController   : PlayerController
 ///   - layoutParent       : 생성된 오브젝트의 부모 Transform (없으면 씬 루트)
 /// </summary>
 public class RoomSceneController : MonoBehaviour
@@ -23,7 +23,7 @@ public class RoomSceneController : MonoBehaviour
 
     [Header("Bridge / Controller")]
     [SerializeField] private RoomBridge bridge;
-    [SerializeField] private PlayerControllerStub playerController;
+    [SerializeField] private PlayerController playerController;
 
     [Header("Layout — 오브젝트 동적 생성 부모 (없으면 씬 루트)")]
     [SerializeField] private Transform layoutParent;
