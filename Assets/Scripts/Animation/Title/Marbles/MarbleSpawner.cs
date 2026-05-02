@@ -53,6 +53,11 @@ public class MarbleSpawner : MonoBehaviour
     [SerializeField] private float settleSpeed = 0.05f;
     [SerializeField] private float settleDelay = 0.3f;
 
+    [Header("Drop SFX")]
+    [SerializeField] private bool playDropSfxOnBounce = true;
+    [SerializeField] private float impactMinFallSpeed = 0.25f;
+    [SerializeField] private float impactCooldown = 0.08f;
+
     public event Action OnAllSettled;
 
     // ─────────────────────────────────────────
@@ -136,12 +141,14 @@ public class MarbleSpawner : MonoBehaviour
         var feedback = marble.GetComponent<MMF_Player>();
         if (feedback != null)
         {
+            AudioManager.PlayCue(AudioCue.MarbleAppear);
             feedback.PlayFeedbacks();
             yield return new WaitForSeconds(feedback.TotalDuration);
         }
         else
         {
             // MMF 없으면 즉시 스케일 복원
+            AudioManager.PlayCue(AudioCue.MarbleAppear);
             marble.transform.localScale = Vector3.one;
         }
 
@@ -151,20 +158,43 @@ public class MarbleSpawner : MonoBehaviour
         // 낙하 중 체크 방지
         yield return new WaitForSeconds(0.3f);
 
-        // 첫 착지 감지 → 수평 속도 주입
-        yield return new WaitUntil(() => rb != null && rb.linearVelocity.y > -0.1f);
-        if (rb != null && speed > 0f)
-            rb.linearVelocity = new Vector3(rollDir.x * speed, rb.linearVelocity.y, rollDir.z * speed);
-
-        // 안착 대기
+        // 착지/바운스 감지 → 첫 착지에는 수평 속도 주입, 이후 바운스도 SFX 재생
+        bool touchedDown = false;
+        float previousYVelocity = rb.linearVelocity.y;
+        float impactTimer = impactCooldown;
         float stillTime = 0f;
         while (stillTime < settleDelay)
         {
             if (rb == null) break;
+
+            impactTimer += Time.deltaTime;
+            float currentYVelocity = rb.linearVelocity.y;
+            bool impactDetected =
+                previousYVelocity < -impactMinFallSpeed &&
+                currentYVelocity > -0.1f &&
+                impactTimer >= impactCooldown;
+
+            if (impactDetected)
+            {
+                impactTimer = 0f;
+
+                if (playDropSfxOnBounce)
+                    AudioManager.PlayCue(AudioCue.MarbleDrop);
+
+                if (!touchedDown)
+                {
+                    touchedDown = true;
+                    if (speed > 0f)
+                        rb.linearVelocity = new Vector3(rollDir.x * speed, rb.linearVelocity.y, rollDir.z * speed);
+                }
+            }
+
             if (rb.linearVelocity.magnitude < settleSpeed)
                 stillTime += Time.deltaTime;
             else
                 stillTime = 0f;
+
+            previousYVelocity = rb.linearVelocity.y;
             yield return null;
         }
 

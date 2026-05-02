@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: 08.MercyLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 7981320379478458322, guid: 5ef690616e64ecf4a90bb2e1d9b44779, type: 3}
+  - prefab: {fileID: 7265164556806341264, guid: a4ecc84922255b14aabfb2359d82992f, type: 3}
+    objectID: Door
+    position: {x: 0, y: 2.5, z: 22}
+    rotation: {x: -90, y: 0, z: 0}
+  - prefab: {fileID: 6793580963554944546, guid: c1148ba3e092e81418bece246ea97418, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 10, z: 7}
     rotation: {x: 0, y: 0, z: 0}

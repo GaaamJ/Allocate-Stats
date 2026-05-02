@@ -13,60 +13,777 @@ MonoBehaviour:
   m_Name: 09.EncoreCheck
   m_EditorClassIdentifier: Assembly-CSharp::EncoreRoomData
   planets:
-  - planetName: 
-    isMercy: 0
-    narration:
-    - "\uD0DC\uC591"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
   - planetName: "\uC218\uC131"
     isMercy: 0
-    narration:
-    - "\uC218\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uAE08\uC131"
     isMercy: 0
-    narration:
-    - "\uAE08\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uC9C0\uAD6C"
-    isMercy: 1
-    narration:
-    - "\uC9C0\uAD6C"
-    mercyDeathNarration:
-    - "\uC0AC\uB9DD"
-    mercySurviveNarration:
-    - "\uB2E4\uC74C \uBC29"
+    isMercy: 0
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uD654\uC131"
     isMercy: 0
-    narration:
-    - "\uD654\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uBAA9\uC131"
     isMercy: 0
-    narration:
-    - "\uBAA9\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uD1A0\uC131"
     isMercy: 0
-    narration:
-    - "\uD1A0\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uCC9C\uC655\uC131"
     isMercy: 0
-    narration:
-    - "\uCC9C\uC655\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
   - planetName: "\uD574\uC655\uC131"
     isMercy: 0
-    narration:
-    - "\uD574\uC655\uC131"
-    mercyDeathNarration: []
-    mercySurviveNarration: []
-  mercyDeathEndingID: "\uC548\uC2DD"
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 
+  - planetName: "\uD0DC\uC591"
+    isMercy: 0
+    phases:
+    - phaseID: Door
+      triggerCondition: 1
+      triggerObjectID: Door
+      requiredPhaseIDs: []
+      requiredSuccessPhaseIDs: []
+      isRepeatable: 0
+      requirementFailNarration: []
+      onEnter:
+      - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\n\uD589\uB3D9:
+          \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
+          \uB2F9\uAE30\uC138\uC694."
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
+          \uB208\uC744 \uAC10\uC73C\uC138\uC694.\n"
+        channel: 0
+        pauseAfter: 0
+        shakeIntensity: 0
+        shakeFrequency: 0
+        appendMode: 0
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 0
+      exitCondition: 0
+      checkData:
+        onBeforeCheck: []
+        onAfterCheck: []
+        stat: 0
+        checkType: 0
+        threshold: 0
+        stat2: 0
+        threshold2: 0
+        onSuccess:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        onFailure:
+          narration: []
+          type: 0
+          targetPhaseID: 
+          endingID: 
+          transitionNarration: []
+        summaryText_success: 
+        summaryText_failure: 
+      outcome:
+        narration:
+        - text: "\uB2F9\uC2E0\uC740 \uBB38\uACE0\uB9AC\uB97C \uC7A1\uACE0 \uB3CC\uB9AC\uACE0
+            \uB2F9\uAE34 \uB4A4\n\uBB38\uC5D0 \uB4E4\uC5B4\uAC00 \uB208\uC744 \uAC10\uC558\uC2B5\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
+          channel: 0
+          pauseAfter: 0
+          shakeIntensity: 0
+          shakeFrequency: 0
+          appendMode: 0
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 0
+        type: 2
+        targetPhaseID: 
+        endingID: 
+        transitionNarration: []
+      animator: {fileID: 0}
+    mercyDeathEndingID: 

@@ -30,6 +30,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 0
     checkData:
       onBeforeCheck: []
@@ -44,11 +49,13 @@ MonoBehaviour:
         type: 0
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration: []
         type: 0
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: 
       summaryText_failure: 
     outcome:
@@ -58,18 +65,29 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
-      - text: "\uB108\uB3C4\uB179\uC544\uB0B4\uB824\uB77C\uB0B4\uAC8C\uC9C8\uBB38\uD574\uB77C\uB098\uB294\uB2F5\uD558\uB9AC\uB77C\r\n\uADF8\uB300\uB294\uC0DD\uAC01\uD558\uB9AC\uB77C\uC6B0\uB454\uD55C\uBA38\uB9AC\uB85C\r\n\uADF8\uB9AC\uD558\uC5EC\uADF8\uB300\uB294\uC601\uC0DD\uC744\uC0B4\uC218\uC788\uC73C\uB9AC\uB77C"
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
+      - text: "\uB108\uB3C4\uB179\uC544\uB0B4\uB824\uB77C\n\uB0B4\uAC8C\uC9C8\uBB38\uD574\uB77C\uB098\uB294\uB2F5\uD558\uB9AC\uB77C\r\n\uADF8\uB300\uB294\uC0DD\uAC01\uD558\uB9AC\uB77C\uC6B0\uB454\uD55C\uBA38\uB9AC\uB85C\r\n\uADF8\uB9AC\uD558\uC5EC\uADF8\uB300\uB294\uC601\uC0DD\uC744\uC0B4\uC218\uC788\uC73C\uB9AC\uB77C"
         channel: 0
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: PHONE
     triggerCondition: 1
-    triggerObjectID: (Test)Phone
+    triggerObjectID: Telephone
     requiredPhaseIDs: []
     requiredSuccessPhaseIDs: []
     isRepeatable: 0
@@ -81,6 +99,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -90,12 +113,22 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       onAfterCheck:
       - text: "\uB2F9\uC2E0\uC740 \uB2F5\uC744 \uB4E3\uC2B5\uB2C8\uB2E4."
         channel: 1
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       stat: 3
       checkType: 0
       threshold: 2
@@ -109,9 +142,26 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
+        - text: "\uC0AC\uACE0: \uC5B4\uB290 \uBB38\uC774\uB4E0, \uB2F9\uC2E0\uC740
+            \uAE38\uC744 \uC555\uB2C8\uB2E4."
+          channel: 2
+          pauseAfter: 1.5
+          shakeIntensity: 0.8
+          shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uB2F9\uC2E0\uC740 \uB204\uAD70\uAC00\uBD80\uD130 \uC62C\uBC14\uB978
@@ -120,9 +170,25 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
+        - text: "\uD589\uB3D9: \uBB38\uC744 \uACE0\uB974\uC138\uC694."
+          channel: 1
+          pauseAfter: 1.5
+          shakeIntensity: 0.8
+          shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uB179\uC544\uB0B4\uB9B0 \uC218\uC740\uC758
         \uB9D0\uC5D0\uC11C \uC9C4\uC2E4\uC744 \uCC3E\uC544\uB0C8\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uB2F9\uC2E0\uC740 \uC18D\uC558\uC2B5\uB2C8\uB2E4."
@@ -133,13 +199,19 @@ MonoBehaviour:
         pauseAfter: 0
         shakeIntensity: 0
         shakeFrequency: 10
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 1
       targetPhaseID: 
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: CORRECTLEFTDOOR
     triggerCondition: 1
-    triggerObjectID: (Test)LeftDoor
+    triggerObjectID: LeftDoor
     requiredPhaseIDs: []
     requiredSuccessPhaseIDs:
     - PHONE
@@ -151,6 +223,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\r\n\uD589\uB3D9:
         \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\r\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
         \uB2F9\uAE30\uC138\uC694."
@@ -158,12 +235,22 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694."
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 0
     checkData:
       onBeforeCheck:
@@ -172,6 +259,11 @@ MonoBehaviour:
         pauseAfter: 0
         shakeIntensity: 0
         shakeFrequency: 10
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       onAfterCheck: []
       stat: 3
       checkType: 0
@@ -185,9 +277,15 @@ MonoBehaviour:
           pauseAfter: 0
           shakeIntensity: 0
           shakeFrequency: 10
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: 
@@ -195,9 +293,15 @@ MonoBehaviour:
           pauseAfter: 0
           shakeIntensity: 0
           shakeFrequency: 10
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uB204\uAD70\uAC00\uC758 \uB9D0\uC5D0\uC11C
         \uC9C4\uC2E4\uC744 \uCC3E\uC544\uB0C8\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uB2F9\uC2E0\uC740 \uC18D\uC558\uC2B5\uB2C8\uB2E4."
@@ -209,18 +313,29 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
         channel: 1
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 2
       targetPhaseID: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: CORRECTRIGHTDOOR
     triggerCondition: 1
-    triggerObjectID: (Test)RightDoor
+    triggerObjectID: RightDoor
     requiredPhaseIDs: []
     requiredSuccessPhaseIDs:
     - PHONE
@@ -232,6 +347,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\r\n\uD589\uB3D9:
         \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\r\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
         \uB2F9\uAE30\uC138\uC694."
@@ -239,12 +359,22 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694."
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 0
     checkData:
       onBeforeCheck:
@@ -253,6 +383,11 @@ MonoBehaviour:
         pauseAfter: 0
         shakeIntensity: 0
         shakeFrequency: 10
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       onAfterCheck: []
       stat: 3
       checkType: 0
@@ -266,9 +401,15 @@ MonoBehaviour:
           pauseAfter: 0
           shakeIntensity: 0
           shakeFrequency: 10
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: 
@@ -276,9 +417,15 @@ MonoBehaviour:
           pauseAfter: 0
           shakeIntensity: 0
           shakeFrequency: 10
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 1
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uB204\uAD70\uAC00\uC758 \uB9D0\uC5D0\uC11C
         \uC9C4\uC2E4\uC744 \uCC3E\uC544\uB0C8\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uB2F9\uC2E0\uC740 \uC18D\uC558\uC2B5\uB2C8\uB2E4."
@@ -290,18 +437,29 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       - text: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
         channel: 1
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 2
       targetPhaseID: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: LUKLEFTDOOR
     triggerCondition: 1
-    triggerObjectID: (Test)LeftDoor
+    triggerObjectID: LeftDoor
     requiredPhaseIDs:
     - PHONE
     requiredSuccessPhaseIDs: []
@@ -313,6 +471,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\r\n\uD589\uB3D9:
         \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\r\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
         \uB2F9\uAE30\uC138\uC694."
@@ -320,12 +483,22 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694."
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -335,6 +508,11 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       onAfterCheck: []
       stat: 4
       checkType: 1
@@ -348,9 +526,15 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 2
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uB2F9\uC2E0\uC740 \uB179\uC544\uB0B4\uB824 \uC77C\uBD80\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740
@@ -359,9 +543,15 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 4
         targetPhaseID: 
         endingID: "\uBD88\uB85C\uBD88\uC0AC"
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uBB34\uC0AC\uD788 \uB2E4\uC74C \uBC29\uC73C\uB85C
         \uB098\uC544\uAC14\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uB2F9\uC2E0\uC740 \uC218\uC740\uC758 \uC77C\uBD80\uAC00
@@ -373,13 +563,19 @@ MonoBehaviour:
         pauseAfter: 0
         shakeIntensity: 0
         shakeFrequency: 10
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 2
       targetPhaseID: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}
   - phaseID: LUKRIGHTDOOR
     triggerCondition: 1
-    triggerObjectID: (Test)LeftRightDoor
+    triggerObjectID: RightDoor
     requiredPhaseIDs:
     - PHONE
     requiredSuccessPhaseIDs: []
@@ -391,6 +587,11 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694.\r\n\uD589\uB3D9:
         \uBB38\uACE0\uB9AC\uB97C \uB3CC\uB9AC\uC138\uC694.\r\n\uD589\uB3D9: \uBB38\uACE0\uB9AC\uB97C
         \uB2F9\uAE30\uC138\uC694."
@@ -398,12 +599,22 @@ MonoBehaviour:
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     - text: "\uD589\uB3D9: \uBB38\uC5D0 \uB4E4\uC5B4\uAC00\uC138\uC694.\n\uD589\uB3D9:
         \uB208\uC744 \uAC10\uC73C\uC138\uC694."
       channel: 2
       pauseAfter: 1.5
       shakeIntensity: 0.8
       shakeFrequency: 8
+      appendMode: 1
+      useStatGate: 0
+      gateStat: 0
+      minStatValue: 0
+      maxStatValue: 4
     exitCondition: 1
     checkData:
       onBeforeCheck:
@@ -413,6 +624,11 @@ MonoBehaviour:
         pauseAfter: 1.5
         shakeIntensity: 0.8
         shakeFrequency: 8
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       onAfterCheck: []
       stat: 4
       checkType: 1
@@ -426,9 +642,15 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 2
         targetPhaseID: 
         endingID: 
+        transitionNarration: []
       onFailure:
         narration:
         - text: "\uB2F9\uC2E0\uC740 \uB179\uC544\uB0B4\uB824 \uC77C\uBD80\uAC00 \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\r\n\uB2F9\uC2E0\uC740
@@ -437,9 +659,15 @@ MonoBehaviour:
           pauseAfter: 1.5
           shakeIntensity: 0.8
           shakeFrequency: 8
+          appendMode: 1
+          useStatGate: 0
+          gateStat: 0
+          minStatValue: 0
+          maxStatValue: 4
         type: 4
         targetPhaseID: 
         endingID: "\uBD88\uB85C\uBD88\uC0AC"
+        transitionNarration: []
       summaryText_success: "\uB2F9\uC2E0\uC740 \uBB34\uC0AC\uD788 \uB2E4\uC74C \uBC29\uC73C\uB85C
         \uB098\uC544\uAC14\uC2B5\uB2C8\uB2E4."
       summaryText_failure: "\uB2F9\uC2E0\uC740 \uC218\uC740\uC758 \uC77C\uBD80\uAC00
@@ -451,7 +679,13 @@ MonoBehaviour:
         pauseAfter: 0
         shakeIntensity: 0
         shakeFrequency: 10
+        appendMode: 1
+        useStatGate: 0
+        gateStat: 0
+        minStatValue: 0
+        maxStatValue: 4
       type: 2
       targetPhaseID: "\uB2F9\uC2E0\uC740 \uB2E4\uC74C \uBC29\uC73C\uB85C \uB098\uC544\uAC11\uB2C8\uB2E4."
       endingID: 
+      transitionNarration: []
     animator: {fileID: 0}

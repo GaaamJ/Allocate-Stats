@@ -17,13 +17,13 @@ public class RoomRunContext
     /// </summary>
     public RoomBridge Bridge { get; }
 
-    /// <summary>플레이어 이동 제어 — 3D 구현 전까지 stub.</summary>
-    public PlayerControllerStub PlayerController { get; }
+    /// <summary>플레이어 이동 제어.</summary>
+    public PlayerController PlayerController { get; }
 
     public RoomRunContext(
         NarratorRouter narrator,
         RoomBridge bridge,
-        PlayerControllerStub playerController)
+        PlayerController playerController)
     {
         Narrator = narrator;
         Bridge = bridge;

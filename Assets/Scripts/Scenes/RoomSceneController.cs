@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+using UnityEngine.InputSystem;
+#endif
 
 /// <summary>
 /// RoomScene 총괄 디스패처.
@@ -13,7 +17,7 @@ using UnityEngine.UI;
 /// [Inspector 연결]
 ///   - narratorRouter     : NarratorRouter
 ///   - bridge             : RoomBridge
-///   - playerController   : PlayerControllerStub (3D 구현 전까지)
+///   - playerController   : PlayerController
 ///   - layoutParent       : 생성된 오브젝트의 부모 Transform (없으면 씬 루트)
 /// </summary>
 public class RoomSceneController : MonoBehaviour
@@ -23,7 +27,7 @@ public class RoomSceneController : MonoBehaviour
 
     [Header("Bridge / Controller")]
     [SerializeField] private RoomBridge bridge;
-    [SerializeField] private PlayerControllerStub playerController;
+    [SerializeField] private PlayerController playerController;
 
     [Header("Layout — 오브젝트 동적 생성 부모 (없으면 씬 루트)")]
     [SerializeField] private Transform layoutParent;
@@ -33,6 +37,29 @@ public class RoomSceneController : MonoBehaviour
 
     [Header("판정 연출")]
     [SerializeField] private CheckPhaseAnimator checkPhaseAnimator;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    [Header("Debug")]
+    [SerializeField] private bool enableDebugRoomSkip = true;
+    [SerializeField] private Key debugRoomSkipKey = Key.F10;
+#endif
+
+    private readonly List<GameObject> spawnedLayoutObjects = new();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private bool debugRoomSkipRequested;
+#endif
+
+    private void OnEnable()
+    {
+        if (narratorRouter != null)
+            narratorRouter.NarrationActiveChanged += HandleNarrationActiveChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (narratorRouter != null)
+            narratorRouter.NarrationActiveChanged -= HandleNarrationActiveChanged;
+    }
 
     private void Start()
     {
@@ -60,10 +87,42 @@ public class RoomSceneController : MonoBehaviour
         StartCoroutine(runner.Run(context));
     }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private void Update()
+    {
+        if (!enableDebugRoomSkip || debugRoomSkipRequested) return;
+        if (Keyboard.current == null) return;
+
+        var keyControl = Keyboard.current[debugRoomSkipKey];
+        if (keyControl == null || !keyControl.wasPressedThisFrame) return;
+
+        debugRoomSkipRequested = true;
+        narratorRouter?.ClearAllIncludingPaper();
+        bridge?.DebugSkipCurrentRoom();
+    }
+#endif
+
+    private void OnDestroy()
+    {
+        ClearLayoutParent(false);
+    }
+
+    private void HandleNarrationActiveChanged(bool isActive)
+    {
+        if (playerController == null) return;
+
+        if (isActive)
+            playerController.DisableMovement();
+        else
+            playerController.EnableMovement();
+    }
+
     // ── 오브젝트 동적 생성 ────────────────────────────────
 
     private void SpawnInteractables()
     {
+        ClearLayoutParent(true);
+
         if (bridge.IsEncoreLoop) return;
 
         var layoutData = bridge.CurrentLayoutData;
@@ -83,7 +142,9 @@ public class RoomSceneController : MonoBehaviour
                 continue;
             }
 
-            var obj = Object.Instantiate(entry.prefab, layoutParent);
+            Transform parent = GetLayoutParent();
+            var obj = Object.Instantiate(entry.prefab, parent);
+            spawnedLayoutObjects.Add(obj);
 
             var rect = obj.GetComponent<RectTransform>();
             if (rect != null)
@@ -103,6 +164,38 @@ public class RoomSceneController : MonoBehaviour
     }
 
     // ── Runner 선택 ───────────────────────────────────────
+
+    private void ClearLayoutParent(bool createParentIfMissing)
+    {
+        for (int i = spawnedLayoutObjects.Count - 1; i >= 0; i--)
+        {
+            var obj = spawnedLayoutObjects[i];
+            if (obj == null) continue;
+            obj.SetActive(false);
+            Destroy(obj);
+        }
+        spawnedLayoutObjects.Clear();
+
+        Transform parent = createParentIfMissing ? GetLayoutParent() : layoutParent;
+        if (parent == null) return;
+
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            var child = parent.GetChild(i).gameObject;
+            child.SetActive(false);
+            Destroy(child);
+        }
+    }
+
+    private Transform GetLayoutParent()
+    {
+        if (layoutParent != null) return layoutParent;
+
+        var root = new GameObject("RuntimeRoomLayout");
+        root.transform.SetParent(transform);
+        layoutParent = root.transform;
+        return layoutParent;
+    }
 
     private void InitRoomNameUI()
     {

@@ -1088,10 +1088,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndingSceneController
   statPaperUI: {fileID: 1308320445}
+  historyPaper: {fileID: 0}
+  clearPaperVisual: {fileID: 0}
+  gameOverPaperVisual: {fileID: 0}
   restartButton: {fileID: 1369367069}
   titleSceneName: TitleScene
-  useTestData: 1
-  testEndingId: "\uC559\uAE30\uBAA8\uB760\uC139\uC2A4\uB531\uB530\uAD6C"
+  useTestData: 0
+  testEndingId: 
   testSTR: 2
   testDEX: 1
   testPER: 3
@@ -5712,6 +5715,7 @@ MonoBehaviour:
   charInterval: 0.035
   defaultPauseAfter: 0.8
   charVariance: 0
+  charactersPerTypingCue: 3
   previewTMP: {fileID: 4027559036031669401}
 --- !u!222 &3011588839591345021
 CanvasRenderer:

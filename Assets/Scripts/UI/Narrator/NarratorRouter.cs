@@ -19,6 +19,7 @@ public class NarratorRouter : MonoBehaviour
     [SerializeField] private WorldNarrator worldNarrator;
     [SerializeField] private PaperNarrator paperNarrator;
     [SerializeField] private CheckPhaseAnimator checkPhaseAnimator;
+    [SerializeField] private float defaultBlockClearDelay = 0.8f;
 
     // ── 공개 채널 접근 ────────────────────────────────────
 
@@ -31,6 +32,8 @@ public class NarratorRouter : MonoBehaviour
     /// PaperNarrator가 이 값을 확인해서 Tab 토글을 차단한다.
     /// </summary>
     public bool IsNarrating { get; private set; } = false;
+    public event System.Action<bool> NarrationActiveChanged;
+    private int narrationLockCount;
 
     // ── 라우팅 ────────────────────────────────────────────
 
@@ -41,14 +44,19 @@ public class NarratorRouter : MonoBehaviour
     /// </summary>
     public IEnumerator ShowBlocks(NarrationBlock[] blocks)
     {
-        IsNarrating = true;
-        if (blocks == null) yield break;
+        BeginNarration();
+        if (blocks == null)
+        {
+            EndNarration();
+            yield break;
+        }
 
         // 채널이 하나라면 그 채널에 한 번에 위임 (순서 보장)
         // 채널이 섞여 있으면 블록 단위로 순서대로 처리
         foreach (var block in blocks)
         {
             if (block == null || string.IsNullOrEmpty(block.text)) continue;
+            if (!block.CanShow(PlayerStats.Instance)) continue;
             var narrator = Resolve(block.channel);
             if (narrator == null)
             {
@@ -59,23 +67,24 @@ public class NarratorRouter : MonoBehaviour
                 checkPhaseAnimator?.ResetGraphic();
             yield return narrator.ShowText(block);
 
-            float pause = block.pauseAfter > 0f ? block.pauseAfter : 0f;
-            if (pause > 0f) yield return new WaitForSeconds(pause);
+            yield return ClearAfterBlock(block, narrator);
         }
-        IsNarrating = false;
+        EndNarration();
     }
 
     /// <summary>단일 블록을 채널에 맞게 출력.</summary>
     public IEnumerator ShowText(NarrationBlock block)
     {
-        IsNarrating = true;
-        if (block == null) { IsNarrating = false; yield break; }
+        BeginNarration();
+        if (block == null) { EndNarration(); yield break; }
+        if (!block.CanShow(PlayerStats.Instance)) { EndNarration(); yield break; }
         if (block.channel == NarratorChannel.Paper)
             checkPhaseAnimator?.ResetGraphic();
         var narrator = Resolve(block.channel);
-        if (narrator == null) { IsNarrating = false; yield break; }
+        if (narrator == null) { EndNarration(); yield break; }
         yield return narrator.ShowText(block);
-        IsNarrating = false;
+        yield return ClearAfterBlock(block, narrator);
+        EndNarration();
     }
 
     /// <summary>지정 채널 클리어.</summary>
@@ -122,4 +131,36 @@ public class NarratorRouter : MonoBehaviour
         NarratorChannel.Paper => paperNarrator,
         _ => null,
     };
+
+    private void BeginNarration()
+    {
+        narrationLockCount++;
+        if (IsNarrating) return;
+
+        IsNarrating = true;
+        NarrationActiveChanged?.Invoke(true);
+    }
+
+    private void EndNarration()
+    {
+        narrationLockCount = Mathf.Max(0, narrationLockCount - 1);
+        if (narrationLockCount > 0 || !IsNarrating) return;
+
+        IsNarrating = false;
+        NarrationActiveChanged?.Invoke(false);
+    }
+
+    private IEnumerator ClearAfterBlock(NarrationBlock block, INarrator narrator)
+    {
+        if (block == null || narrator == null) yield break;
+
+        float pause = block.pauseAfter > 0f ? block.pauseAfter : defaultBlockClearDelay;
+        if (block.channel == NarratorChannel.Screen && block.pauseAfter <= 0f)
+            pause = 0f;
+
+        if (pause > 0f)
+            yield return new WaitForSeconds(pause);
+
+        narrator.Clear();
+    }
 }

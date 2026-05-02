@@ -30,7 +30,8 @@ public class ScatteredPaper : MonoBehaviour
     private void Awake()
     {
         rt = GetComponent<RectTransform>();
-        clickButton.onClick.AddListener(OnClick);
+        if (clickButton != null)
+            clickButton.onClick.AddListener(OnClick);
     }
 
     public void SetContent(string text)

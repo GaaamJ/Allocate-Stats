@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 7428442615786104733}
   - component: {fileID: 1971634281871353146}
   - component: {fileID: 1563856100363574307}
+  - component: {fileID: 8236285259796724957}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -270,7 +271,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitioner
   fadeImage: {fileID: 2480078486346316054}
-  worldNarrator: {fileID: 0}
+  screenNarrator: {fileID: 0}
   fadeOutDuration: 0.5
   holdDuration: 1.5
   fadeInDuration: 1
+--- !u!114 &8236285259796724957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052659765991705535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd7b663d6b4d914fb90645653cb16ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  library: {fileID: 11400000, guid: d79201521e74e4b498d15fe1320c7a16, type: 2}
+  sfxSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  ambientSource: {fileID: 0}
+  masterSfxVolume: 1
+  masterMusicVolume: 1
+  masterAmbientVolume: 1

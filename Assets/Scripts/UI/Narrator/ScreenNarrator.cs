@@ -99,7 +99,7 @@ public class ScreenNarrator : BaseNarrator
 
     // ── Clear override ────────────────────────────────────
 
-    public new void Clear()
+    public override void Clear()
     {
         if (fadeCoroutine != null) { StopCoroutine(fadeCoroutine); fadeCoroutine = null; }
         if (canvasGroup) canvasGroup.alpha = 0f;

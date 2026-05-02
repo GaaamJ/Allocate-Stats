@@ -27,6 +27,9 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
     /// </summary>
     [SerializeField] protected float charVariance = 0f;
 
+    [Header("Typing SFX")]
+    [SerializeField] private int charactersPerTypingCue = 3;
+
     // ── 내부 상태 ─────────────────────────────────────────
 
     private Coroutine typingCoroutine;
@@ -95,7 +98,7 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         OnBlockEnd(block);
     }
 
-    public void Clear()
+    public virtual void Clear()
     {
         StopTyping();
         var tmp = GetTMP();
@@ -121,6 +124,8 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
     /// <summary>채널 고유 TMP 컴포넌트 반환. 서브클래스에서 구현 필수.</summary>
     protected abstract TextMeshProUGUI GetTMP();
 
+    protected virtual AudioCue TypingCue => AudioCue.None;
+
     /// <summary>블록 출력 시작 직전 호출. 채널 고유 연출 (확대, 위치 등).</summary>
     protected virtual void OnBlockStart(NarrationBlock block) { }
 
@@ -135,6 +140,7 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         // 타이핑 시작 시 origin 저장 — 흔들림 복원 기준점
         shakeOrigin = tmp.rectTransform.anchoredPosition;
 
+        int visibleCharacters = 0;
         foreach (char c in text)
         {
             if (skipTyping)
@@ -148,6 +154,12 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
             }
 
             tmp.text += c;
+            if (!char.IsWhiteSpace(c))
+            {
+                visibleCharacters++;
+                if (TypingCue != AudioCue.None && visibleCharacters % Mathf.Max(1, charactersPerTypingCue) == 0)
+                    AudioManager.PlayCue(TypingCue);
+            }
 
             // 타이핑 중 미세 흔들림
             if (shakeIntensity > 0f)

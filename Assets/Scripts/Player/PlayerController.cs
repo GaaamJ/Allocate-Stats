@@ -33,7 +33,7 @@ using Unity.Cinemachine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class PlayerController : PlayerControllerStub
+public class PlayerController : MonoBehaviour
 {
     public enum ControlMode { Title, FPS }
 
@@ -62,6 +62,7 @@ public class PlayerController : PlayerControllerStub
     [Header("Interaction")]
     [SerializeField] private float interactRange = 3f;
     [SerializeField] private LayerMask interactLayer = ~0;
+    [SerializeField] private bool debugInteraction;
 
     /// <summary>Skip 버튼 pressed 시 발행.</summary>
     public event System.Action OnSkipPressed;
@@ -70,6 +71,7 @@ public class PlayerController : PlayerControllerStub
     private ControlMode _currentMode;
     private bool _movementEnabled = true;
     private bool _lookEnabled = true;
+    private int _movementLockCount;
 
     private PlayerInput _actions;
     private PlayerInput.PlayerActions _player;
@@ -126,14 +128,16 @@ public class PlayerController : PlayerControllerStub
 
     // ── Movement ─────────────────────────────────────────
 
-    public override void EnableMovement()
+    public void EnableMovement()
     {
-        _movementEnabled = true;
-        SetCursorLocked(_currentMode == ControlMode.FPS);
+        _movementLockCount = Mathf.Max(0, _movementLockCount - 1);
+        _movementEnabled = _movementLockCount == 0;
+        SetCursorLocked(_currentMode == ControlMode.FPS && _movementEnabled);
     }
 
-    public override void DisableMovement()
+    public void DisableMovement()
     {
+        _movementLockCount++;
         _movementEnabled = false;
         if (_rb) _rb.linearVelocity = Vector3.zero;
         SetCursorLocked(false);
@@ -147,7 +151,7 @@ public class PlayerController : PlayerControllerStub
             _titleBaseYaw = _yaw;
             if (_rb) _rb.linearVelocity = Vector3.zero;
         }
-        SetCursorLocked(mode == ControlMode.FPS);
+        SetCursorLocked(mode == ControlMode.FPS && _movementEnabled);
     }
 
     // ── Look ─────────────────────────────────────────────
@@ -188,13 +192,27 @@ public class PlayerController : PlayerControllerStub
 
     private void HandleInteract()
     {
+        if (debugInteraction)
+            Debug.Log($"[PlayerController] Interact input. mode={_currentMode}, movementEnabled={_movementEnabled}");
+
         if (!_movementEnabled || _currentMode != ControlMode.FPS) return;
+
         Transform origin = cinemachineCamera ? cinemachineCamera.transform
                          : cameraHolder ? cameraHolder
                          : transform;
-        if (Physics.Raycast(origin.position, origin.forward,
-                            out RaycastHit hit, interactRange, interactLayer))
-            hit.collider.GetComponentInParent<InteractableObject>()?.OnInteract();
+
+        if (Physics.Raycast(origin.position, origin.forward, out RaycastHit hit, interactRange, interactLayer))
+        {
+            var interactable = hit.collider.GetComponentInParent<InteractableObject>();
+            if (debugInteraction)
+                Debug.Log($"[PlayerController] Raycast hit '{hit.collider.name}' at {hit.distance:0.00}m. interactable={(interactable ? interactable.name : "null")}");
+
+            interactable?.OnInteract();
+        }
+        else if (debugInteraction)
+        {
+            Debug.Log($"[PlayerController] Raycast missed. origin={origin.position}, direction={origin.forward}, range={interactRange}");
+        }
     }
 
     // ── 헬퍼 ─────────────────────────────────────────────

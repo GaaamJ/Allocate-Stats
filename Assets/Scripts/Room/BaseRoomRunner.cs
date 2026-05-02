@@ -14,7 +14,7 @@ using System.Collections.Generic;
 /// Phase 흐름:
 ///   OnPhaseEnter 연출
 ///   → onEnter 나레이션
-///   → (Check) onBeforeCheck → 판정 → onAfterCheck
+///   → (Check) onBeforeCheck → 판정 연출
 ///   → OnPhaseExit 연출
 ///   → OutcomeData.narration
 ///   → 결과 분기
@@ -24,6 +24,7 @@ public abstract class BaseRoomRunner : IRoomRunner
     protected readonly HashSet<string> completedPhases = new();
     protected readonly HashSet<string> succeededPhases = new();
     protected RoomRunContext ctx;
+    private bool roomIsLeaving;
 
     /// <summary>
     /// 판정 연출 담당. RoomSceneController에서 주입.
@@ -98,14 +99,21 @@ public abstract class BaseRoomRunner : IRoomRunner
         if (!phase.isRepeatable && completedPhases.Contains(phase.phaseID))
             yield break;
 
+        ctx.PlayerController?.DisableMovement();
+
         if (!MeetsRequirements(phase))
         {
             if (phase.requirementFailNarration?.Length > 0)
                 yield return ctx.Narrator.ShowBlocks(phase.requirementFailNarration);
+            if (!roomIsLeaving)
+                ctx.PlayerController?.EnableMovement();
             yield break;
         }
 
         yield return RunPhase(phase);
+
+        if (!roomIsLeaving)
+            ctx.PlayerController?.EnableMovement();
     }
 
     // ── Phase 핵심 흐름 ───────────────────────────────────
@@ -164,9 +172,6 @@ public abstract class BaseRoomRunner : IRoomRunner
         else if (phase.animator != null)
             yield return phase.animator.OnAfterCheck(success);
 
-        if (cd.onAfterCheck?.Length > 0)
-            yield return ctx.Narrator.ShowBlocks(cd.onAfterCheck);
-
         ctx.Bridge.RecordCheck(
             cd.stat, success, phase.phaseID,
             success ? cd.summaryText_success : cd.summaryText_failure
@@ -196,14 +201,17 @@ public abstract class BaseRoomRunner : IRoomRunner
                 break;
 
             case RoomData.OutcomeType.NextRoom:
+                roomIsLeaving = true;
                 OnRoomComplete(outcome.transitionNarration);
                 break;
 
             case RoomData.OutcomeType.Death:
+                roomIsLeaving = true;
                 ctx.Bridge.OnDeath(outcome.endingID);
                 break;
 
             case RoomData.OutcomeType.Escape:
+                roomIsLeaving = true;
                 ctx.Bridge.OnEscape(outcome.endingID);
                 break;
         }
@@ -221,20 +229,41 @@ public abstract class BaseRoomRunner : IRoomRunner
     }
 
     /// <summary>
-    /// objectID로 Interact Phase를 찾는다.
-    /// triggerObjectID가 비어 있으면 모든 오브젝트에 반응하는 Phase로 간주.
-    /// 여러 개 매칭 시 첫 번째 반환.
+    /// objectID로 실행 가능한 Interact Phase를 찾는다.
+    /// 정확히 일치하는 phase를 먼저 찾고, triggerObjectID가 비어 있는 phase는 fallback으로만 사용한다.
     /// </summary>
     private RoomData.PhaseData FindInteractPhase(RoomData.PhaseData[] phases, string objectID)
     {
         if (phases == null) return null;
+
+        RoomData.PhaseData exactRequirementFail = null;
+        RoomData.PhaseData wildcardReady = null;
+        RoomData.PhaseData wildcardRequirementFail = null;
+
         foreach (var p in phases)
         {
             if (p.triggerCondition != RoomData.TriggerCondition.Interact) continue;
-            if (string.IsNullOrEmpty(p.triggerObjectID) || p.triggerObjectID == objectID)
-                return p;
+            if (!p.isRepeatable && completedPhases.Contains(p.phaseID)) continue;
+
+            bool isWildcard = string.IsNullOrEmpty(p.triggerObjectID);
+            bool isExactMatch = p.triggerObjectID == objectID;
+            if (!isWildcard && !isExactMatch) continue;
+
+            bool meetsRequirements = MeetsRequirements(p);
+            if (isExactMatch)
+            {
+                if (meetsRequirements) return p;
+                exactRequirementFail ??= p;
+                continue;
+            }
+
+            if (meetsRequirements)
+                wildcardReady ??= p;
+            else
+                wildcardRequirementFail ??= p;
         }
-        return null;
+
+        return exactRequirementFail ?? wildcardReady ?? wildcardRequirementFail;
     }
 
     private bool MeetsRequirements(RoomData.PhaseData phase)
