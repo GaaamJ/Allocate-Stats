@@ -98,7 +98,7 @@ public abstract class BaseNarrator : MonoBehaviour, INarrator
         OnBlockEnd(block);
     }
 
-    public void Clear()
+    public virtual void Clear()
     {
         StopTyping();
         var tmp = GetTMP();

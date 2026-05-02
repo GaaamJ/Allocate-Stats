@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: 01.AltarLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 4041745422493537775, guid: a948876c85fa15940b9c6f0f5b1ffdc9, type: 3}
-    objectID: (Test)Altar
-    position: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 593053089658290749, guid: b7a80c569929f2e4b9900513192ad0e8, type: 3}
+    objectID: 
+    position: {x: 0, y: 10, z: 15}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 3644601129325226943, guid: 9e17e280f7dc9ad48ba532828ab2111d, type: 3}
-    objectID: (Test)Door
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 6763199381775208726, guid: f50e2b5206b4ed4488175ad700006366, type: 3}
-    objectID: (Test)Idol
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 4386885800380612327, guid: 507e0eddc67c29f4b86d91d5f0f91fd4, type: 3}
+    objectID: Altar
+    position: {x: 0, y: 2, z: 19}
+    rotation: {x: -90, y: 90, z: 0}
+  - prefab: {fileID: 3052482887355532177, guid: a57082c8d4147e64e8a1c4d06ca49f2b, type: 3}
+    objectID: Idol
+    position: {x: 0.5, y: 5.5, z: 25}
+    rotation: {x: -18, y: 0, z: 0}
+  - prefab: {fileID: 7964285979072388383, guid: a47591e73b823fd4893dde6ad4840305, type: 3}
+    objectID: Door
+    position: {x: 0, y: 2, z: 40}
+    rotation: {x: -90, y: 0, z: 0}

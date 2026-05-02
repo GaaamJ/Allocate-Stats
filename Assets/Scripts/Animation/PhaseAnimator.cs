@@ -25,7 +25,7 @@ public class PhaseAnimator : MonoBehaviour
         yield return null;
     }
 
-    /// <summary>판정 직후 호출 — 판정 실행 이후, onAfterCheck 나레이션 이전.</summary>
+    /// <summary>판정 직후 호출 — 판정 실행 이후, 결과 분기 이전.</summary>
     public virtual IEnumerator OnAfterCheck(bool success)
     {
         yield return null;

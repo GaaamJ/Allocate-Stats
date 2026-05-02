@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: 04.WhisperLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 5658311766629204005, guid: 437b9d9348b295f488bb143b3c9b1be1, type: 3}
+  - prefab: {fileID: 2843331950188201904, guid: 4c4421bc149564f439497fa80b8cef6f, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 3977511001933370169, guid: 48ad7f15f724de646898ed2493b325e3, type: 3}
-    objectID: 
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 7.5, z: 42}
     rotation: {x: 0, y: 0, z: 0}

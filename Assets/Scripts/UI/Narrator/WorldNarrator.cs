@@ -73,7 +73,7 @@ public class WorldNarrator : BaseNarrator
 
     // ── Clear 오버라이드 — FadeOut도 함께 중단 ────────────
 
-    public new void Clear()
+    public override void Clear()
     {
         if (fadeCoroutine != null)
         {

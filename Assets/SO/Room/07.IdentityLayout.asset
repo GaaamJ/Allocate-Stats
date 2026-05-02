@@ -13,19 +13,15 @@ MonoBehaviour:
   m_Name: 07.IdentityLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 865307015384170067, guid: 02165a751784c004a8905b23ec955114, type: 3}
+  - prefab: {fileID: 4149598618593988282, guid: a39649b4fc970bb42a51733717e9a0da, type: 3}
     objectID: (Test)Door
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 10, z: 0}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 8658712739657987178, guid: 1c73da1306d3f384aaf2ac146e923920, type: 3}
+  - prefab: {fileID: 9002629343676604366, guid: f65468bf71618934d909e04d2c8ee1be, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
+    position: {x: -14.5, y: 0, z: -14.5}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 1070520055950082741, guid: 6350dbc49605f234da24a80fab866c12, type: 3}
+  - prefab: {fileID: 5771907082526142749, guid: b876d65f0cf059747bcd1adfe0f57cfb, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 5699582081118630954, guid: 4bd33520e6e85ee4bb692f40ee0e5de7, type: 3}
-    objectID: (Test)PaperUI
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 3, z: 15}
+    rotation: {x: -90, y: 0, z: 0}

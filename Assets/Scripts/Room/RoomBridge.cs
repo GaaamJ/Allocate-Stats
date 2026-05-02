@@ -25,6 +25,28 @@ public class RoomBridge : MonoBehaviour
     }
 
     /// <summary>사망 — EndingScene으로 전환.</summary>
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    /// <summary>Debug only: immediately completes the current room.</summary>
+    public void DebugSkipCurrentRoom()
+    {
+        if (GameFlowManager.Instance == null)
+        {
+            Debug.LogWarning("[RoomBridge] GameFlowManager is missing. Debug room skip failed.");
+            return;
+        }
+
+        if (IsEncoreLoop)
+        {
+            Debug.Log($"[RoomBridge] Debug skip encore room. counter={EncoreCounter}");
+            OnEncoreComplete();
+            return;
+        }
+
+        Debug.Log($"[RoomBridge] Debug skip room. roomID={CurrentRoomData?.roomID ?? "unknown"}");
+        OnRoomComplete();
+    }
+#endif
+
     public void OnDeath(string endingID)
     {
         GameFlowManager.Instance?.OnDeath(endingID);

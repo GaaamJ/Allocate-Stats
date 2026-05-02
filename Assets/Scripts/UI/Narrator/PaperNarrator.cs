@@ -46,7 +46,7 @@ public class PaperNarrator : BaseNarrator
     }
 
     // ── Clear override ────────────────────────────────────
-    public new void Clear()
+    public override void Clear()
     {
         if (previewTMP) previewTMP.text = "";
         base.Clear();

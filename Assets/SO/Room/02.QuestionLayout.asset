@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: 02.QuestionLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 8563676989483993857, guid: d0f308017b16664479487cf319f84172, type: 3}
-    objectID: (Test)LeftDoor
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 4263620357521825673, guid: d4e002d722c3c514c9b2aa61e0b9eacf, type: 3}
-    objectID: (Test)Phone
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 3082494948231135652, guid: d600951ca32f9cc4a9b3e15f1e9d4fe6, type: 3}
+  - prefab: {fileID: 1194697722314308374, guid: 554430d37e242a243b1f9155179a8206, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 10, z: 7}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 9050851099509390156, guid: d7a80d5829652d24f90e36857c05cd26, type: 3}
-    objectID: (Test)RightDoor
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 6418820774305756294, guid: 747de11ee40ea28449138c9dd17e5409, type: 3}
+    objectID: Telephone
+    position: {x: 0, y: 1.8, z: 7}
+    rotation: {x: 0, y: -180, z: 0}
+  - prefab: {fileID: 6926579925534126153, guid: c54d2c17ff2062d45aec5768ac866f7c, type: 3}
+    objectID: LeftDoor
+    position: {x: -9, y: 2, z: 22}
+    rotation: {x: -90, y: 0, z: 0}
+  - prefab: {fileID: 547763730710027678, guid: fde91fc7085fafa42b95344067a3cb31, type: 3}
+    objectID: RightDoor
+    position: {x: 6, y: 2, z: 22}
+    rotation: {x: -90, y: 0, z: 0}

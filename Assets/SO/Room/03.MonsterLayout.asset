@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: 03.MonsterLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 4656798384836858223, guid: b476a9d11627f194393c5b64357685d8, type: 3}
-    objectID: (Test)Door
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 7419073070472929652, guid: 90b6de08977fddf4e81efd101a64595f, type: 3}
-    objectID: (Test)Monster
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 4707779947446128111, guid: a6308bd219f6ac045ab8001cfbf3f924, type: 3}
+  - prefab: {fileID: 3459339440918151552, guid: f1ae92af68be9e94c8d8fa3216cd83eb, type: 3}
     objectID: 
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 10, z: 10}
     rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 8095692130763918145, guid: 8f948bf98e9b226459a147ce2eef2549, type: 3}
+    objectID: Monster
+    position: {x: 0, y: 4, z: 9}
+    rotation: {x: -90, y: 0, z: 0}
+  - prefab: {fileID: 3766178006737957759, guid: a17b7c46855cf284abf38354faa0a49e, type: 3}
+    objectID: Door
+    position: {x: 0, y: 2, z: 28}
+    rotation: {x: -90, y: 0, z: 0}

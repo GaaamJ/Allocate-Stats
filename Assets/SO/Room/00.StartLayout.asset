@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: 00.StartLayout
   m_EditorClassIdentifier: Assembly-CSharp::RoomLayoutData
   interactables:
-  - prefab: {fileID: 399585625685788017, guid: fc8e2b9e6caf7f6448db1b34a671c33d, type: 3}
-    objectID: (Test)Paper
-    position: {x: 0, y: 1.5, z: 4}
-    rotation: {x: 0, y: 45, z: 45}
-  - prefab: {fileID: 5777991522815128305, guid: d4a707993e4848b40a4dbce303426868, type: 3}
-    objectID: (Test)RightDoor
-    position: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 2175284206781070625, guid: ebc86502fd9a99c4dadd788ad7360d07, type: 3}
+    objectID: Room
+    position: {x: 0, y: 10, z: 7}
     rotation: {x: 0, y: 0, z: 0}
-  - prefab: {fileID: 5777991522815128305, guid: cb49cb22ec0e14a46ad8655afc394ff0, type: 3}
-    objectID: (Test)LeftDoor
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
+  - prefab: {fileID: 4961725401365491205, guid: 9fb32be02a259ba4c99dc368576c7e9b, type: 3}
+    objectID: RightDoor
+    position: {x: 4, y: 2, z: 22}
+    rotation: {x: -90, y: 0, z: 0}
+  - prefab: {fileID: 3929002698755446144, guid: d3914cefa272e4142b1a4f6581440741, type: 3}
+    objectID: LeftDoor
+    position: {x: -8, y: 2, z: 22}
+    rotation: {x: -90, y: 0, z: 0}

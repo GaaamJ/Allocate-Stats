@@ -154,6 +154,7 @@ MonoBehaviour:
   charInterval: 0.035
   defaultPauseAfter: 0.8
   charVariance: 0
+  charactersPerTypingCue: 3
   narratorTMP: {fileID: 1145231771635186795}
   canvasGroup: {fileID: 102420424963442615}
   fadeInDuration: 0.2
@@ -171,68 +172,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!1 &9063351424591952334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3210601180187415479}
-  - component: {fileID: 753468419010811905}
-  m_Layer: 5
-  m_Name: (Test)RoomLayoutData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3210601180187415479
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9063351424591952334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4246778996551232845}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 112, y: -189}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &753468419010811905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9063351424591952334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 5
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1001 &5675017940208452852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,9 +270,6 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8371664220824971705, guid: 760032ec905b13a46b97642b00bc0431, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3210601180187415479}
-    - targetCorrespondingSourceObject: {fileID: 8371664220824971705, guid: 760032ec905b13a46b97642b00bc0431, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7850199736647582686}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 139438123428995612, guid: 760032ec905b13a46b97642b00bc0431, type: 3}
@@ -376,3 +312,5 @@ MonoBehaviour:
   screenNarrator: {fileID: 3329003766460719339}
   worldNarrator: {fileID: 382568001349501078}
   paperNarrator: {fileID: 0}
+  checkPhaseAnimator: {fileID: 0}
+  defaultBlockClearDelay: 0.8
